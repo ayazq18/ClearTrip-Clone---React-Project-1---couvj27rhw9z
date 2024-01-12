@@ -1,0 +1,139 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto',Helvetica Neue,Ubuntu,Arial,sans-serif;
+}
+
+#navBar-home {
+  width: 100%;
+  /* border: 2px solid blue; */
+}
+
+#navheader {
+  /* border: 2px solid blue; */
+  width: 85%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+  align-items: center;
+}
+
+#navheader img {
+  width: 170px;
+}
+
+#navheader button {
+  padding: 10px;
+  background-color: #3a63c3;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#sideNavBar {
+  background-color: rgb(249, 249, 249);
+  display: flex;
+  justify-content: space-around;
+}
+
+#sideNavBar-section {
+  width: fit-content;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  margin: 10px 0;
+  /* border: 2px solid blue; */
+}
+
+#sideNavBar-links {
+  width: 250px;
+  margin: 0px 8px;
+  /* border: 2px solid blue; */
+}
+
+#sideNavBar-links li {
+  list-style-type: none;
+  text-align: start;
+  text-wrap: nowrap;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#sideNavBar-links a {
+  text-decoration: none;
+  color: #000;
+}
+
+.active {
+  color: #2f5fcfdc;
+  background-color: #b0c3ef6a;
+  border-radius: 6px;
+  padding: 10px 140px 10px 10px;
+}
+
+
+/* -------------------Media------------------------ */
+
+@media only screen and (min-width: 240px) and (max-width: 768px) {
+  #navheader-section {
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 0 10px;
+  }
+
+  #navheader button {
+    text-wrap: nowrap;
+    font-size: 12px;
+    border-radius: 50px;
+  }
+
+  #sideNavBar-section {
+    align-items: center;
+    padding: 10px;
+  }
+
+  #sideNavBar-links {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    text-wrap: wrap;
+    overflow-y: scroll;
+    border-bottom: 1px solid black;
+  }
+
+  #sideNavBar-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  #sideNavBar-links li {
+    font-size: 12px;
+    padding: 5px;
+    margin: 2px;
+    gap: 5px;
+  }
+
+  #sideNavBar-section {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .active {
+    color: #fff;
+    background: none;
+    border-bottom: 1px solid #2f5fcfdc;
+    border-radius: 0px;
+    padding: 10px;
+  }
+}

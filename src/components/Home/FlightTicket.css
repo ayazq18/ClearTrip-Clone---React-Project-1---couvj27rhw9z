@@ -1,0 +1,191 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto',Helvetica 'Neue','Ubuntu',Arial,sans-serif;
+  }
+  
+  /* -------------Custom Styles--------------- */
+
+  .flex{
+    display: flex;
+  }
+
+  .flexX{
+    display: flex;
+    justify-content: center;
+  }
+
+  .flexY{
+    display: flex;
+    align-items: center;
+  }
+
+  .flexXY{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flexEnd{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .flexBet{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flexAround{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .flexEven{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .fs{
+    font-size: 20px;
+  }
+
+  /* -------------Custom Styles Ends--------------- */
+
+  /* -------------Header Styles--------------- */
+
+  .ticket{
+    width: 100%;
+    border-bottom: 1px solid #908a8a7a;
+    /* border: 2px solid blue; */
+    flex-direction: column;
+  }
+
+  #ticketHeader{
+    border: 2px solid yellow;
+    width: 75%;
+    margin: 0 auto;
+  }
+  
+  #ticketSupport {
+    margin: 0 auto;
+    align-items: center;
+  }
+  
+  #ticketSupport img {
+    width: 170px;
+  }
+
+  .headerLogo-Icons{
+    gap: 20px;
+  }
+
+  #takeOff{
+    font-size: 20px;
+    color: rgb(83, 83, 250);
+  }
+
+  #hotelsIcon{
+    color: #4a484889;
+
+  }
+  
+  #ticketHeader button {
+    padding: 10px;
+    color: #1A1A1A;
+    background-color: transparent;
+    font-size: 12px;
+    border: none;
+    gap: 10px;
+  }
+
+  #ticketHeader button:hover {
+    background-color: #4a484816;
+    border-radius: 6px;
+  }
+
+  .ticketSearch-sec {
+    width: 80%;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 15px;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+  }
+
+  .ticketSearch-sec #inputSource, #inputDest, #date{
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+
+  .selectTicket {
+    padding: 10px;
+    /* margin: 0 0 10px 0; */
+    display: flex;
+    /* border: 1px solid red; */
+  }
+  
+  .selectTicket select {
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    font-size: 12px;
+    padding: 10px;
+    margin-right: 10px;
+  }
+
+  .ticketSearch-sec #flightSearchBtn {
+    padding: 10px 30px;
+    border-radius: 4px;
+    background-color: #000;
+    color: #fff;
+    font-size: 15px;
+    text-wrap: nowrap;
+  }
+
+  #main{
+    width: 75%;
+    height: 100vh;
+    /* border: 1px solid red; */
+
+  }
+
+  #aside{
+    width: 20%;
+    height: 100%;
+    border: 1px solid blue;
+  }
+
+  #main-content{
+    width: 80%;
+    height: 100%;
+    border: 1px solid green;
+  }
+
+  #stops{
+    margin: 10px;
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  #stops h1{
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #1a1a1ac9;
+  }
+
+   .check{
+    font-size: 20px;
+  }
+
+  #stops label{
+    font-size: 12px;
+    color: #1a1a1ac9;
+    cursor: pointer;
+  }

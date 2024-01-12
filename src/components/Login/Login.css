@@ -1,0 +1,94 @@
+ *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+ }
+ 
+ /* -------------login--------------- */
+
+ .transparent{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    background-color: #40373792;
+    z-index: 11;
+    cursor: pointer;
+ }
+
+  .login-page{
+    width: 50%;
+    height: 60%;
+    border-radius: 8px;
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    background-color: #fff;
+    border: 1px solid #74717150;
+    z-index: 111;
+  }
+
+  .corousel{
+    width: 50%;
+    height: 100%;
+    background-color: rgb(255, 238, 232);
+    /* border: 1px solid red; */
+  }
+
+  .login-section{
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    /* border: 1px solid red; */
+  }
+
+  .close-icon{
+    font-size: 20px;
+    margin: 10px;
+    position: relative;
+    left: 85%;
+    cursor: pointer;
+  }
+
+  .login-form {
+    /* width: 85%; */
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .login-form input{
+    padding: 10px 30px;
+    border: 1px solid #78727283;
+  }
+
+  .login-form-btn{
+    gap: 30px;
+  }
+
+  .login-form button{
+    padding: 10px 30px;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #000;
+  }
+
+  .login-page p{
+    font-size: 12px;
+    margin-top: 10px;
+    text-align: center;
+    color: #666666;
+  }
+
+  .login-page a{
+    text-decoration: none;
+    color: #3366cc;
+    font-weight: 600;
+  }
+
+  .footer{
+    padding: 20px;
+    border-top: 1px solid #78727283;
+    position: relative;
+    top: 18%;
+  }

@@ -1,0 +1,518 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+
+  /* ----------Custom styles--------- */
+
+  .flexCol{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+  }
+
+  .fs{
+    font-size: 5px;
+  }
+  /* ----------Custom styles--------- */
+
+  
+  .home {
+    height: fit-content;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    /* border: 2px solid red; */
+  }
+  
+  .home h1 {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  
+  .home h2 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .search-card {
+    background-color: #fff;
+    margin: 20px 0;
+    border-radius: 10px;
+    padding: 30px;
+  }
+
+  /* -----Select---- */
+  
+  .select {
+    width: fit-content;
+    max-height: 20%;
+  }
+
+  .selectTrip{
+    /* background-color: red; */
+    padding: 10px;
+    width: fit-content;
+    position: relative;
+    cursor: pointer;
+    text-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .select h4{
+    font-size: 14px;
+    padding: 10px;
+    color: #4c4949;
+    width: fit-content;
+    /* border: 1px solid red; */
+  }
+
+  .search-way{
+    width: fit-content;
+    padding: 5px 40px;
+    background-color: #fff;
+    border: 1px solid #9c979745;
+    border-radius: 6px;
+    position: absolute;
+    top: 270px;
+    cursor: pointer;
+    z-index: 11;
+    border: 1px solid red;
+  }
+
+  .search-way h4{
+    font-size: 16px;
+    margin: 10px;
+  }
+  
+  .selectCateg{
+    /* background-color: red; */
+    width:100%;
+    padding: 10px;
+    text-wrap: nowrap;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .selectCateg-Expand{
+    background-color: #fff;
+    border: 1px solid #9c979745;
+    border-radius: 6px;
+    position: absolute;
+    top: 280px;
+    left: 40%;
+    cursor: pointer;
+    z-index: 11;
+    width: 23%;
+    height: fit-content;
+    position: absolute;
+  }
+
+  .selectCateg-Expand-container h1{
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .selectCateg-Expand-container h5{
+    font-size: 10px;
+    color: #48464684;
+  }
+  .selectCateg-Expand-container{
+    /* border: 1px solid red; */
+    margin: 20px;
+  }
+  
+  .selectCateg-count{
+    gap: 20px;
+  }
+
+  .countPosIcon{
+    font-size: 35px;
+    color: #3942a6c5;
+    border: 1px solid #3542d2c5;
+    border-radius: 50px;
+  }
+  .countNegIcon{
+    font-size: 35px;
+    color: #bebfcdc5;
+    border: 1px solid #999baac5;
+    border-radius: 50px;
+  }
+
+  .selectCateg-count h1{
+    background-color: transparent;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 100%;
+  }
+
+  .selectCateg-counter{
+    font-size: 10px;
+  }
+
+  .selectCateg-Expand-btns-div{
+    margin: 10px;
+    width: fit-content;
+    flex-wrap: wrap;
+  }
+
+  .selectCateg-Expand-btns-div h2 {
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    font-weight: 600;
+    font-size: 13px;
+    text-wrap: nowrap;
+    margin:5px 5px;
+    padding: 8px 10px;
+    border-radius: 50px;
+  }
+
+  .active-classs{
+    color: #3366cc;
+    border: 1px solid #3366cc;
+    background-color: #3366cc36;
+  }
+
+  .search-card .btns-div {
+    margin-left: 5px;
+    padding: 10px 0;
+    gap: 10px;
+  }
+  
+  .search-card .btns-div h2 {
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    font-weight: 600;
+    font-size: 13px;
+    text-wrap: nowrap;
+    padding: 8px 10px;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  .search-card .btns-div h2:hover {
+    background-color: #c8c3c362;
+  }
+
+  .active-fare{
+    color: #3366cc;
+    border: 1px solid #3366cc;
+    background-color: #3366cc36;
+  }
+  
+  .search-card .btns-div button:hover {
+    background-color: rgba(236, 228, 228, 0.207);
+  }
+  
+  .input {
+    width: 100%;
+    margin: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+  }
+  
+  .input-text {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  #input1 {
+    padding: 15px 60px;
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    border-radius: 6px 0 0 6px;
+    font-size: 15px;
+    position: relative;
+  }
+  
+  #input2 {
+    padding: 15px 60px;
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    font-size: 15px;
+    position: relative;
+  }
+  
+  .whereIconfrom {
+    font-size: 20px;
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    color: rgba(0, 0, 0, 0.381);
+    z-index: 1;
+  }
+
+  /* -------------------Expand-whereFrom-------------- */
+
+  .expand-whereFrom{
+    border: 1px solid #b3b0b060;
+    background-color: #fff;
+    border-radius: 6px;
+    width: 20vw;
+    height: 25vh;
+    position: absolute;
+    overflow-y: scroll;
+    top: 50px;
+    z-index: 2;
+  }
+
+  .expand-whereFrom::-webkit-scrollbar{
+    display: none;
+  }
+
+  .wherefrom-container{
+    padding: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    gap: 20px;
+  }
+
+  .wherefrom-container:hover{
+    background-color: #a6bbe436;
+  }
+
+  .expand-whereTo{
+    border: 1px solid #b3b0b060;
+    background-color: #fff;
+    border-radius: 6px;
+    width: 20vw;
+    height: 25vh;
+    position: absolute;
+    overflow-y: scroll;
+    top: 50px;
+    right: -2px;
+    z-index: 2;
+  }
+
+  .expand-whereTo::-webkit-scrollbar{
+    display: none;
+  }
+
+  .whereTo-container{
+    padding: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    gap: 20px;
+  }
+
+  .whereTo-container:hover{
+    background-color: #a6bbe436;
+  }
+
+  .short{
+    font-size: 12px;
+    color: #808080;
+    padding: 3px;
+    background-color: #F7F7F7;
+  }
+
+  .full{
+    font-size: 14px;
+    color: #000000;
+    text-overflow: ellipsis;
+  }
+  
+  /* -------------------Expand-whereFrom-------------- */
+
+
+  .exchangeIcon {
+    font-size: 25px;
+    position: absolute;
+    left: 48%;
+    background-color: #fff;
+    color: blue;
+    border: 1px solid blue;
+    border-radius: 50px;
+    z-index: 1;
+  }
+  
+  .whereIconTo {
+    font-size: 20px;
+    position: absolute;
+    right: 255px;
+    color: rgba(0, 0, 0, 0.381);
+    z-index: 1;
+  }
+  
+  #date1 {
+    padding: 15px 35px;
+    margin: 15px 0;
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    border-radius: 6px 0 0 6px;
+    font-size: 15px;
+  }
+  
+  #date2 {
+    padding: 15px 35px;
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    font-size: 15px;
+  }
+  
+  #flightSearchBtn {
+    padding: 15px 40px;
+    border: 1px solid rgba(0, 0, 0, 0.108);
+    border-radius: 6px;
+    background-color: #f77728;
+    color: #fff;
+    font-size: 15px;
+    text-wrap: nowrap;
+  }
+  
+  .input-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  
+  /*-------------------- Offer section-------------------- */
+  
+  .offer-section {
+    height: fit-content;
+    /* padding: 20px; */
+    margin-left: 25px;
+    /* border: 1px solid blue; */
+  }
+  
+  .offer-section h1 {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 0;
+  }
+  
+  #offer-corousel,
+  #img-corousel {
+    border: 1px solid rgba(0, 0, 0, 0.204);
+    border-radius: 6px;
+    width: 250px;
+    height: 200px;
+    padding: 5px;
+  }
+  
+  #corousel-content {
+    margin: 15px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  #prevIcon,
+  #nextIcon {
+    font-size: 10px;
+    font-weight: 900;
+  }
+  
+  #corousel-btn {
+    /* border: 1px solid black; */
+    justify-content: space-between;
+    color: gray;
+    cursor: pointer;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+  }
+  
+  .btn-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    overflow-x: hidden;
+  }
+  
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #888282;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .active-class {
+    background-color: #000;
+    width: 12px;
+  }
+  /* -------------------Media----------------------- */
+  @media only screen and (min-width: 240px) and (max-width: 768px) {
+    /* .home h1, .home h2 {
+      visibility: hidden;
+    } */
+  
+    .home {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: fit-content;
+      /* width: 100vw; */
+      /* flex-wrap: wrap; */
+    }
+  
+    .search-card .btns-div {
+      display: flex;
+      /* justify-content: center; */
+      flex-wrap: wrap;
+    }
+    .search-card .btns-div button {
+      font-size: 10px;
+      text-wrap: nowrap;
+    }
+  
+    .select {
+      padding: 2px;
+      margin: 0;
+      width: 20px;
+      flex-wrap: nowrap;
+    }
+  
+    .input {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  
+    #input1,
+    #input2, #date1,
+    #date2  {
+      width: 50%;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.29);
+      padding: 15px 30px;
+    }
+  
+    .input-text {
+      flex-wrap: wrap;
+    }
+  
+    .input-date {
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 30px;
+    }
+  
+    .whereIconTo,
+    .whereIconfrom {
+      display: none;
+    }
+  
+    .offer-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+  
+
+ 
