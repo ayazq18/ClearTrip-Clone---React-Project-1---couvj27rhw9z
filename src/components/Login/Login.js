@@ -1,44 +1,66 @@
-import React, { useEffect, useState } from 'react'
-import { RxCross1 } from "react-icons/rx";
+import React, { useEffect, useState, useRef } from "react";
 import './Login.css'
-import LoginCorousel from '../Corousel/LoginPage/LoginCorousel.js'
-export default function Login() {
-    // const [imageSwap, setImageSwap] = useState()
-    const [closeLogin, setCloseLogin] = useState(false)
-    const closeLoginCard = ()=>{
-        setCloseLogin(true)
-    }
-    useEffect(()=>{
+import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher } from "../Services/Icons.js";
 
-    })
+export default function Login({setToken, showLogin, setShowLogin}) {
+    const MyRef = useRef(null);
+    // const [token, setToken] = useState("");
+    const expandedObj = [
+        {item : 'Trips', icons : trips, toolsIcon: cancel,  tools : 'Cancellations'},
+        {item : 'ShortList', icons : shortlists, toolsIcon: change,  tools : 'Change flights'},
+        {item : 'Travellers', icons : travellers, toolsIcon: print,  tools : 'Print tickes'},
+        {item : 'Cleartrip Wallet', icons : wallet, toolsIcon: voucher,  tools : 'Print hotel voucher'},
+        {item : 'Hi-Five', icons : hiFive},
+        {item : 'Expressway', icons : Expressway},
+        {item : 'Profile', icons : profile},
+        {item : 'Settings', icons : settings},
+      ]
+
+      useEffect(()=>{
+        if (localStorage.getItem('token')) {
+        }
+      })
+
+      const handleSignOut = ()=>{
+        if(localStorage.getItem('token')){
+          setToken('')
+          localStorage.removeItem('token')
+          setShowLogin(!showLogin)
+          MyRef.current.style.backgroundColor = "blue"
+          MyRef.current.style.color = "#fff"
+        }
+      }
+
   return (
-   
-        <>
-      {!closeLogin && (
-            <div className="login-page flexXY">
-            <div className='corousel flexXY'>
-              <LoginCorousel/>
-            </div>
-            <div className='login-section'>
-                <div>
-                <RxCross1 className='close-icon' onClick={()=>closeLoginCard()}/>
-                </div>
-                <form className='login-form flexXY'>
-                    <input type='text' placeholder='Enter Your Name'/>
-                    <input type='text' placeholder='Enter Email'/>
-                    <input type='text' placeholder='Enter Password'/>
-                    <div className=' login-form-btn flexBet'>
-                    <button>Login</button>
-                    <button>Signup</button>
+    <div>
+        <div className="navheader-one">
+            <div onClick={()=>setShowLogin(false)} className="Expand-to-logout-one flexXY">
+            <div className="logout-profile-one"><h2>My Account</h2></div>
+            <div className="logout-account-one flex">
+                <div className="logout-account-sec">
+                <h6>Account</h6>
+                {expandedObj.map((Obj, index)=>(
+                    <div className="account-items-one flexY">
+                    {Obj.icons}
+                    <h4 key={index}>{Obj.item}</h4>
                     </div>
-                </form>
-                <p>We no more support email based login. You can now login via mobile number & link email to access your account.</p>
-                <p className='footer'>By continuing, you agree to Cleartrip's <a href=''>privacy policy</a> & <a href>terms of use.</a></p>
+                ))}
+                </div>
+                <div className="logout-tools-sec-one">
+                <h6>Quick tools</h6>
+                {expandedObj.map((Obj, index)=>(
+                    <div className="tools-items-one flexY">
+                    {Obj.toolsIcon}
+                    <h4 key={index}>{Obj.tools}</h4>
+                    </div>
+                ))}
+                </div>
             </div>
+            <div className="expande-signout-one"><h4 onClick={()=>handleSignOut()}>Sign out</h4></div>
             </div>
-        )
-    }
-      {!closeLogin && <div className='transparent' onClick={()=>closeLoginCard()}></div>}
-    </>
+        </div>
+        <div className="signUpPage flexXY">
+      </div>
+    </div>
   )
 }

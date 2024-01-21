@@ -1,35 +1,39 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.img-corousel-two img{
-    position: relative;
-    width: 320px;
+.img-corousel-two img {
+  position: relative;
+  width: 320px;
+}
+
+.carousel-container-two{
+  position: relative;
 }
 
 #Imgcorousel-btn-two {
-    width: 200px;
-    justify-content: space-around;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px;
-    position: absolute;
-    top: 340px;
-    left: 90px;
-  }
-  
-  .dots-two {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background-color: #ccc;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  .active-class-two {
-    background-color: #000;
-  }
-  
+  width: 200px;
+  justify-content: space-around;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  position: absolute;
+  /* bottom: 15px; */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dots-two {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.active-class-two {
+  background-color: #000;
+}

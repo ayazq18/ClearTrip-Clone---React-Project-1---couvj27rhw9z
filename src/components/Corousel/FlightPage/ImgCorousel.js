@@ -38,7 +38,7 @@ const Carousel = () => {
         <div>
           <FaLessThan
             onClick={() => handleCarouselButtonClick("prev")}
-            id="prevIcon"
+            id="prevIcon-one"
           />
         </div>
         <div className="Imgbtn-dots-one flexXY">
@@ -51,7 +51,7 @@ const Carousel = () => {
         <div>
           <FaGreaterThan
             onClick={() => handleCarouselButtonClick("next")}
-            id="nextIcon"
+            id="nextIcon-one"
           />
         </div>
       </div>

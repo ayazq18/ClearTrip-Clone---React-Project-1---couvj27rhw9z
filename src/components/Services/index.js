@@ -1,25 +1,35 @@
-import { Base_URL } from "../Constants";
-import { Project_ID } from "../Constants";
+import { Base_URL, Project_ID, appType } from "../Constants";
+import React, { createContext, useContext, useState } from 'react';
 
-export const fetchOffer = async ()=>{
-    try{
-    const res = await fetch(`${Base_URL}/offers`,{
-        method : "GET",
-          headers : {
-            projectID : Project_ID,
-            "Content-Type": "application/json",
-          }
-    })
-        const result = res.json()
-        return result;
-    }catch(error){
-        return error
+export const MyContext = createContext();
+
+    // --------------OfferApi------------------
+
+    export const fetchOffer = async ()=>{
+        try{
+        const res = await fetch(`${Base_URL}/offers`,{
+            method : "GET",
+              headers : {
+                projectID : Project_ID,
+                "Content-Type": "application/json",
+              }
+        })
+            const result = await res.json()
+            return result;
+        }catch(error){
+            return error
+        }
     }
-}
 
-export const fetchFlights = async ()=>{
+    // --------------OfferApi------------------
+
+
+    // --------------FlightsApi------------------
+
+
+  export const fetchFlights = async ()=>{
       try{
-        const response = await fetch (`${Base_URL}/flight?search={"source":"","destination":""}&day=Wed`, {
+        const response = await fetch (`${Base_URL}/airport?search={"city":${flight}}`, {
           method : "GET",
           headers : {
             projectID : Project_ID,
@@ -32,3 +42,9 @@ export const fetchFlights = async ()=>{
         return(error);
       }
     }
+
+    // --------------FlightsApi------------------
+
+
+
+    // ----------------------Login-------------------------
