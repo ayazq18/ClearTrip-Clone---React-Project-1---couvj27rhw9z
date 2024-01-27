@@ -62,13 +62,19 @@
   .hotelInputExpand{
     padding: 10px;
     position: absolute;
-    bottom: 0;
+    top: 270px;
     width: 600px;
     height: 400px;
+    overflow-y: scroll;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     border-radius: 6px;
     z-index: 11;
+    cursor: pointer;
+  }
+
+  .hotelInputExpand::-webkit-scrollbar{
+    display: none;
   }
 
   .hotelInputExpand p{
@@ -81,6 +87,20 @@
     gap: 30px;
     margin-bottom: 18px;
     /* border: 1px solid red; */
+  }
+
+  .hotelInputExpand-content{
+    padding: 10px 0 0 10px;
+    gap: 10px;
+  }
+
+  .hotelInputExpand-content:hover{
+    background-color: rgba(133, 133, 232, 0.085);
+    border-radius: 6px;
+  }
+
+  .hotelInputExpand-content h1{
+    font-size: 14px;
   }
 
   #hotelDate1 {

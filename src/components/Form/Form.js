@@ -10,6 +10,7 @@ import { CgMathMinus, CgMathPlus } from "react-icons/cg";
 import { MdKeyboardArrowDown, MdCompareArrows } from "react-icons/md";
 import { PiCheckBold } from "react-icons/pi";
 import { useAuthContext } from "../ContextAllData.js";
+import Signup from "../Signup/Signup.js";
 
 export default function Form() {
     const { all, setall } = useAuthContext()
@@ -33,7 +34,8 @@ export default function Form() {
     const [flightTo, setFlightTo] = useState([]);
     const [selectedFlightIn, setSelectedFlightIn] = useState(null);
     const [selectedFlightOut, setSelectedFlightOut] = useState(null);
-    const [filteredAirports, setFilteredAirports] = useState([]);
+    const [filteredAirportsFrom, setFilteredAirportsFrom] = useState([]);
+    const [filteredAirportsTo, setFilteredAirportsTo] = useState([]);
     const [whereDate, setWhereDate] = useState(`${new Date().toISOString().split("T")[0]}`);
     const [toDate, setToDate] = useState(`${new Date().toISOString().split("T")[0]}`);
     const [day, setDay] = useState()
@@ -48,13 +50,11 @@ export default function Form() {
     const [whereTo, setWhereTo] = useState(false);
     const [showSignup, setShowSignUp] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
-    const [token, setToken] = useState("");
-
+    const [token, setToken] = useState(all.token);
     const [ways, setWays] = useState("One way");
     const [rotateWay, setRotateWay] = useState({ transform: "rotate(0deg)" });
     const [classs, setClasss] = useState("Economy");
     const [fare, setFare] = useState("Regular fare");
-
 
     //   -----------functions-----------------
 
@@ -126,6 +126,8 @@ export default function Form() {
         setWhereTo(false);
         setWay(false);
         setSelectVisible(false);
+        // filteredAirportsSearchFrom(flightIn)
+
     };
 
     const showWhereTo = () => {
@@ -133,15 +135,25 @@ export default function Form() {
         setWhereTo(!whereTo);
         setWay(false);
         setSelectVisible(false);
+        // filteredAirportsSearchTo(flightOut)
     };
 
-    const filteredAirportsSearch = (input, isWhereFrom) => {
-        const filtered = flightWhere.filter((airport) => {
-            const airportName = isWhereFrom && airport.iata_code || airport.city || airport.name || airport.city
-            return airportName.toLowerCase().includes(input.toLowerCase())
-        })
-        setFilteredAirports(filtered)
-    }
+    // const filteredAirportsSearchFrom = (input)=>{
+    //     const filtered = flightWhere.filter((airport)=>{
+    //         const airportName = airport.iata_code && airport.name && airport.city
+    //         return airportName.toLowerCase().includes(input.toLowerCase())
+    //     })
+    //     setFilteredAirportsFrom(filtered)
+    // }
+
+    
+    // const filteredAirportsSearchTo = (input)=>{
+    //     const filtered = flightTo.filter((airport)=>{
+    //         const airportName = airport.iata_code && airport.name && airport.city
+    //         return airportName.toLowerCase().includes(input.toLowerCase())
+    //     })
+    //     setFilteredAirportsTo(filtered)
+    // }
 
     const onHandleSelectFlightIn = (selectedFlightIn) => {
         setSelectedFlightIn(selectedFlightIn)
@@ -183,24 +195,28 @@ export default function Form() {
 
     const navigate = useNavigate()
     const handleSearchFlight = (e) => {
-        e.preventDefault();
-        setall(prev => ({ ...prev, flightIn: flightIn, flightOut: flightOut, day: day, whereDate: whereDate, selectedFlightIn:selectedFlightIn, selectedFlightOut:selectedFlightOut }));
-        (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`);
+        e.preventDefault(); 
+        if(localStorage.getItem('token')){
+            setall(prev => ({ ...prev, flightIn: flightIn, flightOut: flightOut, flightWhere:{flightWhere}, flightTo:{flightTo}, day: day, whereDate: whereDate, selectedFlightIn:selectedFlightIn, selectedFlightOut:selectedFlightOut }));
+            (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`);
+        }else{
+           navigate('/')
+        }
     }
 
+  
+
     //   -----------functions-----------------
-
-
-
 
 
     const selectedDate = new Date(whereDate);
     const dayOfWeek = selectedDate.getDay();
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const days = daysOfWeek[dayOfWeek];
+
     useEffect(() => {
         setDay(days)
-
+        console.log(days)
 
         const fetchFlightsIn = async () => {
             try {
@@ -217,6 +233,7 @@ export default function Form() {
             } catch (error) {
                 return (error);
             }
+
         }
 
         const fetchFlightsOut = async () => {
@@ -231,19 +248,26 @@ export default function Form() {
                 const result = await response.json()
                 setFlightTo(result.data.airports)
                 // console.log (result);
+
             } catch (error) {
                 return (error);
             }
           }
-       
-        fetchFlightsIn();
-        fetchFlightsOut();
+       const fetchData = async ()=>{
+           await fetchFlightsIn();
+        //    filteredAirportsSearchFrom(flightIn)
 
+           await fetchFlightsOut();
+        //    filteredAirportsSearchTo(flightOut)
+
+       }
+       fetchData()
     }, []);
 
     return (
         // <div className="flexXY">
         <form className="search-card">
+            {showSignup && <Signup showSignup={showSignup} setShowSignUp={setShowLogin}/>}
             <div className="select flexBet">
                 <div className="selectWay" onClick={() => handleTrip()}>
                     <div className="selectTrip flexY">
@@ -339,7 +363,7 @@ export default function Form() {
                         type="text"
                         placeholder="Where from?"
                         value={flightIn}
-                        onChange={(e) => { setFlightIn(e.target.value); showWhereFrom(flightWhere); filteredAirportsSearch(e.target.value, true) }}
+                        onChange={(e) => { setFlightIn(e.target.value); showWhereFrom(flightWhere) }}
                         onClick={() => {
                             showWhereFrom();
                         }}
@@ -361,7 +385,7 @@ export default function Form() {
                         type="text"
                         placeholder="Where to?"
                         value={flightOut}
-                        onChange={(e) => { setFlightOut(e.target.value), showWhereTo(flightTo), filteredAirportsSearch(e.target.value, true) }}
+                        onChange={(e) => { setFlightOut(e.target.value), showWhereTo(flightTo)}}
                         onClick={() => {
                             showWhereTo();
                         }}

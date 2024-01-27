@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ImgCorousel from "../Corousel/FlightPage/ImgCorousel.js";
 import { FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import { fetchOffer } from "../Services/index.js";
-import Form from "../Form/Form.js";
+import { Base_URL, Project_ID, App_Type } from "../Constants.js";
 import './Hotel.css'
 import { BiUser } from "react-icons/bi";
 import { CgMathMinus, CgMathPlus } from "react-icons/cg";
@@ -17,13 +17,18 @@ export default function Hotel() {
   const [adultcount, setAdultCount] = useState(1);
   const [childrencount, setChildrenCount] = useState(0);
   const [infantcount, setinfantCount] = useState(0);
-  const [classs, setClasss] = useState("Economy");
   const [selectVisible, setSelectVisible] = useState(false);
   const [whereFrom, setWhereFrom] = useState(false);
-  const [flightWhere, setFlightWhere] = useState([]);
   const [roomSelect, setRoomSelect] = useState(false);
   const [inputSelect, setInputSelect] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [inputResult, setInputResult] = useState([]);
+  const [fromDate, setFromDate] = useState(`${new Date().toISOString().split("T")[0]}`)
+  const [toDate, setToDate] = useState(`${new Date().toISOString().split("T")[0]}`)
+  const [selection, setSelection] = useState('1Room, 1 Adult')
 
+  const navigate = useNavigate()
+  const {all, setall} = useAuthContext()
 
   const arr = [
     { category: "Adults", age: "(12+ Years)", count: 1 },
@@ -35,22 +40,13 @@ export default function Hotel() {
     { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_DOTW_Varanasi_F_0501.jpg", class: "Business class", fareType: "Student fare", },
     { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_CTTHAI_F_2012.jpg", class: "First class", fareType: "Senior citizen fare", },
     { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_Medicancel_F_1711.jpg", class: "Premium class", fareType: "Armed forces fare", },
-];
+  ];
 
   //   -----------functions-----------------
   const handleSelectCategory = () => {
     setSelectVisible(!selectVisible);
     setWhereFrom(false);
-    // setWhereTo(false);
-    // setWay(false);
-    // setRotateCateg(
-    //     selectVisible
-    //         ? { transform: "rotate(0deg)", transition: 'transform 0.3s ease-in-out', }
-    //         : { transform: "rotate(180deg)", transition: 'transform 0.3s ease-in-out', }
-    // );
   };
-
-  const {all} = useAuthContext()
 
     const handleIncrease = (category) => {
         switch (category) {
@@ -91,20 +87,62 @@ export default function Hotel() {
     const handleInputSelect = ()=>{
       setInputSelect(!inputSelect)
     }
+
+    const handleToInput = (selectedHotel)=>{
+      const match = selectedHotel.location.match(/([^,]+)/);
+        const wordBeforeComma = match[1];
+        setInputValue(wordBeforeComma);
+        setInputSelect(false)
+    }
+
+    const handleSelection = (selection)=>{
+      setSelection(selection)
+    }
+
   //   -----------functions-----------------
+  const fetchHotels = async (inputVal) => {
+    try {
+        const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputVal}"}`, {
+            method: "GET",
+            headers: {
+                Authorization:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow',
+                projectID: Project_ID,
+                "Content-Type": "application/json",
+            }
+        })
+        const result = await response.json()
+        setInputResult(result.data.hotels)
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+    useEffect(()=>{
+      fetchHotels("")
+    }, [])
 
   useEffect(() => {
-    // Offers
-    fetchOffer()
-      .then((result) => {
-        setOffers(result.data.offers);
-        // console.log(result)
-      })
-      .catch((error) => {
-        console.log("Error fetching offers:", error);
-      });
-    
-  }, [offers.length]);
+      // Offers
+      fetchOffer()
+        .then((result) => {
+          setOffers(result.data.offers);
+        })
+        .catch((error) => {
+          console.log("Error fetching offers:", error);
+        });
+
+    }, []);
+
+  const handleSearchFlight = ()=>{
+    if(localStorage.getItem('token')){
+      setall(prev => ({ ...prev, inputValue:inputValue }));
+      (inputValue !== '' && fromDate !== '' && toDate !== '') && navigate(`/hotels/results?location=${inputValue}&dateFrom=${fromDate}&dateTo=${toDate}`)
+  }else{
+      navigate('/hotel')
+  }
+  }
+  
+
   return (
     <div className="hotel-home">
       <div className="home-main">
@@ -117,6 +155,8 @@ export default function Hotel() {
                 id="inputHotel"
                 type="text"
                 placeholder="Enter locality, landmark, city or hotel"
+                value={inputValue}
+                onChange={(e)=>{setInputValue(e.target.value); fetchHotels(e.target.value)}}
                 onClick={()=>handleInputSelect()}
             />
             <div className="location-icon">{location}</div>
@@ -124,27 +164,33 @@ export default function Hotel() {
         {inputSelect &&
           <div className="hotelInputExpand">
             <p>Popular destinations</p>
+            {inputResult && inputResult.map((item, index)=>(
+              <div key={index} className="hotelInputExpand-content flex">
+                <h2>{location}</h2>
+                <h1 onClick={()=>handleToInput(item)}>{item.location}</h1>
+              </div>
+            ))}
           </div>
         }
         <div className="input-hotel-date flexXY">
             <div className="flexXY">
-                <input id="hotelDate1" type="date" min={new Date().toISOString().split('T')[0]}/>
-                <input id="hotelDate2" type="date" min={new Date().toISOString().split('T')[0]}/>
+                <input id="hotelDate1" value={fromDate} onChange={(e)=>setFromDate(e.target.value)} type="date" min={new Date().toISOString().split('T')[0]}/>
+                <input id="hotelDate2" value={toDate} onChange={(e)=>setToDate(e.target.value)} type="date" min={new Date().toISOString().split('T')[0]}/>
             </div>
             <div className="hotelSelectCateg flex" onClick={()=>handleRoomSelect()}>
                     <BiUser/>
                     <h4>
-                        {adultcount && (<> {adultcount} <span>Room, </span> </>)}
-                        {childrencount > 0 && (<>{childrencount} <span>Childrens, </span></>)}
+                        {selection || adultcount || `1 Room, ${adultcount} Adults `} &nbsp;
+                        {childrencount > 0 && (<>{childrencount} <span>Childrens</span></>)}
                     </h4>
-                    <h4>2 Adults</h4>
+                    <h4></h4>
                {roomSelect && <div className="hotelSelect-expand1 flexX">
                     <h5>Quick select</h5>
-                    <li>1 Room, 1 Adult</li>
-                    <li>1 Room, 2 Adult</li>
-                    <li>2 Room, 4 Adult</li>
-                    <p onClick={() => handleSelectCategory()}>Add more rooms and travellers</p>
-                </div>}
+                    <li onClick={()=>handleSelection(`1 Room, 1 Adult`)}>1 Room, 1 Adult</li>
+                    <li onClick={()=>handleSelection('1 Room, 2 Adult')}>1 Room, 2 Adult</li>
+                    <li onClick={()=>handleSelection('2 Room, 4 Adult')}>2 Room, 4 Adult</li>
+                    <p onClick={() =>handleSelectCategory()}>Add more rooms and travellers</p>
+            </div>}
             {selectVisible && (
                 <div className="hotelSelectCateg-Expand">
                     <div className="hotelSelectCateg-Expand-header flexBet">
@@ -187,7 +233,7 @@ export default function Hotel() {
             </div>
         </div>
             <div className="hotelSearchDiv">
-                <button id="hotelSearchBtn">
+                <button id="hotelSearchBtn" onClick={()=>handleSearchFlight()}>
                     Search flights
                 </button>
             </div>

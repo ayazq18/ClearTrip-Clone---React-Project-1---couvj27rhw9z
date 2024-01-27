@@ -1,20 +1,5 @@
 
 
-.loginBtn-one {
-    padding: 12px 20px;
-    background-color: #3a63c3;
-    color: #fff;
-    font-size: 14px;
-    text-align: center;
-    font-weight: 600;
-    gap: 10px;
-    /* border: none; */
-    border: 1px solid red;
-    /* border-radius: 6px; */
-    cursor: pointer;
-    position: relative;
-  }
-
 /* -------------Expanded-login------------- */
 .Expand-to-logout-one{
     flex-direction: column;

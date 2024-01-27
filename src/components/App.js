@@ -5,11 +5,9 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom'
 import Hotel from "./Hotels/Hotel.js";
 import Bus from "./Bus/Bus.js";
 import FlightTicket from "./Home/FlightTicket.js";
-import Login from "./Login/Login.js";
-import Form from "./Form/Form.js";
-import Signup from "./Signup/Signup.js";
 import ContextAllDataProvider from './ContextAllData.js';
-// import { MyContextProvider } from "./Services/index.js";
+import Booking from "./Booking/Booking.js";
+import HotelResults from "./Hotels/HotelResults.js";
 
 
 function App() {
@@ -18,20 +16,19 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<NavBar/>}>
-      <Route index element={<Flight/>}/>
-      <Route path="/flights" element={<Flight/>}/>
-      <Route  path="/hotel" element={<Hotel/>}/>
-      <Route  path="/bus" element={<Bus/>}/>
+        <Route index element={<Flight/>}/>
+        <Route path="/flights" element={<Flight/>}/>
+        <Route  path="/hotel" element={<Hotel/>}/>
+        <Route  path="/bus" element={<Bus/>}/>
       </Route>
       <Route  path="/offers" element={<Bus/>}/>
       <Route path="/flights/:results" element={<FlightTicket/>}/>
+      <Route path="/flights/:results/itenary" element={<Booking/>}/>
+      <Route path="/hotels/:results" element={<HotelResults/>}/>
+    
     </Routes>
     </BrowserRouter>
     </ContextAllDataProvider>
-    {/* <FlightTicket/>
-     {/* <Login/> */}
-    {/* <Form/> */}
-    {/* <Signup/> */}
   </div>;
 }
 

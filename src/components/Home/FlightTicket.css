@@ -68,10 +68,7 @@
 
 .ticket {
   width: 100%;
-  /* background-color: yellow; */
-  /* border: 1px solid #908a8a7a; */
   flex-direction: column;
-  position: relative;
 }
 
 .ticketHeader-container{
@@ -82,13 +79,18 @@
 #ticketHeader {
   width: 1100px;
   margin: 0 auto;
-  position: relative;
 }
 
 #ticketSupport {
   margin: 0 auto;
   align-items: center;
-  position: relative;
+}
+
+.login-popup{
+  position: absolute;
+  top: 0px;
+  right: 1250px;
+  z-index: 222222;
 }
 
 .headerLogo-Icons {
@@ -99,8 +101,6 @@
   position: relative;
   gap: 10px;
 }
-
-
 
 /* ---------expand-INR------- */
 .expand-INR{
@@ -143,6 +143,7 @@
   border-top: 1px solid #80808074;
   padding: 10px 0;
 }
+
 /* ---------expand-INR------- */
 
 .support-Btn button{
@@ -315,6 +316,8 @@
       width: 870px;
       /* height: 100%; */
       /* border: 1px solid green; */
+      position: relative;
+
     }
     
     .ticket-content-header{
@@ -487,6 +490,7 @@
       border-radius: 6px;
       background-color: #ff4f17;
       padding: 10px 30px;
+      cursor: pointer;
     }
 
     /* ----------------content-card-flight-details--------------- */
@@ -578,8 +582,8 @@
   border: 1px solid #9c979745;
   border-radius: 6px;
   position: absolute;
-  top: 93px;
-  right: 20px;
+  top: 130px;
+  right: 210px;
   cursor: pointer;
   z-index: 11;
   height: fit-content;
@@ -749,26 +753,25 @@
   text-wrap: nowrap;
 }
 
-
-.navheader-two .loginBtn-two {
-  padding: 7px 20px;
-  background-color: #fff;
-  color: #1a1a1a;
-  font-size: 12px;
+.loginBtn-one {
+  padding: 12px 20px;
+  background-color: #3a63c3;
+  color: #fff;
+  font-size: 14px;
   text-align: center;
-  /* font-weight: 600; */
+  font-weight: 600;
   gap: 10px;
-  border: none;
-  border-radius: 4px;
+  border: 1px solid red;
   cursor: pointer;
   position: relative;
 }
 
-.navheader-two .loginBtn-two:hover {
+.loginBtn-one:hover {
   background-color: #f3f0f0;
 }
-
-
+.loginBtn-one:hover svg {
+  color: #3a63c3;
+}
 /* --------------------loader------------- */
 .loader {
   width: 48px;

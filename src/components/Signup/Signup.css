@@ -8,26 +8,27 @@
 
   .login-page{
     width: 800px;
-    height: 60%;
+    height: 410px;
     border-radius: 6px;
     position: absolute;
-    top: 20%;
-    left: 25%;
+    top: 200px;
+    left: 320px;
     background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     border: 1px solid #74717150;
-    z-index: 111;
+    z-index: 11111;
   }
 
   .corousel{
-    width: 50%;
-    height: 100%;
+    width: 450px;
+    height: 410px;
     background-color: rgb(255, 238, 232);
     /* border: 1px solid red; */
   }
 
   .login-section{
-    width: 50%;
-    height: 100%;
+    width: 450px;
+    height: 410px;
     padding: 10px;
     /* border: 1px solid red; */
   }
@@ -56,7 +57,7 @@
     gap: 30px;
   }
 
-  .login-form-btn h1{
+  .login-page .login-form-btn h1{
     font-size: 12px;
     cursor: pointer;
   }

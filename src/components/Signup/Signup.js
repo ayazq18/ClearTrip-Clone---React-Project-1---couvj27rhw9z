@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { Base_URL, Project_ID, App_Type } from "../Constants";
+import { Base_URL, Project_ID, App_Type } from "../Constants.js";
 import { RxCross1 } from "react-icons/rx";
 
 import "./Signup.css";
 import LoginCorousel from "../Corousel/LoginPage/LoginCorousel.js";
-export default function Signup({showSignup, setShowSignUp}) {
+export default function Signup({token, setToken, showSignup, setShowSignUp}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(true)
 
   const closeLoginCard = () => {
-    setShowSignUp(false);
+    setShowSignUp(!showSignup);
   };
 
   const handleSubmit = async (e) => {
@@ -60,11 +60,12 @@ export default function Signup({showSignup, setShowSignUp}) {
       },
       body:JSON.stringify({...loginInfo})
     });
-    const result = response.json()
+    const result =await response.json()
     console.log(result);
     if(result.status === 'success'){
-      localStorage.getItem('token', JSON.stringify(result.token));
+      localStorage.setItem('token', JSON.stringify(result.token));
       setShowSignUp(false)
+      setToken(localStorage.getItem('token'))
     }else{
       alert('error')
     }
@@ -153,6 +154,7 @@ export default function Signup({showSignup, setShowSignUp}) {
               <a href="#">privacy policy</a> & <a href="#">terms of use.</a>
             </p>
           </div>
+          <div className="transparent"></div>
         </div>
     </>
   );

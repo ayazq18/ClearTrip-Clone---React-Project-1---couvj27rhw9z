@@ -34,7 +34,8 @@ export default function FlightTicket() {
     const [flightTo, setFlightTo] = useState([]);
     const [selectedFlightIn, setSelectedFlightIn] = useState(all.selectedFlightIn);
     const [selectedFlightOut, setSelectedFlightOut] = useState(all.selectedFlightOut);
-    const [filteredAirports, setFilteredAirports] = useState([]);
+    const [filteredAirportsFrom, setFilteredAirportsFrom] = useState([]);
+    const [filteredAirportsTo, setFilteredAirportsTo] = useState([]);
     const [whereDate, setWhereDate] = useState(all.whereDate);
     const [toDate, setToDate] = useState(`${new Date().toISOString().split("T")[0]}`);
     const [day, setDay] = useState(all.day)
@@ -49,8 +50,7 @@ export default function FlightTicket() {
     const [whereTo, setWhereTo] = useState(false);
     const [showSignup, setShowSignUp] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
-    const [token, setToken] = useState(all.token);
-
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const [inr, setInr] = useState(false);
     const [stop, setStop] = useState(false);
     const [rotateStop, setRotateStop] = useState({ transform: "rotate(0deg)" });
@@ -63,23 +63,23 @@ export default function FlightTicket() {
     const [toggle, setToggle] = useState(false)
     const [range, setRange] = useState(4587)
     const [isVisible, setIsVisible] = useState(false)
-    const [sortCriteria, setSortCriteria] = useState("departure");
-    const [sortOrder, setSortOrder] = useState(1);
-    const [sortParticular, setSortParticular] = useState("stop");
-    const [sortdown, setSortDown] = useState(1);
     const [pages, setPages] = useState(1)
     const [flightDetails, setFlightDetails] = useState(false)
     const  [selectedCardIndex, setSelectedCardIndex] = useState(null);
-    
+    const [pop, setPop] = useState({})
   
     const navigate = useNavigate()
     const MyRef = useRef(null);
 
+        const poptab = (key)=>{
+            setPop({})
+            setPop((prev)=>({...prev, [key] : !pop[key]}))
+        }
     const handleIncrease = (category) => {
         switch (category) {
-            case "Adult": setAdultCount(adultcount + 1);cbreak;
+            case "Adult": setAdultCount(adultcount + 1);break;
             case "Children": setChildrenCount(childrencount + 1); break;
-            case "Infant":csetinfantCount(infantcount + 1); break;
+            case "Infant": setinfantCount(infantcount + 1); break;
             default: break;
         }
     };
@@ -110,35 +110,23 @@ export default function FlightTicket() {
     };
 
     const handleSelectCategory = () => {
-        setSelectVisible(!selectVisible);
-        setWhereFrom(false);
-        setWhereTo(false);
-        setWay(false);
-        setInr(false)
         setRotateCateg(selectVisible ? { transform: "rotate(0deg)", transition: "transform 0.3s ease-in-out" } : { transform: "rotate(180deg)", transition: "transform 0.3s ease-in-out" });
     };
 
-    const showWhereFrom = () => {
-        setWhereFrom(!whereFrom);
-        setWhereTo(false);
-        setWay(false);
-        setSelectVisible(false);
-    };
+    // const showWhereFrom = () => {
+    //     setWhereFrom(!whereFrom);
+    //     setWhereTo(false);
+    //     setWay(false);
+    //     setSelectVisible(false);
+    // };
 
-    const showWhereTo = () => {
-        setWhereFrom(false);
-        setWhereTo(!whereTo);
-        setWay(false);
-        setSelectVisible(false);
-    };
+    // const showWhereTo = () => {
+    //     setWhereFrom(false);
+    //     setWhereTo(!whereTo);
+    //     setWay(false);
+    //     setSelectVisible(false);
+    // };
 
-    const filteredAirportsSearch = (input, isWhereFrom) => {
-        const filtered = flightWhere.filter((airport) => {
-            const airportName = (isWhereFrom && airport.iata_code) || airport.city || airport.name || airport.city;
-            return airportName.toLowerCase().includes(input.toLowerCase());
-        });
-        setFilteredAirports(filtered);
-    };
 
     const onHandleSelectFlightIn = (selectedFlightIn) => {
         setSelectedFlightIn(selectedFlightIn);
@@ -166,30 +154,23 @@ export default function FlightTicket() {
 
     };
 
-    const handleInr = ()=>{
-        setInr(!inr)
-    }
+
 
     const handleStop = () => {
-        setInr(false);
-        setStop(!stop);
         setRotateStop(stop ? { transform: "rotate(0deg)", transition: "transform 0.3s ease-in-out" } : { transform: "rotate(180deg)", transition: "transform 0.3s ease-in-out" });
     };
 
     const handleDepart = () => {
-        setInr(false);
-        setDepart(!depart);
         setRotateDepart(depart ? { transform: "rotate(0deg)", transition: "transform 0.3s ease-in-out" } : { transform: "rotate(180deg)", transition: "transform 0.3s ease-in-out" });
     };
 
     const handleOneWayPrice = () => {
-        setOneWayPrice(!oneWayPrice);
         setRotateOneWayPrice(oneWayPrice ? { transform: "rotate(0deg)", transition: "transform 0.3s ease-in-out" } : { transform: "rotate(180deg)", transition: "transform 0.3s ease-in-out" });
     };
     const handleAirlines = () => {
-        setAirlines(!airlines);
         setRotateAirlines(airlines ? { transform: "rotate(0deg)", transition: "transform 0.3s ease-in-out" } : { transform: "rotate(180deg)", transition: "transform 0.3s ease-in-out" });
     };
+
 
 
     // -----------------flightResults----------------------
@@ -217,16 +198,14 @@ export default function FlightTicket() {
     // -----------------flightResults----------------------
 
     // -----------------Single Flight Data----------------------
-    const fetchSingleFlight = useMemo(async () => {
-        try {
-            const response = await fetch(`${Base_URL}/flight?{"flightId":${flightResultdata.flightID}&day=${day}}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
-            const result = await response.json();
-            console.log(result)
-            // setFlightWhere(result.data.airports);
-        } catch (error) {
-            return error;
-        }
-    }, []);
+    // const fetchSingleFlight = useMemo(async () => {
+    //     try {
+    //         const response = await fetch(`${Base_URL}/flight?{"flightId":${flightResultdata.flightID}&day=${day}}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
+    //         const result = await response.json();
+    //     } catch (error) {
+    //         return error;
+    //     }
+    // }, []);
     // console.log(flightResultdata)
 
     // -----------------Single Flight Data----------------------
@@ -256,39 +235,6 @@ export default function FlightTicket() {
 
     // --------------------Flight_Search----------------------
 
-
-    // ---------------------------Sorting-----------------------------
-
-      const handleSortFlights = useCallback(async (parameter, order) => {
-        try {
-          const response = await fetch(
-            `${Base_URL}/flight?search={"source":"${flightFrom[0],flightFrom[1],flightFrom[2]}","destination":"${flightToo[0],flightToo[1],flightToo[2]}"}&day=${dayy}&sort={"${parameter}":${order}}`,
-            {
-              method: "GET",
-              headers: {
-                projectID: Project_ID,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          const result = await response.json();
-          setflightResultdata(result.data.flights);
-          console.log()
-        } catch (error) {
-          console.log(error);
-        }
-      }, []);
-
-      const handleSort = (parameter) => {
-        setSortCriteria(parameter);
-        setSortOrder((prevOrder)=>(parameter === sortCriteria ? -prevOrder : 1));
-        handleSortFlights(parameter, sortOrder);
-      };
-
-    // ---------------------------Sorting-----------------------------
-
-
-
     const selectedDate = new Date(whereDate);
     const dayOfWeek = selectedDate.getDay();
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -296,19 +242,25 @@ export default function FlightTicket() {
 
     useEffect(() => {
         setDay(days)
-      
-        fetchFlightsIn;
-        fetchFlightsOut;
+   
         fetchFlights();
-        fetchSingleFlight;
-        // console.log(flightResultdata)
-        setIsVisible(false)
+        // fetchSingleFlight;
+        
+        const fetchData = async ()=>{
+            fetchFlightsIn;
+ 
+            fetchFlightsOut;
+ 
+            setIsVisible(!isVisible)
+        }
+        fetchData()
 
     }, [whereDate, fetchFlights]);
 
     const handleSearchResults = (e) => {
         e.preventDefault();
         setflightResultdata([]);
+        setIsVisible(!isVisible);
         fetchFlights();
         (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`)
     }
@@ -333,10 +285,17 @@ export default function FlightTicket() {
     }
   };
 
+  const handleToBooking = ()=>{
+    if(token){
+        navigate(`/flights/results/itenary`)
+    }else{
+        navigate('/flights/results?source=LKO%20-%20Lucknow,%20India&destination=GOI%20-%20Goa,%20India&date=2024-01-23&dayOfWeek=Tue')
+    }
+  }
+
     return (
-        <div className="ticket ">
-            {/* {!showSignup && <Signup showSignup={showSignup} setShowSignUp={setShowSignUp} token={token} setToken={setToken}/>}
-            {showLogin && <Login showLogin={showLogin} setShowLogin={setShowLogin} token={token} setToken={setToken}/>} */}
+        <div className="ticket">
+            {showLogin && <Login showLogin={showLogin} setShowLogin={setShowLogin} token={token} setToken={setToken} pop={pop} poptab={poptab}/>}
             <div className="ticketHeader-container">
                 <div id="ticketHeader">
                     <div id="ticketSupport" className="flexBet">
@@ -346,8 +305,8 @@ export default function FlightTicket() {
                             <h1 onClick={() => navigate("/hotel")}>{hotelIcon}</h1>
                         </div>
                         <div className="support-Btn flex">
-                            <button className="ticketHeader-btn" onClick={() => handleInr()}>INR ₹</button>
-                            {inr && (
+                            <button className="ticketHeader-btn" onClick={() => poptab('inr')}>INR ₹</button>
+                            {pop['inr'] && (
                                 <div onClick={() => handleInr()} className="expand-INR flex">
                                     <h5>Popular currencies</h5>
                                     <div className="expand-INR-sec1 flexXY">
@@ -357,10 +316,13 @@ export default function FlightTicket() {
                                     <h5 className="expand-INR-currencies">Other currencies</h5>
                                 </div>
                             )}
-                            <button className="ticketHeader-btn flexXY">{support} Support</button>
-                            <button ref={MyRef} className="loginBtn-one flexXY" onClick={() => handleSignin()}>
-                                {token !== '' ? 'My account' : 'login/signup'}
+                            <button className="ticketHeader-btn flexXY" onClick={()=>navigate('/')}>{support} Support</button>
+                            <div className="Login-button">
+                            <button ref={MyRef} className="loginBtn-one flexXY" onClick={() => {handleSignin(), poptab('signin')}}>
+                                {token? <><svg viewBox="0 0 14 14" height="16px" width="16px" class="c-inherit"><g fill="none" fill-rule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.5"></circle><path fill="currentColor" d="M3,5 C4.38071187,5 5.5,3.88071187 5.5,2.5 C5.5,1.11928813 4.38071187,0 3,0 C1.61928813,0 0.5,1.11928813 0.5,2.5 C0.5,3.88071187 1.61928813,5 3,5 Z" transform="matrix(-1 0 0 1 10 3)"></path><path fill="currentColor" d="M7,9 C9.14219539,9 10.8910789,10.6839685 10.9951047,12.8003597 L11,13 L3,13 C3,10.790861 4.790861,9 7,9 Z"></path><circle cx="7" cy="7" r="7.75" stroke="#FFF" stroke-width="1.5"></circle></g></svg> My account</> : 'login / signup'}
                             </button>
+                            {showSignup && pop['signin'] && <div className="login-popup"><Signup showSignup={showSignup} setShowSignUp={setShowSignUp} token={token} setToken={setToken}/></div>}
+                            </div>
                         </div>
                     </div>
                     {inr && <div></div>}
@@ -373,17 +335,17 @@ export default function FlightTicket() {
                                         type="text"
                                         placeholder="Where from?"
                                         value={flightIn}
-                                        onChange={(e) => { setFlightIn(e.target.value); showWhereFrom(flightWhere); filteredAirportsSearch(e.target.value, true); }}
-                                        onClick={() => { showWhereFrom(); }}
+                                        onChange={(e) => { setFlightIn(e.target.value);}}
+                                        onClick={() => { poptab('wayfrom')}}
                                     />
                                     <CgArrowsExchange className="exchangeIcon-one" onClick={() => swapInputs()} />
-                                    {whereFrom && (
+                                    {pop['wayfrom'] && (
                                         <div className="expand-whereFrom-one">
                                             {flightWhere.map((whereFromFlight, index) => (
                                                 <div
                                                     key={whereFromFlight._id}
                                                     className="wherefrom-container-one flexXY"
-                                                    onClick={() => onHandleSelectFlightIn(whereFromFlight)}
+                                                    onClick={() =>{ onHandleSelectFlightIn(whereFromFlight); poptab('wayfrom')}}
                                                 >
                                                     <div className="short-one">{whereFromFlight.iata_code}</div>
                                                     <div className="full-one">{whereFromFlight.city}, {whereFromFlight.name}</div>
@@ -396,19 +358,19 @@ export default function FlightTicket() {
                                         type="text"
                                         placeholder="Where to?"
                                         value={flightOut}
-                                        onChange={(e) => { setFlightOut(e.target.value), showWhereTo(flightTo), filteredAirportsSearch(e.target.value, true); }}
-                                        onClick={() => { showWhereTo(); }}
+                                        onChange={(e) => { setFlightOut(e.target.value)}}
+                                        onClick={() => { poptab('wayto')}}
                                     />
                                     {whereFrom === whereTo || whereFrom !== "" || whereTo !== "" && (
                                         <h5 className="error" style={{ color: "red" }}>Enter arrival airport / city</h5>
                                     )}
-                                    {whereTo && (
+                                    {pop['wayto'] && (
                                         <div className="expand-whereTo-one">
                                             {flightTo.map((whereToFlight, index) => (
                                                 <div
                                                     key={whereToFlight._id}
                                                     className="whereTo-container-one flexY"
-                                                    onClick={() => onHandleSelectFlightOut(whereToFlight)}
+                                                    onClick={() => {onHandleSelectFlightOut(whereToFlight); poptab('wayto')}}
                                                 >
                                                     <div className="short-one">
                                                         {whereToFlight.iata_code}
@@ -428,6 +390,7 @@ export default function FlightTicket() {
                                                 min={new Date().toISOString().split("T")[0]}
                                                 value={whereDate}
                                                 onChange={(e) => setWhereDate(e.target.value)}
+                                                onClick={()=>poptab('date1')}
                                             />
                                             <input
                                                 className="input-date2"
@@ -435,6 +398,7 @@ export default function FlightTicket() {
                                                 min={new Date().toISOString().split("T")[0]}
                                                 value={isDisabled ? "Return" : whereTo}
                                                 onChange={(e) => setToDate(e.target.value)}
+                                                onClick={()=>poptab('date2')}
                                                 disabled={isDisabled}
                                             />
                                         </div>
@@ -444,7 +408,7 @@ export default function FlightTicket() {
                                 <div className="selectTicket flex">
                                     <div
                                         className="selectCateg flexXY"
-                                        onClick={() => handleSelectCategory()}
+                                        onClick={() =>{ handleSelectCategory(),poptab('selecttraveller')}}
                                     >
                                         <h4>
                                             {adultcount && (
@@ -468,7 +432,7 @@ export default function FlightTicket() {
                                         <MdKeyboardArrowDown style={rotateCateg} className="" />
                                     </div>
 
-                                    {selectVisible && (
+                                    {pop['selecttraveller'] && (
                                         <div className="selectCateg-Expand-one">
                                             {arr.map((items, index) => (
                                                 <div className="selectCateg-Expand-container-one flexBet">
@@ -506,7 +470,7 @@ export default function FlightTicket() {
                                 </div>
 
                                 <div className="searchBtn">
-                                    <button id="flightSearchBtn">Search</button>
+                                    <button id="flightSearchBtn"  onClick={() =>{poptab('searchFlites')}}>Search</button>
                                 </div>
                             </div>
                         </form>
@@ -517,11 +481,11 @@ export default function FlightTicket() {
                 <div id="main" className="flex">
                     <div id="aside">
                         <div id="stops">
-                            <div onClick={() => handleStop()} className="flexBet">
+                            <div onClick={() => {handleStop(), poptab('stop')}} className="flexBet">
                                 <h1>Stops</h1>
                                 <MdKeyboardArrowUp style={rotateStop} className="fs" />
                             </div>
-                            {!stop && (
+                            {!pop['stop'] && (
                                 <div className="stop-container">
                                     <input
                                         className="styled-checkbox"
@@ -547,17 +511,16 @@ export default function FlightTicket() {
                             )}
                         </div>
                         <div id="departure">
-                            <div onClick={() => handleDepart()} className="flexBet">
+                            <div onClick={() =>{ handleDepart(), poptab('depart')}} className="flexBet">
                                 <h1>Departure</h1>
                                 <MdKeyboardArrowUp style={rotateDepart} className="fs" />
                             </div>
-                            {!depart && (
+                            {!pop['depart'] && (
                                 <>
                                     <input
                                         type="checkbox"
                                         className="styled-checkbox"
                                         id="early-morning"
-                                        onClick={()=>handleSort('departure')}
                                     />{" "}
                                     <label for="early-morning">Early morning</label>
                                     <br />
@@ -593,11 +556,11 @@ export default function FlightTicket() {
                             )}
                         </div>
                         <div id="one-way-price" className="flex">
-                            <div onClick={() => handleOneWayPrice()} className="flexBet">
+                            <div onClick={() => {handleOneWayPrice(), poptab('oneway')}} className="flexBet">
                                 <h1>One-way price</h1>
                                 <MdKeyboardArrowUp style={rotateOneWayPrice} className="fs" />
                             </div>
-                            {!oneWayPrice && (
+                            {!pop['oneway'] && (
                                 <div className="one-way-price-sec1">
                                     <h6>Up to {range}</h6>
                                     <input type="range" value={range} min={4587} max={62689} onChange={(e) => setRange(e.target.value)} />
@@ -609,11 +572,11 @@ export default function FlightTicket() {
                             )}
                         </div>
                         <div id="airlines">
-                            <div onClick={() => handleAirlines()} className="flexBet">
+                            <div onClick={() => {handleAirlines(), poptab('airline')}} className="flexBet">
                                 <h1>Airlines</h1>
                                 <MdKeyboardArrowUp style={rotateAirlines} className="fs" />
                             </div>
-                            {!airlines && (
+                            {!pop['airline'] && (
                                 <>
                                     <div className="check ">
                                         <input
@@ -670,15 +633,14 @@ export default function FlightTicket() {
                         <div className="ticket-content-header flexBet">
                             <div className="ticket-content-header-sec1 flexBet">
                                 <h6>Airlines</h6>
-                                {/* <IoIosArrowRoundUp className={`${toggle ? 'upDown' : ''}`} style={{ fontSize: "12px" }} /> */}
                                 <div className="ticket-content-header-links flexBet">
-                                    <h6 onClick={()=>handleSort('departure')}>Departure</h6>
-                                    <h6 onClick={()=>handleSort('duration')}>Duration</h6>
-                                    <h6 onClick={()=>handleSort('arrival')}>Arrival</h6>
+                                    <h6 >Departure</h6>
+                                    <h6 >Duration</h6>
+                                    <h6 >Arrival</h6>
                                 </div>
                             </div>
                             <div className="ticket-content-header-sec2 flexBet">
-                                <div className="price flex"><h6 onClick={()=>handleSort('ticketPrice')}>Price </h6></div>
+                                <div className="price flex"><h6 >Price </h6></div>
                                 <div className="ticket-content-header-sec3 flexBet">
                                     <h6 class>Smart sort</h6>{sortIcon}
                                     <div className="toggle-button flexY">
@@ -722,7 +684,7 @@ export default function FlightTicket() {
                                         </div>
                                         <div className="content-card-price-book-container flexBet">
                                             <h3>₹{result.ticketPrice}</h3>
-                                            <h2 className="content-card-book-btn">Book</h2>
+                                            <h2 onClick={()=>handleToBooking()} className="content-card-book-btn">Book</h2>
                                         </div>
                                         {
                                         flightDetails && selectedCardIndex === index &&

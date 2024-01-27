@@ -16,6 +16,7 @@
   .fs{
     font-size: 5px;
   }
+
   /* ----------Custom styles--------- */
 
   
@@ -24,7 +25,7 @@
     margin: 10px 0px;
     display: flex;
     justify-content: space-between;
-    gap: 25px;
+    gap: 5px;
     /* border: 2px solid red; */
   }
   
@@ -40,12 +41,12 @@
   }
   
   .search-card {
-    width: fit-content;
+    width: 700px;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     margin: 20px 0;
     border-radius: 10px;
-    padding: 30px;
+    padding: 20px;
   }
 
   /* -----Select---- */
@@ -419,7 +420,6 @@
   
     .search-card .btns-div {
       display: flex;
-      /* justify-content: center; */
       flex-wrap: wrap;
     }
     .search-card .btns-div button {
@@ -445,8 +445,6 @@
       flex-wrap: wrap;
     }
 
-   
-  
     #input1,
     #input2, #date1,
     #date2  {
@@ -455,6 +453,7 @@
       border-radius: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.29);
       padding: 15px 30px;
+      text-align: center;
     }
   
     .input-text {
