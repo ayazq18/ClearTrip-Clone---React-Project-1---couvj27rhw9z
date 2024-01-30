@@ -6,8 +6,9 @@
 .slide{
     border-radius: 0.5rem;
     box-shadow: 0px 0px 7px #6666665d;
-    width: 280px;
+    width: 276px;
     height: 100%;
+    margin-bottom: 20px;
 }
 .slide-hidden{
     display: none;
@@ -63,13 +64,14 @@ scale: 0.7;
 
 .HotelsResultCardsCarousalMainDiv .leftarrow{
     position: absolute;
-    top: -80px;
+    top: -100px;
     background-color: white;
     border-radius: 50%;
     padding: 6px 7px 6px 5px;
     left: 0px;
     opacity: 0;
     transition: all 0.15s ease-in; 
+    z-index: 99;
 }
 .HotelsResultCardsCarousalMainDiv .leftarrow:hover{
     opacity: 1;
@@ -79,10 +81,11 @@ scale: 0.7;
     border-radius: 50%;
     background-color: white;
     position: absolute;
-    top: -80px;
+    top: -100px;
     right: 0px;
     opacity: 0;
     transition: all 0.15s ease-in; 
+    z-index: 99;
 }
 .HotelsResultCardsCarousalMainDiv .rightarrow:hover{
     opacity: 1;

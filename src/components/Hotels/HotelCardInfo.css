@@ -1,0 +1,306 @@
+.g2{
+    gap: 2px;
+}
+.g10{
+    gap: 10px;
+}
+*{
+    scroll-behavior: smooth;
+}
+/* -----------------------Tab-container-------------------- */
+.hotelCardInfo{
+    width: 100vw;
+    flex-direction: row;
+}
+.hotelCardInfo-container-tab{
+    width: 1100px;
+    text-decoration: none;
+}
+.hotelCardInfo-container-tab a{
+    text-decoration: none;
+}
+.hotelCardInfo-container-tab-section{
+    width: 400px;
+    height: 60px;
+    align-items: flex-end;
+}
+.hotelCardInfo-container-tab-section a{
+    padding: 10px 10px 10px 0;
+    color: #808080;
+    cursor: pointer;
+}
+
+.activeTab{
+    border-radius: 3px;
+    color: #000;
+    border-bottom: 1px solid #000;
+}
+
+.hotelCardInfo-container-main{
+    width: 80%;
+    height: 100vh;
+    margin-top: 150px;
+}
+.hotelCardInfo-container-leftMain{
+    width: 50%;
+    height: 100vh;
+    padding: 15px 0;
+    flex-wrap: wrap;
+}
+.hotelCardInfo-container-leftMain-contain1{
+    width: 100%;
+    padding-bottom: 55px;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 1px solid #80808060;
+}
+.hotelCardInfo-container-leftMain-contain1 h1{
+    font-size: 30px;
+    color: #1a1a1a;
+}
+.hotelCardInfo-container-leftMain-contain1 h2{
+    font-size: 14px;
+    color: #808080;
+}
+.hotelCardInfo-container-leftMain-contain1-rating h2{
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+}
+.hotelCardInfo-container-leftMain-contain1-rating p{
+    font-size: 16px;
+    color: #1a1a1a;
+}
+
+.hotelCardInfo-container-rightMain{
+    width: 50%;
+    height: 100vh;
+    padding: 15px;
+}
+.hotelCardInfo-container-leftMain-contain1-meal{
+    gap: 10px;
+    margin-top: 15px;
+}
+.hotelCardInfo-container-leftMain-contain1-meal #meal-plans{
+    font-size: 14px;
+    color: #1a1a1a;
+}
+.hotelCardInfo-container-leftMain-contain1-meal #meal-offer{
+    font-size: 12px;
+    color: #808080;
+}
+.hotelCardInfo-container-leftMain-contain2{
+    padding: 15px 0;
+}
+.hotelCardInfo-container-leftMain-contain2 h1{
+    font-size: 23px;
+}
+.hotelCardInfo-container-leftMain-contain2{
+    padding-top: 45px;
+}
+.hotelCardInfo-container-leftMain-contain2-amenities-sec1{
+    width: 50%;
+    padding: 15px 0;
+    flex-direction: column;
+    gap: 25px;
+}
+.hotelCardInfo-container-leftMain-contain2-amenities-sec2{
+    width: 50%;
+    height: 300px;
+    padding: 15px 0;
+}
+.hotelCardInfo-container-leftMain-contain2-amenities-sec1 h5{
+    font-size: 14px;
+    color: #808080;
+    cursor: auto;
+}
+.hotelCardInfo-container-leftMain-contain2-amenities-sec2{
+    width: 50%;
+    padding: 15px 0;
+    flex-direction: column;
+    gap: 25px;
+}
+.hotelCardInfo-container-leftMain-contain2-amenities-sec2 h5{
+    font-size: 14px;
+    color: #808080;
+    cursor: auto;
+}
+.hotelCardInfo-container-rightMain{
+    position: relative;
+}
+
+.hotelPricingSec-container .con2, .con3,.con4{
+    font-size: 12px;
+    color: #808080;
+}
+.hotelPricingSec button{
+    padding: 10px 25px;
+    background-color: orangered;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+}
+.hotelInfoCarausal .slide{
+    top: 0;
+    width: 550px;
+    height: 350px;
+}
+.hotelInfoCarausal{
+    height: 400px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+}
+.hotelCardInfo-container-rightMain-payment{
+    width: 550px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
+    position: relative;
+    border-radius: 6px;
+    padding: 10px;
+    top: 370px;
+    right: 15px;
+}
+.hotelCardInfo-container-rightMain .contain1{
+    font-size: 20px;
+    text-wrap: nowrap;
+}
+.hotelCardInfo-container-rightMain .contain3{
+    font-size: 12px;
+    color: #808080;
+    text-wrap: nowrap;
+}
+.hotelCardInfo-container-rightMain .hotelMain-sec3-container2  .contain1{
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+.hotelCardInfo-container-rightMain-payment button{
+    padding: 15px 30px;
+    background-color: orangered;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+}
+.hotelCardInfo-container-rightMain-payment-sec1{
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.219);
+    padding-bottom: 10px;
+}
+
+.hotelRoomsSection{
+    width: 100%;
+    gap: 10px;
+}
+.hotelRoomsSection-section{
+    width: 80%;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.hotelRoomsSection-container{
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
+    margin-top: 100px;
+    padding: 20px;
+    border-radius: 10px;
+    flex-direction: column;
+    gap: 25px;
+}
+.hotelRoomsSection-container h1{
+    font-size: 20px;
+    padding: 10px 0;
+}
+.hotelRoomsSection-container .sec1{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+.hotelRoomsSection-container-sec3 .cont1{
+    font-size: 20px;
+}
+.hotelRoomsSection-container-sec3 .cont2, .cont3{
+    font-size: 14px;
+    color: #808080;
+}
+.hotelRoomsSection-container-price-section .contain1{
+    font-size: 20px;
+}
+.hotelRoomsSection-container-price-section .contain2{
+    font-size: 14px;
+    color: #808080;
+}
+.hotelRoomsSection-container-price-section .contain3{
+    font-size: 14px;
+    color: #808080;
+}
+.hotelRoomsSection-container-price-section .contain4{
+    font-size: 14px;
+    color: #808080;
+}
+.hotelRoomsSection-container button{
+    padding: 12px 30px;
+    background-color: orangered;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+}
+
+
+/* ------------------footer------------------ */
+.cleartrip-footer {
+    background-color: #f5f5f5;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-logo{
+    padding: 30px;
+}
+
+  
+  .footer-links {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .footer-links h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links ul li {
+    margin-bottom: 8px;
+  }
+  
+  .footer-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .footer-top {
+      flex-direction: column;
+    }
+  
+    .footer-links {
+      margin: 0 0 20px 0;
+    }
+  }

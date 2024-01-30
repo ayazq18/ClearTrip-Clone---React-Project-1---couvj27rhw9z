@@ -34,8 +34,6 @@ export default function Form() {
     const [flightTo, setFlightTo] = useState([]);
     const [selectedFlightIn, setSelectedFlightIn] = useState(null);
     const [selectedFlightOut, setSelectedFlightOut] = useState(null);
-    const [filteredAirportsFrom, setFilteredAirportsFrom] = useState([]);
-    const [filteredAirportsTo, setFilteredAirportsTo] = useState([]);
     const [whereDate, setWhereDate] = useState(`${new Date().toISOString().split("T")[0]}`);
     const [toDate, setToDate] = useState(`${new Date().toISOString().split("T")[0]}`);
     const [day, setDay] = useState()
@@ -138,23 +136,6 @@ export default function Form() {
         // filteredAirportsSearchTo(flightOut)
     };
 
-    // const filteredAirportsSearchFrom = (input)=>{
-    //     const filtered = flightWhere.filter((airport)=>{
-    //         const airportName = airport.iata_code && airport.name && airport.city
-    //         return airportName.toLowerCase().includes(input.toLowerCase())
-    //     })
-    //     setFilteredAirportsFrom(filtered)
-    // }
-
-    
-    // const filteredAirportsSearchTo = (input)=>{
-    //     const filtered = flightTo.filter((airport)=>{
-    //         const airportName = airport.iata_code && airport.name && airport.city
-    //         return airportName.toLowerCase().includes(input.toLowerCase())
-    //     })
-    //     setFilteredAirportsTo(filtered)
-    // }
-
     const onHandleSelectFlightIn = (selectedFlightIn) => {
         setSelectedFlightIn(selectedFlightIn)
         setFlightIn(`${selectedFlightIn.iata_code} - ${selectedFlightIn.city}, ${selectedFlightIn.country}`)
@@ -216,8 +197,6 @@ export default function Form() {
 
     useEffect(() => {
         setDay(days)
-        console.log(days)
-
         const fetchFlightsIn = async () => {
             try {
                 const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn}"}`, {
@@ -229,7 +208,6 @@ export default function Form() {
                 })
                 const result = await response.json()
                 setFlightWhere(result.data.airports)
-                // console.log (result);
             } catch (error) {
                 return (error);
             }
@@ -247,7 +225,6 @@ export default function Form() {
                 })
                 const result = await response.json()
                 setFlightTo(result.data.airports)
-                // console.log (result);
 
             } catch (error) {
                 return (error);
@@ -255,14 +232,10 @@ export default function Form() {
           }
        const fetchData = async ()=>{
            await fetchFlightsIn();
-        //    filteredAirportsSearchFrom(flightIn)
-
            await fetchFlightsOut();
-        //    filteredAirportsSearchTo(flightOut)
-
        }
        fetchData()
-    }, []);
+    }, [flightIn, flightOut]);
 
     return (
         // <div className="flexXY">
@@ -370,7 +343,7 @@ export default function Form() {
                     />
                     {whereFrom && (
                         <div className="expand-whereFrom">
-                            {flightWhere.map((whereFromFlight, index) => (
+                            {flightWhere && flightWhere.map((whereFromFlight, index) => (
                                 <div key={whereFromFlight._id} className="wherefrom-container flexXY" onClick={() => onHandleSelectFlightIn(whereFromFlight)}>
                                     <div className="short">{whereFromFlight.iata_code}</div>
                                     <div className="full">{whereFromFlight.city}, {whereFromFlight.name}</div>
@@ -395,7 +368,7 @@ export default function Form() {
                     )}
                     {whereTo && (
                         <div className="expand-whereTo">
-                            {flightTo.map((whereToFlight, index) => (
+                            {flightTo && flightTo.map((whereToFlight, index) => (
                                 <div key={whereToFlight._id} className="whereTo-container flexY" onClick={() => onHandleSelectFlightOut(whereToFlight)}>
                                     <div className="short">{whereToFlight.iata_code}</div>
                                     <div className="full">{whereToFlight.city}, {whereToFlight.name}</div>

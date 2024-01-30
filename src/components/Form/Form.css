@@ -82,7 +82,7 @@
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     position: absolute;
-    top: 280px;
+    top: 230px;
     left: 460px;
     cursor: pointer;
     z-index: 11;
@@ -121,7 +121,7 @@
     border: 1px solid #9c979745;
     border-radius: 6px;
     position: absolute;
-    top: 280px;
+    top: 230px;
     left: 40%;
     cursor: pointer;
     z-index: 11;

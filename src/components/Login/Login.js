@@ -2,9 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import './Login.css'
 import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher } from "../Services/Icons.js";
 
-export default function Login({token,setToken, showLogin, setShowLogin, poptab, pop}) {
+export default function Login({token,setToken, showLogin, setShowLogin, pop}) {
     const MyRef = useRef(null);
-    // const [token, setToken] = useState(localStorage.getItem('token'));
     const expandedObj = [
         {item : 'Trips', icons : trips, toolsIcon: cancel,  tools : 'Cancellations'},
         {item : 'ShortList', icons : shortlists, toolsIcon: change,  tools : 'Change flights'},
@@ -15,12 +14,6 @@ export default function Login({token,setToken, showLogin, setShowLogin, poptab, 
         {item : 'Profile', icons : profile},
         {item : 'Settings', icons : settings},
       ]
-
-      useEffect(()=>{
-        // if (token) {
-        //   set
-        // }
-      })
 
       const handleSignOut = ()=>{
         if(token){
@@ -35,7 +28,7 @@ export default function Login({token,setToken, showLogin, setShowLogin, poptab, 
   return (
     <div>
         <div className="navheader-one">
-            <div onClick={()=>{setShowLogin(false), poptab('expand')}} className="Expand-to-logout-one flexXY">
+            <div onClick={()=>{setShowLogin(false)}} className="Expand-to-logout-one flexXY">
             <div className="logout-profile-one"><h2>My Account</h2></div>
             <div className="logout-account-one flex">
                 <div className="logout-account-sec">
@@ -57,7 +50,7 @@ export default function Login({token,setToken, showLogin, setShowLogin, poptab, 
                 ))}
                 </div>
             </div>
-            <div className="expande-signout-one"><h4 ref={MyRef} onClick={()=>{handleSignOut(), poptab('signout')}}>Sign out</h4></div>
+            <div className="expande-signout-one"><h4 ref={MyRef} onClick={()=>{handleSignOut()}}>Sign out</h4></div>
             </div>
         </div>
         <div className="signUpPage flexXY">

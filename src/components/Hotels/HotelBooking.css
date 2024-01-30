@@ -1,0 +1,177 @@
+.g20{
+    gap: 20px;
+  }
+.flexc{
+    display: flex;
+    flex-direction: column;
+}
+.hotelBooking{
+    width: 100%;
+    height: 100vw;
+    /* border: 1px solid red; */
+    position: relative;
+}
+.hotelBooking .main-section{
+    width: 100%;
+}
+.hotelBooking .main-section-left{
+    height: 100vw;
+    padding: 20px;
+    gap: 20px;
+    /* border: 1px solid blue; */
+}
+.hotelinfo-left-card{
+    width: 750px;
+    margin: 20px 10px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
+}
+.hotelinfo-left-card-sec1{
+    width: 750px;
+    /* height: 50%; */
+    padding: 10px 20px;
+}
+.hotelinfo-left-card-sec2{
+    width: 750px;
+    height: 50%;
+    padding: 20px;
+    border-top: 1px dashed #808080;
+}
+.hotelinfo-left-card-sec1 p{
+    font-size: 14px;
+    color: #808080;
+    padding-bottom: 5px;
+}
+.hotelinfo-left-card-sec1 h1{
+    font-size: 25px;
+    padding-bottom: 5px;
+}
+.hotelinfo-left-card img{
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+}
+.hotelinfo-left-card-sec2-travell{
+    width: 50%;
+    padding: 0 30px 0 0;
+    border-right: 1px solid #80808042;
+}
+.hotelinfo-left-card-sec2-travell p,.hotelinfo-left-card-sec2-rooms p{
+    font-size: 12px;
+    color: #808080;
+    padding-bottom: 5px;
+}
+.hotelinfo-left-card-sec2-travell h2,.hotelinfo-left-card-sec2-rooms h1{
+    font-size: 19px;
+    padding-bottom: 5px;
+}
+.hotelinfo-left-card-sec2-rooms{
+    width: 50%;
+    padding: 0 0 0 30px;
+    position: relative;
+}
+.guestinfopopup{
+    width: 300px;
+    height: 120px;
+    position: absolute;
+    top: 45px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+.transparent{
+    width: 100%;
+    height: 100vh;
+    background-color: #0000002c;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.hotelinfo-left-card-sec3, .hotelinfo-left-card-sec4, .hotelinfo-left-card-sec5{
+    width: 750px;
+    padding: 20px 10px;
+    margin-top: 30px;
+    border-bottom: 1px dashed #80808042;
+}
+.hotelinfo-left-card-sec3 h3, .hotelinfo-left-card-sec4 h3, .hotelinfo-left-card-sec5 h3{
+    padding-bottom: 10px;
+}
+.hotelinfo-left-card-sec3 img{
+    width: 250px;
+    /* height: 90px; */
+    border-radius: 6px;
+}
+.hotelinfo-left-card-sec3 p, .hotelinfo-left-card-sec4 p,  .hotelinfo-left-card-sec5 p{
+    font-size: 14px;
+    width: 700px;
+    /* padding-bottom: 10px; */
+    text-wrap: wrap;
+    color: #808080;
+}
+.moreDetailsAboutRoom{
+    width: 40vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #fff;
+    top: 0px;
+    right: 0;
+}
+.hotelinfo-left-card-sec5{
+    position: relative;
+}
+.seemore{
+    width: 40vw;
+    position: absolute;
+    background-color: #fff;
+    top: 0px;
+    right: 0;
+}
+
+
+.hotelInfo-emailInput, .hotelInfo-numberInput, .fname, .lname{
+    padding: 20px;
+    border-radius: 8px;
+    width: 370px;
+    border: 1px solid #80808080;
+}
+.hotelInfo-buttondiv button{
+    padding: 20px 40px;
+    background-color: #ff4f17;
+    border-radius: 8px;
+}
+
+.hotelBooking .main-section-right{
+    width: 25%;
+    height: 100vw;
+    padding-top: 20px;
+    /* border: 1px solid yellow; */
+}
+.main-section-right-sec1{
+    width: 270px;
+    height: fit-content;
+    border-radius: 15px;
+    border: 1px solid #80808033;
+}
+.main-section-right-sec1-pricing{
+    width: 100%;
+    gap: 15px;
+    border-bottom: 1px dashed #80808033;
+    padding: 15px;
+}
+.main-section-right-sec1-pricing h1, .main-section-right-sec1-total h1{
+    font-size: 18px;
+}
+.main-section-right-sec1-pricing p, .main-section-right-sec1-total p{
+    font-size: 12px;
+    color: #808080;
+}
+.main-section-right-sec1-total{
+    padding: 15px;
+}
+.main-section-right-sec1-offersaving{
+    padding: 10px;
+    background-color: #11a66f34;
+    border-radius: 0 0 15px 15px;
+}

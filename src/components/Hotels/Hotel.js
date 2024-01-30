@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import { useMatch, useNavigate } from "react-router-dom";
 import ImgCorousel from "../Corousel/FlightPage/ImgCorousel.js";
 import { FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import { fetchOffer } from "../Services/index.js";
@@ -100,7 +100,7 @@ export default function Hotel() {
     }
 
   //   -----------functions-----------------
-  const fetchHotels = async (inputVal) => {
+  const fetchHotels = useCallback(async (inputVal) => {
     try {
         const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputVal}"}`, {
             method: "GET",
@@ -115,7 +115,7 @@ export default function Hotel() {
     } catch (error) {
         console.log(error);
     }
-  }
+  },[inputValue])
 
     useEffect(()=>{
       fetchHotels("")
@@ -126,6 +126,7 @@ export default function Hotel() {
       fetchOffer()
         .then((result) => {
           setOffers(result.data.offers);
+          console.log(result.data.offers)
         })
         .catch((error) => {
           console.log("Error fetching offers:", error);
@@ -134,12 +135,8 @@ export default function Hotel() {
     }, []);
 
   const handleSearchFlight = ()=>{
-    if(localStorage.getItem('token')){
       setall(prev => ({ ...prev, inputValue:inputValue }));
       (inputValue !== '' && fromDate !== '' && toDate !== '') && navigate(`/hotels/results?location=${inputValue}&dateFrom=${fromDate}&dateTo=${toDate}`)
-  }else{
-      navigate('/hotel')
-  }
   }
   
 

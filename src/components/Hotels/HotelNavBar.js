@@ -6,11 +6,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Signup from "../Signup/Signup.js";
 import Login from "../Login/Login.js";
 import { useAuthContext } from '../ContextAllData.js';
+import MultiRangeSlider from "multi-range-slider-react";
 import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
 import { BiCheck } from "react-icons/bi";
 
 
-const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotelResultData, setIsVisible, isVisible }) => {
+const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setmaxrange, rating, setrating, inputResult, fromDate, toDate }) => {
     const { all, setall } = useAuthContext()
     const navigate = useNavigate()
 
@@ -24,6 +25,7 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
     const [selectVisible, setSelectVisible] = useState(false);
     const [classs, setClasss] = useState("Guests");
     const [rotateCateg, setRotateCateg] = useState({ transform: "rotate(0deg)" });
+    const [selectedCheckBox, setSelectedCheckBox] = useState();
 
     const [hotelResult, setHotelResult] = useState([])
     const [popUp, setPopUp] = useState(false)
@@ -32,15 +34,33 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
     const [endDate, setEndDate] = useState()
     const [date1, setDate1] = useState(fromDate)
     const [date2, setDate2] = useState(toDate)
+    const [selectedDeals, setSelectedDeals] = useState([])
+    const [dealsDisabled, setDealsDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(false)
 
     const [hotelPrice, setHotelPrice] = useState(false)
     const [hotelDeal, setHotelDeal] = useState(false)
     const [guestRating, setGuestRating] = useState(false)
     const [price, setPrice] = useState(false)
     const [pop, setpop] = useState({})
-    const [priceTag, setPriceTag] = useState('Price: High to Low')
-    const [sortOrder, setSortOrder] = useState('highToLow')
 
+
+    function ratingchanger(val) {
+        if (val == rating) {
+            setrating("1")
+        }
+        else {
+            setrating(val);
+        }
+    }
+    function lowhighchanger(val){
+        if (val == lowhigh) {
+            setlowhigh("")
+        }
+        else {
+            setlowhigh(val);
+        }
+    }
 
     function popp(key) {
         setpop({});
@@ -94,23 +114,23 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
         navigate(`/hotels/results?location=${inputValue}&dateFrom=${date1}&dateTo=${date2}`)
     }
 
-    const handleLoginSignUp = () => {
-        token ? setShowLogin(!showLogin) : setShowSignUp(!showSignup);
+    const handleLoginSignUp = (e) => {
+        if(token){
+            setShowLogin(!showLogin)
+        }else{
+            setShowSignUp(!showSignup)
+        }
     };
 
     const handleHotelInput = (selectedHotel) => {
         setInputValue(selectedHotel)
     }
 
-    const [selectedCheckBox, setSelectedCheckBox] = useState(null)
-    const [disabled, setDisabled] = useState(false)
     const handleClick = (checkBox) => {
         setSelectedCheckBox(checkBox === selectedCheckBox ? null : checkBox)
         setDisabled(!disabled)
     }
 
-    const [selectedDeals, setSelectedDeals] = useState([])
-    const [dealsDisabled, setDealsDisabled] = useState(false)
     const handleDeals = (checkBox) => {
         const updatedCheckBoxes = [...selectedDeals]
         if (updatedCheckBoxes.includes(checkBox)) {
@@ -122,14 +142,13 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
         setDealsDisabled(updatedCheckBoxes.length === 0)
 
     }
+
     const fetchHotels = async () => {
         try {
-            const sortParameter = sortOrder === 'highToLow' ? -1 : 1;
-            const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputValue}"}&sort={"price":"${sortParameter}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputValue}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setHotelResult(result.data.hotels)
-            setIsVisible(!isVisible)
-            console.log(result)
+
         } catch (error) {
             console.log(error);
         }
@@ -137,12 +156,12 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
 
     useEffect(() => {
         fetchHotels()
-        setIsVisible(false)
-    }, [inputValue, sortOrder])
+    }, [inputValue])
+
 
     return (
         <div className='hotelResults'>
-            <div className='hotelResults-navBar-container flexY'>
+            <div className='hotelResults-navBar-container flexXY'>
                 <div className='hotelResults-navBar flexBet'>
                     <div onClick={() => navigate('/hotel')}>{logo}</div>
                     <div className='hotelResults-input flexXY' >
@@ -162,17 +181,16 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
                             <p>1 Room, {adultcount} Guests</p>
                         </div>
                     </div>
-                    <div className='hotelResults-navBar-btnDiv flexXY' onClick={() => { handleLoginSignUp(); popp('login') }}>
+                    <div className='hotelResults-navBar-btnDiv flexXY' onClick={(e) => { handleLoginSignUp(e) }}>
                         {token && <div>{loginProfile}</div>}
                         <h4 className={`hotelResults-navBar-btnDiv-loginbtn ${token ? 'loggedIn' : ''}`}>{token ? <>Hi, User {dropDown}</> : 'Login / Signup'}</h4>
-                        {showSignup && <div className='hotelLogin-transparent' onClick={() => pop['login']}></div>}
+                        {showSignup && <div className='hotelLogin-transparent' ></div>}
                         <div className='hotelResults-signup'>
-                            {showSignup && <Signup token={token} setToken={setToken} showSignup={showSignup} setShowSignUp={setShowSignUp} />
-                            }
+                            {showSignup && <Signup token={token} setToken={setToken} showSignup={showSignup} setShowSignUp={setShowSignUp} />}
                         </div>
                     </div>
                 </div>
-                {showLogin && <div className='hotelLogin-transparent' onClick={() => handleLoginSignUp()}></div>}
+                {showLogin && <div className='hotelLogin-transparent' ></div>}
                 {showLogin &&
                     <div className='hotelResults-login'>
                         <Login token={token} setToken={setToken} showLogin={showLogin} setShowLogin={setShowLogin} showSignup={showSignup} setShowSignUp={setShowSignUp} />
@@ -253,53 +271,52 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
 
                 <div className='hotelFilter-container flexBet'>
                     <div className={`hotelFilter-sec1 ${pop["hotelprice"] ? 'searchActive' : ''} `}>
-                        <div onClick={() => popp("hotelprice")} className='sortByPrice flexXY'><div>Sort by: {priceTag}</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
+                        <div onClick={() => popp("hotelprice")} className='sortByPrice flexXY'><div>Sort by: Price: High to Low</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
                         {pop["hotelprice"] &&
                             <div className={`hotelFilter-sec1-expand ${pop["hotelprice"] ? 'popup' : ''}`}>
                                 <h2>Sort hotels by</h2>
                                 <div className='hotelFilter-sec1-expand-container flex'>
-                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => handleClick('highPrice')}>
+                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => {handleClick('highPrice'); popp('hotprice')}}>
                                         <div className={`outerCircle ${selectedCheckBox === 'highPrice' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
-                                        <p onClick={() => { handlePriceTag('highPrice')}}>High to Low</p>
+                                        <p onClick={() => {lowhighchanger("hightolow")}}>High to Low</p>
                                     </div>
-                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => handleClick('lowPrice')}>
+                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => {handleClick('lowPrice'); popp('hotprice')}}>
                                         <div className={`outerCircle ${selectedCheckBox === 'lowPrice' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
-                                        <p onClick={() => { handlePriceTag('lowPrice') }}> Low to High</p>
+                                        <p onClick={() => {lowhighchanger("lowtohigh")}}> Low to High</p>
                                     </div>
                                 </div>
-                                <div className='hotelFilter-sec1-expand-container-btn flex'><button onClick={() => { popp("hotelprice"); fetchHotels() }} className={`hotelFilter-sec1-expand-container-button ${selectedCheckBox !== null ? 'btnClick' : ''}`} disabled={selectedCheckBox === null && !disabled}>Apply</button></div>
                             </div>
                         }
                     </div>
                     {pop['hotelprice'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
-                    <div className={`hotelFilter-sec2 ${pop["deals"] ? 'searchActive' : ''} `}>
-                        <div className='sortByDeals flexXY' onClick={() => popp("deals")}><div>{deals}</div><div>Deals</div><div className={`${pop['deals'] && 'rotate'}`}>{dropDown}</div></div>
-                        {pop["deals"] &&
-                            <div className={`hotelFilter-sec2-expand ${pop["deals"] ? 'popup' : ''}`}>
-                                <h2>Deals</h2>
+                    <div className={`hotelFilter-sec2 ${pop["star"] ? 'searchActive' : ''} `}>
+                        <div className='sortByDeals flexXY' onClick={() => popp("star")}><div>{deals}</div><div>Star category</div><div className={`${pop['star'] && 'rotate'}`}>{dropDown}</div></div>
+                        {pop["star"] &&
+                            <div className={`hotelFilter-sec2-expand ${pop["star"] ? 'popup' : ''}`}>
+                                <h2>Star Category</h2>
                                 <div className='hotelFilter-sec2-expand-container flex'>
                                     <div className='hotelFilter-sec2-expand-container-item flexY' onClick={() => handleDeals('dealsOfDay')}>
                                         <div className={`outerSquare ${selectedDeals.includes('dealsOfDay') ? "hotelDeals-checked" : ""}`} ><div className={`${selectedDeals.includes('dealsOfDay') ? "checkedDeals" : ""}`}>{selectedDeals.includes('dealsOfDay') ? <BiCheck /> : ""}</div></div>
-                                        <p>Deals of the day</p>
+                                        <p>5 star</p>
                                     </div>
                                     <div className='hotelFilter-sec2-expand-container-item flexY' onClick={() => handleDeals('jackPot')}>
                                         <div className={`outerSquare ${selectedDeals.includes('jackPot') ? "hotelDeals-checked" : ""}`} ><div className={`${selectedDeals.includes('jackPot') ? "checkedDeals" : ""}`}>{selectedDeals.includes('jackPot') ? <BiCheck /> : ""}</div></div>
-                                        <p>Jackpot deals</p>
+                                        <p>4 star</p>
                                     </div>
                                     <div className='hotelFilter-sec2-expand-container-item flexY' onClick={() => handleDeals('bestSeller')}>
                                         <div className={`outerSquare ${selectedDeals.includes('bestSeller') ? "hotelDeals-checked" : ""}`} ><div className={`${selectedDeals.includes('bestSeller') ? "checkedDeals" : ""}`}>{selectedDeals.includes('bestSeller') ? <BiCheck /> : ""}</div></div>
-                                        <p>BestSeller hotels</p>
+                                        <p>3 star</p>
                                     </div>
                                     <div className='hotelFilter-sec2-expand-container-item flexY' onClick={() => handleDeals('premium')}>
                                         <div className={`outerSquare ${selectedDeals.includes('premium') ? "hotelDeals-checked" : ""}`} ><div className={`${selectedDeals.includes('premium') ? "checkedDeals" : ""}`}>{selectedDeals.includes('premium') ? <BiCheck /> : ""}</div></div>
-                                        <p>Premium hotels</p>
+                                        <p>2 star</p>
                                     </div>
                                 </div>
-                                <div className='hotelFilter-sec2-expand-container-btn flex'><button onClick={() => popp("deals")} className={`hotelFilter-sec2-expand-container-button ${selectedDeals.length > 0 ? 'dealsBtnClick' : ''}`} disabled={selectedDeals.includes([]) ? !dealsDisabled : dealsDisabled}>Apply</button></div>
+                                <div className='hotelFilter-sec2-expand-container-btn flex'><button onClick={() => popp("star")} className={`hotelFilter-sec2-expand-container-button ${selectedDeals.length > 0 ? 'dealsBtnClick' : ''}`} disabled={selectedDeals.includes([]) ? !dealsDisabled : dealsDisabled}>Apply</button></div>
                             </div>
                         }
                     </div>
-                    {pop['deals'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
+                    {pop['star'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
 
                     <div className={`hotelFilter-sec3 ${pop["guestrating"] ? 'searchActive' : ''} `}>
                         <div className='sortByGuest flexXY' onClick={() => popp("guestrating")}><div>{guestrating}</div><div>Guests Rating</div><div className={`${pop['guestrating'] && 'rotate'}`}>{dropDown}</div></div>
@@ -307,24 +324,23 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
                             <div className={`hotelFilter-sec3-expand ${pop["guestrating"] ? 'popup' : ''}`}>
                                 <h2>Guests Rating</h2>
                                 <div className='hotelFilter-sec3-expand-container flex'>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => handleClick('higher')}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("4.5"); handleClick('higher'); popp('rate') }}>
                                         <div className={`outerCircle ${selectedCheckBox === 'higher' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>4.5 & above</p>
                                     </div>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => handleClick('average')}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("4"); handleClick('average'); popp('rate') }}>
                                         <div className={`outerCircle ${selectedCheckBox === 'average' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>4 & above</p>
                                     </div>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => handleClick('low')}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("3.5"); handleClick('low'); popp('rate') }}>
                                         <div className={`outerCircle ${selectedCheckBox === 'low' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>3.5 & above</p>
                                     </div>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => handleClick('lowest')}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("3"); handleClick('lowest'); popp('rate') }}>
                                         <div className={`outerCircle ${selectedCheckBox === 'lowest' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>3 & above</p>
                                     </div>
                                 </div>
-                                <div className='hotelFilter-sec3-expand-container-btn flex'><button onClick={() => popp("guestrating")} className={`hotelFilter-sec3-expand-container-button ${selectedCheckBox !== null ? 'btnClick' : ''}`} disabled={!disabled}>Apply</button></div>
                             </div>
                         }
                     </div>
@@ -335,10 +351,7 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
                         {pop["price"] &&
                             <div className={`hotelFilter-sec4-expand ${pop["price"] ? 'popup' : ''}`}>
                                 <h2>Price (per night)</h2>
-                                <div className='hotelFilter-sec4-expand-container flex'>
-
-                                </div>
-                                <div className='hotelFilter-sec4-expand-container-btn flex'><h4 onClick={() => { popp("price") }}>Apply</h4></div>
+                                <MultiRangeSlider min={1000} max={10000} minValue={minrange} ruler="false" label="false" maxValue={maxrange} step={1} onInput={(e) => { setminrange(e.minValue); setmaxrange(e.maxValue) }} />
                             </div>
                         }
                     </div>
@@ -359,7 +372,6 @@ const HotelNavBar = ({ inputResult, fromDate, toDate, hotelsResultData, setHotel
                     {pop['searchHotel'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
                 </div>
             </div>
-            {!isVisible && <span class="loader"></span>}
         </div>
     );
 }

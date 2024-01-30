@@ -146,20 +146,20 @@
 
 .sideNavBar-container{
   width: 100%;
+  background-color: rgba(247, 245, 245, 0.567);
 }
 
 #sideNavBar {
-  background-color: rgba(247, 245, 245, 0.567);
-  width: fit-content;
-  margin: 0 auto;
+  width: 80%;
+  /* margin: 0 auto; */
   justify-content: space-around;
   /* border: 2px solid blue; */
 }
 
 #sideNavBar-section {
   display: flex;
-  gap: 20px;
-  justify-content: space-around;
+  gap: 5px;
+  justify-content: space-evenly;
   padding: 10px;
   margin: 10px 0;
   /* border: 2px solid blue; */
