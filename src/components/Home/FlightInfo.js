@@ -3,7 +3,7 @@ import "./FlightInfo.css";
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { IoIosArrowDown } from "react-icons/io";
 import { useAuthContext } from '../ContextAllData';
-
+import { getAirlineInfo } from '../Constants';
 
 export default function FlightInfo() {
   const {all, setall} = useAuthContext()
@@ -12,6 +12,8 @@ export default function FlightInfo() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   let flightid = searchParams.get("flightid");
+  let ID = searchParams.get("ID");
+  
   const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor (Timor-Leste)", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican state", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"]
   const states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "New South Wales", "Queensland", "South Australia", "Tasmania", "Victoria", "Western Australia", "Australian Capital Territory", "Northern Territory", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan"];
   const objdropdownstate = [{ name: "BLR", fname: "Bangalore, IN", lname: "- Kempegowda International Airport (BLR)" },
@@ -27,25 +29,6 @@ export default function FlightInfo() {
     "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/AI.svg", "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/QP.svg",
     "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/S5.svg"
   ])
-  function logofinder(item) {
-    if ((item.flightID[0] + item.flightID[1]) == "6E") { return logoflights[0]; }
-    if ((item.flightID[0] + item.flightID[1]) == "SG") { return logoflights[1]; }
-    if ((item.flightID[0] + item.flightID[1]) == "I5") { return logoflights[2]; }
-    if ((item.flightID[0] + item.flightID[1]) == "UK") { return logoflights[3]; }
-    if ((item.flightID[0] + item.flightID[1]) == "AI") { return logoflights[4]; }
-    if ((item.flightID[0] + item.flightID[1]) == "QP") { return logoflights[5]; }
-    if ((item.flightID[0] + item.flightID[1]) == "S5") { return logoflights[6]; }
-  }
-  function airlineNamefinder(item) {
-    if ((item.flightID[0] + item.flightID[1]) == "6E") { return "IndiGo"; }
-    if ((item.flightID[0] + item.flightID[1]) == "SG") { return "SpiceJet"; }
-    if ((item.flightID[0] + item.flightID[1]) == "I5") { return "Air India Express"; }
-    if ((item.flightID[0] + item.flightID[1]) == "UK") { return "Vistara"; }
-    if ((item.flightID[0] + item.flightID[1]) == "AI") { return "Air India"; }
-    if ((item.flightID[0] + item.flightID[1]) == "QP") { return "Akasa Air"; }
-    if ((item.flightID[0] + item.flightID[1]) == "S5") { return "Star Air"; }
-  }
-
 
   const [pageLoader, setpageLoader] = useState(false);
   const [dataa, setdataa] = useState();
@@ -155,6 +138,7 @@ export default function FlightInfo() {
         }
       )).json();
       setdataa(response.data);
+      console.log(dataa)
       setpageLoader(true);
     } catch (error) {
       alert(error);
@@ -194,8 +178,8 @@ export default function FlightInfo() {
                 </div>
                 <div className='flightinfo-cardPhases flex'>
                   <div className='flightinfo-cardPhase1st flexj flexc'>
-                    <img src={logofinder(dataa)} alt="image" />
-                    <div className='flightinfo-flightName'>{airlineNamefinder(dataa)}</div>
+                    <img src={getAirlineInfo(dataa.flightID.slice(0, 2)).logoSrc} alt="image" />
+                    <div className='flightinfo-flightName'>{getAirlineInfo(dataa.flightID).airlineName}</div>
                     <div className='flightinfo-flightId'>{dataa.flightID[0] + dataa.flightID[1]}-{dataa.flightID[dataa.flightID.length - 3] + dataa.flightID[dataa.flightID.length - 2] + dataa.flightID[dataa.flightID.length - 1]}</div>
                   </div>
                   <div className='flightinfo-cardPhase2st'><svg width="9" height="97" viewBox="0 0 9 97"><g fill="none" fill-rule="evenodd"><circle fill="#999" cx="4.5" cy="4.5" r="4.5"></circle><circle fill="#999" cx="4.5" cy="92.5" r="4.5"></circle><path stroke="#999" stroke-linecap="square" stroke-dasharray="7" d="M4.5 7v84"></path></g></svg></div>

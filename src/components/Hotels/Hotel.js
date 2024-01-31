@@ -48,6 +48,27 @@ export default function Hotel() {
     setWhereFrom(false);
   };
 
+  const handleCarouselButtonClick = (type, direction) => {
+    if (type === "offer-corousel") {
+      if (direction === "next") {
+        setCounter((prevCounter) => (prevCounter + 1) % offers.length);
+      } else if (direction === "prev") {
+        setCounter(
+          (prevCounter) => (prevCounter - 1 + offers.length) % offers.length
+        );
+      }
+    } else if (type === "img-corousel") {
+      if (direction === "next") {
+        setImgCounter((prevCounter) => (prevCounter + 1) % offers.length);
+      } else if (direction === "prev") {
+        setImgCounter(
+          (prevCounter) => (prevCounter - 1 + offers.length) % offers.length
+        );
+      }
+    }
+  };
+
+
     const handleIncrease = (category) => {
         switch (category) {
             case "Adults":
@@ -123,15 +144,23 @@ export default function Hotel() {
 
   useEffect(() => {
       // Offers
-      fetchOffer()
-        .then((result) => {
-          setOffers(result.data.offers);
-          console.log(result.data.offers)
+       const fetchOffer = async ()=>{
+        try{
+        const res = await fetch(`${Base_URL}/offers?filter={"type":"CABS"}`,{
+            method : "GET",
+              headers : {
+                projectID : Project_ID,
+                "Content-Type": "application/json",
+              }
         })
-        .catch((error) => {
-          console.log("Error fetching offers:", error);
-        });
-
+            const result = await res.json()
+            setOffers(result.data.offers)
+            console.log (result);
+        }catch(error){
+            return error
+        }
+      }
+      fetchOffer()
     }, []);
 
   const handleSearchFlight = ()=>{

@@ -177,12 +177,8 @@ export default function Form() {
     const navigate = useNavigate()
     const handleSearchFlight = (e) => {
         e.preventDefault(); 
-        if(localStorage.getItem('token')){
             setall(prev => ({ ...prev, flightIn: flightIn, flightOut: flightOut, flightWhere:{flightWhere}, flightTo:{flightTo}, day: day, whereDate: whereDate, selectedFlightIn:selectedFlightIn, selectedFlightOut:selectedFlightOut }));
             (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`);
-        }else{
-           navigate('/')
-        }
     }
 
   
@@ -208,6 +204,7 @@ export default function Form() {
                 })
                 const result = await response.json()
                 setFlightWhere(result.data.airports)
+                console.log(result)
             } catch (error) {
                 return (error);
             }

@@ -89,31 +89,6 @@ export default function NavBar() {
                 <HiOutlineBuildingOffice2 /> Hotels
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/bus">
-                <MdOutlineDirectionsBus /> Bus
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/offers'>
-              <BiSolidOffer /> Offers
-              </NavLink>
-            </li>
-            <li>
-            <NavLink to='/trips'>
-              <TfiBag /> My trips
-              </NavLink>
-            </li>
-            <li>
-            <NavLink to='business'>
-              <MdStars /> Cleartrip for Business
-              </NavLink>
-            </li>
-            <li>
-            <NavLink to='support'>
-              <BiSupport /> Support
-              </NavLink>
-            </li>
           </ul>
           <Outlet />
         </div>

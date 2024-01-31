@@ -22,9 +22,7 @@ function App() {
         <Route index element={<Flight/>}/>
         <Route path="/flights" element={<Flight/>}/>
         <Route  path="/hotel" element={<Hotel/>}/>
-        <Route  path="/bus" element={<Bus/>}/>
       </Route>
-      <Route  path="/offers" element={<Bus/>}/>
       <Route path="/flights/:results" element={<FlightTicket/>}/>
       <Route path="/flights/results/:Info" element={<FlightInfo/>}/>
       <Route path="/flights/results/Info/:bookingpage" element={<PaymentBooking/>}/>

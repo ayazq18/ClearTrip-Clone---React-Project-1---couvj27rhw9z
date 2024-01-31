@@ -35,7 +35,7 @@ export default function Home() {
   //   -----------functions-----------------
   const fetchOffer = async ()=>{
     try{
-    const res = await fetch(`${Base_URL}/offers`,{
+    const res = await fetch(`${Base_URL}/offers?filter={"type":"FLIGHTS"}`,{
         method : "GET",
           headers : {
             projectID : Project_ID,
@@ -44,7 +44,7 @@ export default function Home() {
     })
         const result = await res.json()
         setOffers(result.data.offers);
-        // console.log(result)
+        console.log(result)
     }catch(error){
         console.log (error)
     }

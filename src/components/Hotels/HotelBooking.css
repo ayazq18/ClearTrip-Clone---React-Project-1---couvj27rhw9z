@@ -5,10 +5,11 @@
     display: flex;
     flex-direction: column;
 }
+.hotelBooking .wholenav{
+    justify-content: start;
+    padding-left: 180px;
+}
 .hotelBooking{
-    width: 100%;
-    height: 100vw;
-    /* border: 1px solid red; */
     position: relative;
 }
 .hotelBooking .main-section{
@@ -80,14 +81,14 @@
     border-radius: 8px;
     background-color: #fff;
 }
-.transparent{
+/* .transparent{
     width: 100%;
     height: 100vh;
     background-color: #0000002c;
     position: absolute;
     top: 0;
     z-index: -1;
-}
+} */
 
 .hotelinfo-left-card-sec3, .hotelinfo-left-card-sec4, .hotelinfo-left-card-sec5{
     width: 750px;
@@ -174,4 +175,159 @@
     padding: 10px;
     background-color: #11a66f34;
     border-radius: 0 0 15px 15px;
+}
+
+
+/* ------------------hotelPayment------------------ */
+.payment-active{
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    color: blue;
+    background-color: rgba(113, 113, 126, 0.199);
+}
+.hotelPayment{
+    width: 100vw;
+    height: 100vh;
+}
+.hotelPayment-main{
+    /* width: 700px; */
+    height: 70%;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
+    position: relative;
+}
+.hotelPayment-Upi{
+    width: 600px;
+    height: 100%;
+}
+.hotelPayment-QR{
+    width: 350px;
+    padding: 20px;
+    height: 100%;
+}
+.hotelPayment-Upi-options{
+    width: 400px;
+    height: 100%;
+    padding: 10px;
+}
+.hotelPayment-Upi-option1, .hotelPayment-Upi-option2{
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+.hotelPayment-Upi-option1 h4, .hotelPayment-Upi-option2 h4{
+   /* color: blue; */
+   font-weight: 500;
+   text-wrap: nowrap;
+}
+.hotelPayment-Upi-option1-form{
+    width: 600px;
+    padding: 10px;
+    gap: 10px;
+    border-right: 1px solid #6b68682c;
+}
+
+.hotelPayment-Upi-option1-form input{
+   padding: 8px;
+   width: 100%;
+   border-radius: 3px;
+   border: 1px solid #808080;
+}
+.hotelCard{
+    margin-bottom: 10px;
+}
+.hotelPayment-Upi-option1-form input:hover{
+   border:1px solid rgba(113, 113, 126, 0.199);
+}
+.hotelPayment-Upi-option1-form h3{
+   font-size: 16px;
+}
+.hotelPayment-Upi-option1-form p{
+   color: #808080;
+   font-size: 12px;
+}
+.hotelPayment-debit-option1-form{
+    width: 500px;
+    padding: 10px;
+}
+.hotelDebitform{
+    flex-direction: column;
+    gap: 20px;
+}
+.hotelDebitform select{
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #a7a1a1;
+}
+.hotelDebitform input{
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid #a7a1a1;
+}
+.activemonth{
+    background-color: blue;
+    margin-bottom: 2px;
+    padding: 2px 10px;
+    color: #fff;
+}
+.hotelPayment-QR h1{
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+.showqrcode{
+    align-items: center;
+    border: 1px solid #999494;
+    padding: 20px 0;
+    border-radius: 6px;
+}
+.upiicon{
+    width: 70px;
+}
+.upiscanner{
+    width: 120px;
+}
+.termsandsubmission{
+    width: 100%;
+}
+.termssubmit{
+    width: 600px;
+}
+.termssubmit label{
+    width: fit-content;
+}
+.paysubmit {
+    align-items: flex-end;
+}
+.paysubmit h1{
+    font-size: 14px;
+}
+.paysubmit p{
+    font-size: 9px;
+    color: #808080;
+    text-wrap: nowrap;
+}
+.termsandsubmission button{
+    padding: 10px 25px;
+    border-radius: 6px;
+    text-wrap: nowrap;
+    background-color: #f77728;
+}
+.paymentPopup{
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
+    background-color: #fff;
+    position: absolute;
+    top: 50px;
+    left: 150px;
+    z-index: 2;
+}
+.payment-transparent{
+    width: 100%;
+    height: 100%;
+    background-color: #8080806b;
+    position: absolute;
+    top: 0;
+    z-index: 1;
 }

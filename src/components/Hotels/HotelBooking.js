@@ -21,7 +21,6 @@ export default function HotelBooking() {
     const [errorcontact, seterrorcontact] = useState(false);
     const [hotelcard, sethotelcard] = useState([])
     const [load, setLoad] = useState(false)
-    const [guestInfo, setguestInfo] = useState(false)
     const [popp, setpopp] = useState({})
     const [details, setdetails] = useState({ dnumber: "", demail: "", dfname: "", dlname: "", dgender: "", dcountry: "", dstate: "", dbillingAddress: "" })
 
@@ -78,7 +77,7 @@ export default function HotelBooking() {
 
     function gotopayment() {
         if (phonenumber && details.demail && details.dfname && details.dlname) {
-            navigate(`/hotels/results/hotelcardsinfo/hotelBooking/hotelPayment?FirstName="${details.dfname}"&Email="${details.demail}"`);
+            navigate(`/hotels/results/hotelcardsinfo/hotelBooking/hotelPayment?FirstName=${details.dfname}&Email=${details.demail}&Amount=${Math.floor((hotelcard.rooms[0].costDetails.baseCost) + (hotelcard.rooms[0].costDetails.taxesAndFees) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100)).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}`);
             // console.log(hello)
         }
     }
@@ -95,6 +94,7 @@ export default function HotelBooking() {
             console.log(error);
         }
     }, [])
+    
 
     useEffect(() => {
         fetchHotelCardInfo
@@ -102,7 +102,7 @@ export default function HotelBooking() {
 
     return (
         <>
-            {load && <div className='hotelBooking'>
+            {load && hotelcard && <div className='hotelBooking'>
                 <div className="wholenav flexja">
                     {popp['moreDetailsAboutRoom'] && <div className='moreDetailsAboutRoom ' style={{ boxShadow: 'rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px' }}>
                         <div className='hotelinfo-left-card-sec3 flexc g20'>
@@ -129,7 +129,7 @@ export default function HotelBooking() {
                         <div className='hotelinfo-left-card'>
                             <div className='hotelinfo-left-card-sec1 flexBet'>
                                 <div className='flexc g20'>
-                                    <p>{hotelcard.amenities}-star hotel</p>
+                                    <p>{hotelcard.amenities.length}-star hotel</p>
                                     <h1>{hotelcard.name} {hotelcard.location}</h1>
                                     <div className='flexY'><div>{ratingOwl}</div> &nbsp; <div>{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}</div></div>
                                 </div>
@@ -228,7 +228,7 @@ export default function HotelBooking() {
                         </div>
                     </div>
                 </div>
-                {popp['guestInfo'] && <div onClick={() => pop('guestInfo')} className='transparent'></div>}
+                {/* {popp['guestInfo'] && <div onClick={() => pop('guestInfo')} className='transparent'></div>} */}
             </div>}
         </>
     )

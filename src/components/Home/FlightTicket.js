@@ -1,11 +1,12 @@
 let tl;
 import React, { useEffect, useState, useContext, useRef, useMemo, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { IoIosArrowRoundUp } from "react-icons/io";
 import "./FlightTicket.css";
+import { handleIncrease } from "../Constants";
+import { getAirlineInfo } from '../Constants';
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { CgArrowsExchange } from "react-icons/cg";
-import { logo, flightgo, hotelIcon, support, sortIcon, } from "../Services/Icons";
+import { logo, flightgo, hotelIcon, support, sortIcon, clockIcon, } from "../Services/Icons";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup.js";
 import { arr } from "../Constants";
@@ -13,7 +14,6 @@ import MultiRangeSlider from "multi-range-slider-react";
 import { Base_URL, Project_ID, App_Type } from "../Constants";
 import { CgMathMinus, CgMathPlus } from "react-icons/cg";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { useAuthContext } from "../ContextAllData.js";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
@@ -28,13 +28,13 @@ export default function FlightTicket() {
 
     const [filter, setfilter] = useState({ "6E": true, "SG": true, "I5": true, "UK": true, "AI": true, "QP": true, "S5": true, "stops": null });
     const [flightResultdata, setflightResultdata] = useState([]);
-    const [flightIn, setFlightIn] = useState(all.flightIn);
-    const [flightOut, setFlightOut] = useState(all.flightOut);
+    const [flightIn, setFlightIn] = useState(flightFrom);
+    const [flightOut, setFlightOut] = useState(flightToo);
     const [flightWhere, setFlightWhere] = useState();
     const [flightTo, setFlightTo] = useState();
     const [selectedFlightIn, setSelectedFlightIn] = useState(all.selectedFlightIn);
     const [selectedFlightOut, setSelectedFlightOut] = useState(all.selectedFlightOut);
-    const [whereDate, setWhereDate] = useState(all.whereDate);
+    const [whereDate, setWhereDate] = useState(date);
     const [toDate, setToDate] = useState(`${new Date().toISOString().split("T")[0]}`);
     const [day, setDay] = useState(all.day)
     const [isDisabled, setIsDisabled] = useState(true);
@@ -85,12 +85,9 @@ export default function FlightTicket() {
         clearTimeout(tl);
         tl = setTimeout(() => {
             setvaluee(number);
-        }, 3000);
+        }, 1000);
         setonewayPrice(number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
     };
-    function filterbuttonRotate(key) {
-        setfilterPopup((prev) => ({ ...prev, [key]: !filterPopup[key] }));
-    }
 
     const poptab = (key) => {
         setPop({})
@@ -112,22 +109,6 @@ export default function FlightTicket() {
             case "Infant": infantcount > 0 && setinfantCount(infantcount - 1); break;
             default: break;
         }
-    };
-
-    const getAirlineInfo = (flightID) => {
-        let logoSrc, airlineName;
-        switch (flightID.slice(0, 2)) {
-            case '6E': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/6E.svg'; airlineName = 'Indigo'; break;
-            case 'AI': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/AI.svg'; airlineName = 'Air India'; break;
-            case 'QP': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/QP.svg'; airlineName = 'Akasa Air'; break;
-            case 'UK': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/UK.svg'; airlineName = 'Vistara'; break;
-            case 'SG': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/SG.svg'; airlineName = 'Spicejet'; break;
-            case 'IX': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/IX.svg'; airlineName = 'Air India Express'; break;
-            case 'G8': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/G8.svg'; airlineName = 'GoAir'; break;
-            case 'I5': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/I5.svg'; airlineName = 'AirAsia India'; break;
-            default: logoSrc = ''; airlineName = '';
-        }
-        return { logoSrc, airlineName };
     };
 
     const handleSelectCategory = () => {
@@ -166,13 +147,13 @@ export default function FlightTicket() {
         setflightResultsortingnav({ [key]: !flightResultsortingnav[key] });
     }
 
-    function navigateToFlightInfo(_id) {
+    function navigateToFlightInfo(_id, flightId) {
         if (localStorage.getItem("token")) {
             setall(prev =>({...prev, dayy:dayy}))
-            navigate(`/flights/results/Info?flightid=${_id}`)
+            navigate(`/flights/results/Info?flightid=${_id}&ID=${flightId}`)
         }
         else {
-            setlogincheck(true);
+           alert('Please login before proceed !')
         }
     }
     
@@ -181,7 +162,7 @@ export default function FlightTicket() {
 
     const fetchFlights = async () => {
         try {
-            const response = await fetch(`${Base_URL}/flight?search={"source":"${flightFrom[0], flightFrom[1], flightFrom[2]}","destination":"${flightToo[0], flightToo[1], flightToo[2]}"}&day=${dayy}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&page=${pagination}&limit=10&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`, {
+            const response = await fetch(`${Base_URL}/flight?search={"source":"${flightIn[0], flightIn[1], flightIn[2]}","destination":"${flightOut[0], flightOut[1], flightOut[2]}"}&day=${dayy}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&page=${pagination}&limit=20&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`, {
                 method: "GET",
                 headers: {
                     projectID: Project_ID,
@@ -197,30 +178,29 @@ export default function FlightTicket() {
         }
     }
 
-
     // -----------------flightResults----------------------
 
     // --------------------FlightName_Search----------------------
 
-    const fetchFlightsIn =async () => {
+    const fetchFlightsIn = useMemo(async () => {
         try {
-            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightFrom[0], flightIn[1], flightIn[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn[0], flightIn[1], flightIn[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json();
             setFlightWhere(result.data.airports);
         } catch (error) {
             return error;
         }
-    }
+    }, [])
 
-    const fetchFlightsOut = async() => {
+    const fetchFlightsOut= useMemo(async() => {
         try {
-            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightToo[0], flightToo[1], flightToo[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightOut[0], flightOut[1], flightOut[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json();
             setFlightTo(result.data.airports);
         } catch (error) {
             return error;
         }
-    }
+    }, [])
 
     // --------------------Flight_Search----------------------
 
@@ -229,23 +209,26 @@ export default function FlightTicket() {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const days = daysOfWeek[dayOfWeek];
 
+    function formatDate(inputdate) {
+        const options = { month: 'short', day: 'numeric', weekday: 'short'};
+        const formattedDate = new Date(inputdate).toLocaleDateString('en-US', options);
+        return formattedDate;
+    }
+
+    const formatdatefrom = formatDate(date)
+
     useEffect(() => {
         setDay(days)
 
         fetchFlights();
-        // fetchSingleFlight;
-
-        const fetchData = async () => {
-            fetchFlightsIn();
-            fetchFlightsOut();
-        }
-        fetchData()
+            fetchFlightsIn;
+            fetchFlightsOut;
 
     }, [valuee, filter, flightResultsortingnav, tripdurationmin, tripdurationmax, pagination]);
 
     const handleSearchResults = (e) => {
         e.preventDefault();
-        setflightResultdata([]);
+        // setflightResultdata([]);
         fetchFlights();
         (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`)
     }
@@ -255,12 +238,10 @@ export default function FlightTicket() {
         return
     }
 
-
     const handleFlightDetails = (index) => {
         setFlightDetails(!flightDetails)
         setSelectedCardIndex(index)
     }
-
 
     const handleSignin = () => {
         if (localStorage.getItem('token')) {
@@ -547,51 +528,59 @@ export default function FlightTicket() {
                                         </div>
                                         <div className="content-card-price-book-container flexBet">
                                             <h3>₹{result.ticketPrice}</h3>
-                                            <h2 onClick={() => {navigateToFlightInfo(result._id); console.log(result._id)}} className="content-card-book-btn">Book</h2>
+                                            <h2 onClick={() => {navigateToFlightInfo(result._id, result.flightID)}} className="content-card-book-btn">Book</h2>
                                         </div>
-                                        {flightDetails && selectedCardIndex === index &&
-                                            <div className="content-card-flight-details">
-                                                <div className="content-card-flight-details-header flexBet">
-                                                    <div className="content-card-header-head1 flexXY">
-                                                        <h4>Bangalore <HiOutlineArrowNarrowRight /> Kolkata</h4>
-                                                        <p>Fri, 26 Jan</p>
+                                    </div>
+                                    {flightDetails && selectedCardIndex === index && 
+                                        <div className="content-card-flight-details">
+                                            <div className="content-card-flight-details-header flexBet">
+                                                <div className="content-card-header-head1 flexXY">
+                                                    <h4>{result.source} <HiOutlineArrowNarrowRight /> {result.destination}</h4>
+                                                    <p>{formatdatefrom}</p>
+                                                </div>
+                                                <div className="content-card-header-head2 flexXY">
+                                                    <h6>Partially Refundable</h6>
+                                                    <p>Know more</p>
+                                                </div>
+                                            </div>
+                                            <div className="content-card-container-details-airline flexY g20">
+                                                <div className="content-card-container-details-sec1 flexBet">
+                                                    <div>
+                                                        <img src={getAirlineInfo(result.flightID).logoSrc} />
                                                     </div>
-                                                    <div className="content-card-header-head2 flexXY">
-                                                        <h6>Partially Refundable</h6>
-                                                        <p>Know more</p>
+                                                    <div className="content-card-container-airline-name">
+                                                        <h5>{getAirlineInfo(result.flightID).airlineName}</h5>
+                                                    </div>
+                                                    <div className="flexC">
+                                                        <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
+                                                        <h5>Economy</h5>
                                                     </div>
                                                 </div>
-                                                <div className="content-card-container-details-airline flexBet">
-                                                    <div className="content-card-container-details-sec1 flexBet">
-                                                        <div>
-                                                            <img src={getAirlineInfo(result.flightID).logoSrc} />
-                                                        </div>
-                                                        <div className="content-card-container-airline-name">
-                                                            <h5>{getAirlineInfo(result.flightID).airlineName}</h5>
-                                                        </div>
-                                                        <div className="flexC">
-                                                            <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
-                                                            <h5>Economy</h5>
-                                                        </div>
+                                                <div className="content-card-expanded flexBet">
+                                                    <div className="content-card-expanded-sec1">
+                                                        <div className="flexY g5"><h3>{result.source}</h3><h4>{result.departureTime}</h4></div>
+                                                        <p>{formatdatefrom}</p>
                                                     </div>
-                                                    <div className="content-card-links flexBet">
-                                                        <h3>{result.departureTime}</h3>
-                                                        <div className="content-card-duration flexXY">
-                                                            <h4>{result.duration}h {result.duration}m</h4>
-                                                            <div id="line">
-                                                                <div className="line-circle-container flexBet">
-                                                                    <div className="line-circle"></div>
-                                                                    <div className="line-circle"></div>
-                                                                </div>
-                                                            </div>
-                                                            <h4>{result.stops}</h4>
-                                                        </div>
-                                                        <h3>{result.arrivalTime}</h3>
+                                                    <div className="content-card-expanded-sec2">
+                                                        {clockIcon}
+                                                        <p>{result.duration}h {result.duration}m</p>
+                                                    </div>
+                                                    <div className="content-card-expanded-sec3">
+                                                        <div className="flexY g5"><h3>{result.destination}</h3><h4>{result.arrivalTime}</h4></div>
+                                                        <p>{formatdatefrom}</p>
+                                                    </div>
+                                                    <div className="content-card-expanded-sec4">
+                                                        <p>Check-in baggage</p>
+                                                        <p>Cabin baggage</p>
+                                                    </div>
+                                                    <div className="content-card-expanded-sec5">
+                                                        <p>15 kg / adult</p>
+                                                        <p>7 kg / adult</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
-                                    </div>
+                                        </div>
+                                    }
                                 </div>
                             )))}
                         </div>
@@ -601,7 +590,7 @@ export default function FlightTicket() {
             <div className='paginationBtn flexXY g20'>
                 <button className={` ${(pagination === 1) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination - 1)} disabled={pagination == 1}>Prev</button>
                 <h4>...{pagination}</h4>
-                <button className={` ${(pagination === +resultforpagination / 10) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination / 10 === pagination} >Next</button>
+                <button className={` ${(pagination === +resultforpagination / 20) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination/20===pagination} >Next</button>
             </div>
             {/* {!loading && <span class="loader"></span>} */}
         </div>
