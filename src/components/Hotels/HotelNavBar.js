@@ -181,16 +181,16 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                             <p>1 Room, {adultcount} Guests</p>
                         </div>
                     </div>
-                    <div className='hotelResults-navBar-btnDiv flexXY' onClick={(e) => { handleLoginSignUp(e) }}>
+                    <div className='hotelResults-navBar-btnDiv flexXY' onClick={(e) => { handleLoginSignUp(e)}}>
                         {token && <div>{loginProfile}</div>}
                         <h4 className={`hotelResults-navBar-btnDiv-loginbtn ${token ? 'loggedIn' : ''}`}>{token ? <>Hi, User {dropDown}</> : 'Login / Signup'}</h4>
-                        {showSignup && <div className='hotelLogin-transparent' ></div>}
+                        {showSignup && <div className='hotelLogin-transparent'></div>}
+                    </div>
                         <div className='hotelResults-signup'>
                             {showSignup && <Signup token={token} setToken={setToken} showSignup={showSignup} setShowSignUp={setShowSignUp} />}
                         </div>
-                    </div>
                 </div>
-                {showLogin && <div className='hotelLogin-transparent' ></div>}
+                {showLogin && <div className='hotelLogin-transparent'></div>}
                 {showLogin &&
                     <div className='hotelResults-login'>
                         <Login token={token} setToken={setToken} showLogin={showLogin} setShowLogin={setShowLogin} showSignup={showSignup} setShowSignUp={setShowSignUp} />

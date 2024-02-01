@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext, useMemo } from "react";
-import { MyContext } from "../Services/index.js";
-import { Link, useNavigate, } from "react-router-dom";
-import { Base_URL, Project_ID, appType } from "../Constants";
-import { flyFrom, flyTo, swapIcon } from "../Services/Icons.js";
+import React, { useEffect, useState} from "react";
+import { useNavigate, } from "react-router-dom";
+import { Base_URL, Project_ID, object, arr, handleselectionCategory} from "../Constants.js";
+import { flightgo, flyFrom, swapIcon } from "../Services/Icons.js";
 import "./Form.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { BiSolidPlaneLand, BiUser } from "react-icons/bi";
+import { BiUser } from "react-icons/bi";
 import { CgMathMinus, CgMathPlus } from "react-icons/cg";
 import { MdKeyboardArrowDown, MdCompareArrows } from "react-icons/md";
 import { PiCheckBold } from "react-icons/pi";
@@ -14,20 +13,7 @@ import Signup from "../Signup/Signup.js";
 
 export default function Form() {
     const { all, setall } = useAuthContext()
-
-    const arr = [
-        { category: "Adults", age: "(12+ Years)", count: 1 },
-        { category: "Children", age: "(2 - 12 yrs)", count: 0 },
-        { category: "Infants", age: "(Below 2 yrs)", count: 0 },
-    ];
-
-    const object = [
-        { url: " https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/BBD/GiftCards_RR_12072023.png", class: "Economy", fareType: "Regular fare", },
-        { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_DOTW_Varanasi_F_0501.jpg", class: "Business class", fareType: "Student fare", },
-        { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_CTTHAI_F_2012.jpg", class: "First class", fareType: "Senior citizen fare", },
-        { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_Medicancel_F_1711.jpg", class: "Premium class", fareType: "Armed forces fare", },
-    ];
-
+    const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
     const [flightIn, setFlightIn] = useState("");
     const [flightOut, setFlightOut] = useState("");
     const [flightWhere, setFlightWhere] = useState([]);
@@ -41,14 +27,10 @@ export default function Form() {
     const [way, setWay] = useState(false);
     const [rotateCateg, setRotateCateg] = useState({ transform: "rotate(0deg)" });
     const [selectVisible, setSelectVisible] = useState(false);
-    const [adultcount, setAdultCount] = useState(1);
-    const [childrencount, setChildrenCount] = useState(0);
-    const [infantcount, setinfantCount] = useState(0);
     const [whereFrom, setWhereFrom] = useState(false);
     const [whereTo, setWhereTo] = useState(false);
     const [showSignup, setShowSignUp] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
-    const [token, setToken] = useState(all.token);
     const [ways, setWays] = useState("One way");
     const [rotateWay, setRotateWay] = useState({ transform: "rotate(0deg)" });
     const [classs, setClasss] = useState("Economy");
@@ -63,38 +45,6 @@ export default function Form() {
 
     const handleFare = (category) => {
         setFare(category);
-    };
-
-    const handleIncrease = (category) => {
-        switch (category) {
-            case "Adults":
-                setAdultCount(adultcount + 1);
-                break;
-            case "Children":
-                setChildrenCount(childrencount + 1);
-                break;
-            case "Infants":
-                setinfantCount(infantcount + 1);
-                break;
-            default:
-                break;
-        }
-    };
-
-    const handleDecrease = (category) => {
-        switch (category) {
-            case "Adults":
-                adultcount > 1 && setAdultCount(adultcount - 1);
-                break;
-            case "Children":
-                childrencount > 0 && setChildrenCount(childrencount - 1);
-                break;
-            case "Infants":
-                infantcount > 0 && setinfantCount(infantcount - 1);
-                break;
-            default:
-                break;
-        }
     };
 
     const handleTrip = () => {
@@ -124,7 +74,6 @@ export default function Form() {
         setWhereTo(false);
         setWay(false);
         setSelectVisible(false);
-        // filteredAirportsSearchFrom(flightIn)
 
     };
 
@@ -133,7 +82,6 @@ export default function Form() {
         setWhereTo(!whereTo);
         setWay(false);
         setSelectVisible(false);
-        // filteredAirportsSearchTo(flightOut)
     };
 
     const onHandleSelectFlightIn = (selectedFlightIn) => {
@@ -169,8 +117,6 @@ export default function Form() {
             setFlightIn(`${tempFlightOut.iata_code} - ${tempFlightOut.city}, ${tempFlightOut.country}`);
             setFlightOut(`${tempFlightIn.iata_code} - ${tempFlightIn.city}, ${tempFlightIn.country}`);
         }
-
-        console.log('After Swap:', selectedFlightIn, selectedFlightOut);
     };
 
 
@@ -204,9 +150,8 @@ export default function Form() {
                 })
                 const result = await response.json()
                 setFlightWhere(result.data.airports)
-                console.log(result)
             } catch (error) {
-                return (error);
+                console.log (error);
             }
 
         }
@@ -224,7 +169,7 @@ export default function Form() {
                 setFlightTo(result.data.airports)
 
             } catch (error) {
-                return (error);
+                console.log (error);
             }
           }
        const fetchData = async ()=>{
@@ -262,17 +207,17 @@ export default function Form() {
                         </div>
                     )}
                 </div>
+                <div className="selectioncaegory">
                 <div className="selectCateg flexXY" onClick={() => handleSelectCategory()}>
                     <BiUser className="" />
                     <h4>
                         {adultcount && (<> {adultcount} <span>Adult, </span> </>)}
                         {childrencount > 0 && (<>{childrencount} <span>Childrens, </span></>)}
-                        {infantcount > 0 && (<>{infantcount} <span>Infants, </span></>)}
+                        {infantcount > 0 && (<>{infantcount} <span>Infant, </span></>)}
                     </h4>
                     <h4>{classs}</h4>
                     <MdKeyboardArrowDown style={rotateCateg} className="" />
                 </div>
-            </div>
             {selectVisible && (
                 <div className="selectCateg-Expand">
                     {arr.map((items, index) => (
@@ -283,16 +228,16 @@ export default function Form() {
                             </div>
                             <div className="selectCateg-count flexXY">
                                 <CgMathMinus
-                                    className={`${(items.category === "Adults" && adultcount > 1) ||
+                                    className={`${(items.category === "Adult" && adultcount > 1) ||
                                             (items.category === "Children" && childrencount > 0) ||
-                                            (items.category === "Infants" && infantcount > 0)
+                                            (items.category === "Infant" && infantcount > 0)
                                             ? "changeToPosIcon"
                                             : "countNegIcon"
                                         }`}
                                     onClick={() => handleDecrease(items.category)}
                                 />
                                 <h1>
-                                    {items.category === "Adults"
+                                    {items.category === "Adult"
                                         ? adultcount
                                         : items.category === "Children"
                                             ? childrencount
@@ -315,6 +260,8 @@ export default function Form() {
                     </div>
                 </div>
             )}
+            </div>
+            </div>
 
             <div className="btns-div flexY">
                 {object.map((category, index) => (
@@ -348,8 +295,7 @@ export default function Form() {
                             ))}
                         </div>
                     )}
-                    <BiSolidPlaneLand className="whereIconTo" />
-                    {/* <h1 className="whereIconTo">{flyTo}</h1> */}
+                    <h1 className="whereIconTo">{flightgo}</h1>
                     <input
                         id="input2"
                         type="text"
@@ -375,7 +321,7 @@ export default function Form() {
                     )}
                 </div>
                 <div className="input-date">
-                    <div>
+                    <div className="flex">
                         <input id="date1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)}/>
                         <input id="date2" type="date" min={new Date().toISOString().split('T')[0]} value={isDisabled ? "Return" : whereTo} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
                     </div>

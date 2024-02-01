@@ -3,10 +3,8 @@ import { Base_URL, Project_ID, App_Type } from "../Constants";
 
 import HotelNavBar from './HotelNavBar';
 const CardCarausal = lazy(() => import('../Corousel/HotelPage/CardCarausal'));
-import { useAuthContext } from '../ContextAllData';
 import { useLocation, useNavigate } from 'react-router-dom';
 const HotelResults = () => {
-    const { all, setall } = useAuthContext()
     const hotelLocation = useLocation();
     const searchParams = new URLSearchParams(hotelLocation.search);
     let inputResult = searchParams.get("location");
@@ -24,6 +22,7 @@ const HotelResults = () => {
     const [lowhigh, setlowhigh] = useState("");
     const [load, setLoad] = useState(false)
     const navigate = useNavigate()
+
     function sortingincreaseordecrease(value) {
         if (lowhigh == "") {
             return value;
@@ -39,13 +38,12 @@ const HotelResults = () => {
     const fetchHotels = useMemo(async () => {
         try {
             setLoad(false)
-            const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputResult}"}&filter={"rating":{"$gte":"${rating}"}}&page=${pagination}&limit=10`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputResult}"}&filter={"rating":{"$gte":"${rating}"}}&page=${pagination}&limit=10`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setresultforpagination(result.totalResults)
             setHotelResultData(sortingincreaseordecrease(result.data.hotels))
             setHotelId(result.data.hotels[0]._id)
             setLoad(true)
-            // console.log(sortingincreaseordecrease(result.data.hotels))
         } catch (error) {
             console.log(error);
         }
@@ -84,9 +82,6 @@ const HotelResults = () => {
                                 </div>
                                 <div className='hotelMain-sec2 flexBet'>
                                     <h6>{item.amenities.length}-star hotel . {item.location}</h6>
-                                    {/* <div className='hotelMain-sec2-div1 flexBet'>
-                                        <p>62 ratings</p>
-                                    </div> */}
                                 </div>
                                 <div className='hotelMain-sec3'>
                                     <div className='hotelMain-sec3-container1 flexY'>

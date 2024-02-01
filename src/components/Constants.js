@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const Project_ID = "Ccouvj27rhw9z";
 export const Base_URL = 'https://academics.newtonschool.co/api/v1/bookingportals';
 export const App_Type= 'bookingportals';
@@ -23,3 +25,40 @@ export const arr = [
   { category: "Children", age: "(2 - 12 yrs)", count: 0 },
   { category: "Infant", age: "(Below 2 yrs)", count: 0 },
 ];
+
+export const object = [
+  { url: " https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/BBD/GiftCards_RR_12072023.png", class: "Economy", fareType: "Regular fare", },
+  { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_DOTW_Varanasi_F_0501.jpg", class: "Business class", fareType: "Student fare", },
+  { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_CTTHAI_F_2012.jpg", class: "First class", fareType: "Senior citizen fare", },
+  { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_Medicancel_F_1711.jpg", class: "Premium class", fareType: "Armed forces fare", },
+];
+
+export function handleselectionCategory() {
+  const [adultcount, setAdultCount] = useState(1);
+  const [childrencount, setChildrenCount] = useState(0);
+  const [infantcount, setinfantCount] = useState(0);
+  function handleIncrease(category){
+  switch (category) {
+      case "Adult":setAdultCount(adultcount + 1);break;
+      case "Children":setChildrenCount(childrencount + 1);break;
+      case "Infant":setinfantCount(infantcount + 1);break;
+      default: break;
+  }
+}
+const handleDecrease = (category) => {
+  switch (category) {
+      case "Adult":
+          adultcount > 1 && setAdultCount(adultcount - 1);
+          break;
+      case "Children":
+          childrencount > 0 && setChildrenCount(childrencount - 1);
+          break;
+      case "Infant":
+          infantcount > 0 && setinfantCount(infantcount - 1);
+          break;
+      default:
+          break;
+  }
+}
+  return {handleIncrease, handleDecrease, adultcount, setAdultCount, childrencount, setChildrenCount, infantcount, setinfantCount }
+};

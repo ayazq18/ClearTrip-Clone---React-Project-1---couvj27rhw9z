@@ -19,8 +19,4 @@ export const MyContext = createContext();
       }
     }
 
-    // --------------FlightsApi------------------
-
-
-
-    // ----------------------Login-------------------------
+    

@@ -42,39 +42,36 @@
   }
 
   .login-form {
-    /* width: 85%; */
     flex-direction: column;
     gap: 10px;
   }
 
   .login-form input{
-    padding: 10px 30px;
-    border: 1px solid #78727283;
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #7872723b;
   }
 
   .login-form-btn{
     width: 60%;
     gap: 30px;
   }
-
   .login-page .login-form-btn h1{
     font-size: 12px;
     cursor: pointer;
+    padding: 10px 20px;
+    background-color: orangered;
   }
-
+  .login-page .login-form-btn button{
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 0;
+    padding: 10px 20px;
+    background-color: orangered;
+  }
   .login-form-btn h1:hover{
     color: #3366cc;
   }
-
-  .login-form button{
-    padding: 10px 30px;
-    border: none;
-    border-radius: 6px;
-    color: #fff;
-    background-color: #000;
-    cursor: pointer;
-  }
-
   .login-page p{
     font-size: 12px;
     margin-top: 10px;
@@ -87,10 +84,39 @@
     color: #3366cc;
     font-weight: 600;
   }
+  .footer-section{
+    margin-top: 40px;
+  }
 
   .footer{
     padding: 20px;
     border-top: 1px solid #78727283;
     position: relative;
     top: 18%;
+  }
+
+  @media only screen and (min-width: 240px) and (max-width: 768px) {
+    .login-page{
+      flex-direction: column;
+      width: 400px;
+      height: fit-content;
+    }
+    .corousel{
+      width: 400px;
+      height: 290px;
+    }
+    .login-section{
+      width: 450px;
+      height: fit-content;
+      padding: 0px;
+    }
+    .login-page p{
+      width: 250px;
+      text-align: center;
+      text-wrap: wrap;
+    }
+    .footer-section{
+      margin-top: 10px;
+      align-items: center;
+    }
   }

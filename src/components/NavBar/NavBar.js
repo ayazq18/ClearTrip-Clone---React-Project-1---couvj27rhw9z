@@ -1,19 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./NavBar.css";
-import { BiSolidPlaneAlt, BiSupport, BiSolidOffer } from "react-icons/bi";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
-import { MdOutlineDirectionsBus, MdStars } from "react-icons/md";
-import { TfiBag } from "react-icons/tfi";
-import { NavLink, Outlet, Link, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Signup from "../Signup/Signup.js";
-import { useAuthContext } from "../ContextAllData.js";
-import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher, logo, profileLogo } from "../Services/Icons.js";
+import {logo, flight } from "../Services/Icons.js";
 import Login from "../Login/Login.js";
 
 export default function NavBar() {
   const MyRef = useRef(null)
-  const { all, setall } = useAuthContext();
   const [showSignup, setShowSignUp] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -49,16 +43,6 @@ export default function NavBar() {
     }
   };
 
-  const expandedObj = [
-    {item : 'Trips', icons : trips, toolsIcon: cancel,  tools : 'Cancellations'},
-    {item : 'ShortList', icons : shortlists, toolsIcon: change,  tools : 'Change flights'},
-    {item : 'Travellers', icons : travellers, toolsIcon: print,  tools : 'Print tickes'},
-    {item : 'Cleartrip Wallet', icons : wallet, toolsIcon: voucher,  tools : 'Print hotel voucher'},
-    {item : 'Hi-Five', icons : hiFive},
-    {item : 'Expressway', icons : Expressway},
-    {item : 'Profile', icons : profile},
-    {item : 'Settings', icons : settings},
-  ]
   const navigate = useNavigate()
   return (
     <div id="navBar-home">
@@ -77,16 +61,19 @@ export default function NavBar() {
         <div id="sideNavBar-section">
           <ul id="sideNavBar-links">
             <li>
-              {/* <NavLink to='/'>  */}
                 <NavLink to="/flights">
-                  <BiSolidPlaneAlt/>
-                  Flights
+                  <div className="flexY g10">
+                  <div>{flight}</div>
+                  <div>Flights</div>
+                  </div>
                 </NavLink>
-              {/* </NavLink> */}
             </li>
             <li>
               <NavLink to="/hotel">
-                <HiOutlineBuildingOffice2 /> Hotels
+              <div className="flexY g10">
+                  <div><HiOutlineBuildingOffice2 /></div>
+                  <div>Hotels</div>
+                  </div>
               </NavLink>
             </li>
           </ul>

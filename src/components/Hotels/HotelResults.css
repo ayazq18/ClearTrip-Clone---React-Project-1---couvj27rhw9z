@@ -6,6 +6,9 @@ body{
     gap: 20px;
 }
 
+.hotelResults{
+    position: relative;
+}
 .hotelResults-navBar-container{
     width: 100%;
     background-color: #fff;
@@ -70,7 +73,7 @@ body{
     padding: 10px 15px;
     border-radius: 6px;
     border: 1px solid #000;
-    position: relative;
+    /* position: relative; */
 }
 .loggedIn{
     border: none;

@@ -145,14 +145,15 @@ export default function Signup({token, setToken, showSignup, setShowSignUp}) {
               </div>
             </form>
              )}
+             <div className="footer-section flexc">
             <p>
-              We no more support email based login. You can now login via mobile
-              number & link email to access your account.
+              We now support mobile number based login. The option will be available soon.
             </p>
             <p className="footer">
               By continuing, you agree to Cleartrip's{" "}
               <a href="#">privacy policy</a> & <a href="#">terms of use.</a>
             </p>
+            </div>
           </div>
           <div className="transparent"></div>
         </div>

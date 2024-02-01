@@ -31,8 +31,6 @@
 
 
 /* -------------Expanded-login------------- */
-
-
 .logout-profile{
   padding: 10px;
   border-bottom: 1px solid #5a575725;
@@ -145,15 +143,14 @@
 }
 
 .sideNavBar-container{
-  width: 100%;
-  background-color: rgba(247, 245, 245, 0.567);
+  /* width: 100%; */
+  flex-wrap: nowrap;
+  height: 100%;
+  /* background-color: rgba(247, 245, 245, 0.567); */
 }
 
 #sideNavBar {
-  width: 80%;
-  /* margin: 0 auto; */
   justify-content: space-around;
-  /* border: 2px solid blue; */
 }
 
 #sideNavBar-section {
@@ -166,7 +163,7 @@
 }
 
 #sideNavBar-links {
-  width: 250px;
+  width: 200px;
   margin: 0px 12px;
   /* border: 2px solid blue; */
 }
@@ -174,7 +171,6 @@
 #sideNavBar-links li {
   list-style-type: none;
   text-align: start;
-  text-wrap: nowrap;
   font-size: 16px;
   margin: 10px;
   display: flex;
@@ -195,12 +191,10 @@
   border-radius: 6px;
 }
 
-.active {
-  width: 100%;
-  color: rgb(40, 102, 225);
-  background-color: rgba(51, 102, 204, 0.408);
+.active{
+  background-color: #b0c3ef6a;
+  padding: 10px;
   border-radius: 6px;
-  padding: 10px 140px 10px 10px;
 }
 
 

@@ -90,7 +90,7 @@ export default function FlightInfo() {
   
   function gotopayment() {
     if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
-      navigate(`/flights/results/Info/bookingpage?FirstName="${details.dfname}"&Email="${details.demail}"`);
+      navigate(`/flights/results/Info/bookingpage?FirstName="${details.dfname}"&Email="${details.demail}"&Amount=${((dataa.ticketPrice * 18) / 100 + dataa.ticketPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
     }
   }
 

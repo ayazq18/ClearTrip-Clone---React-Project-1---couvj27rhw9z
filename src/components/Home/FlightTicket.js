@@ -2,11 +2,10 @@ let tl;
 import React, { useEffect, useState, useContext, useRef, useMemo, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./FlightTicket.css";
-import { handleIncrease } from "../Constants";
-import { getAirlineInfo } from '../Constants';
+import { getAirlineInfo, handleselectionCategory} from '../Constants';
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { CgArrowsExchange } from "react-icons/cg";
-import { logo, flightgo, hotelIcon, support, sortIcon, clockIcon, } from "../Services/Icons";
+import { logo, flightgo, hotelIcon, support, sortIcon, clockIcon, flightIcon, } from "../Services/Icons";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup.js";
 import { arr } from "../Constants";
@@ -26,6 +25,7 @@ export default function FlightTicket() {
     let dayy = searchParams.get("dayOfWeek");
     let date = searchParams.get("date");
 
+    const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
     const [filter, setfilter] = useState({ "6E": true, "SG": true, "I5": true, "UK": true, "AI": true, "QP": true, "S5": true, "stops": null });
     const [flightResultdata, setflightResultdata] = useState([]);
     const [flightIn, setFlightIn] = useState(flightFrom);
@@ -40,9 +40,6 @@ export default function FlightTicket() {
     const [isDisabled, setIsDisabled] = useState(true);
     const [rotateCateg, setRotateCateg] = useState({ transform: "rotate(0deg)" });
     const [selectVisible, setSelectVisible] = useState(false);
-    const [adultcount, setAdultCount] = useState(1);
-    const [childrencount, setChildrenCount] = useState(0);
-    const [infantcount, setinfantCount] = useState(0);
     const [whereFrom, setWhereFrom] = useState(false);
     const [whereTo, setWhereTo] = useState(false);
     const [showSignup, setShowSignUp] = useState(false);
@@ -61,7 +58,6 @@ export default function FlightTicket() {
     const [tripdurationmin, settripdurationmin] = useState(1);
     const [tripdurationmax, settripdurationmax] = useState(10);
     const [valuee, setvaluee] = useState(2500);
-    const [filterPopup, setfilterPopup] = useState({ stops: false, departure: false, wayprice: false, airline: false, duration: false, layover: false });
 
     const navigate = useNavigate()
     const MyRef = useRef(null);
@@ -93,23 +89,6 @@ export default function FlightTicket() {
         setPop({})
         setPop((prev) => ({ ...prev, [key]: !pop[key] }))
     }
-    const handleIncrease = (category) => {
-        switch (category) {
-            case "Adult": setAdultCount(adultcount + 1); break;
-            case "Children": setChildrenCount(childrencount + 1); break;
-            case "Infant": setinfantCount(infantcount + 1); break;
-            default: break;
-        }
-    };
-
-    const handleDecrease = (category) => {
-        switch (category) {
-            case "Adult": adultcount > 1 && setAdultCount(adultcount - 1); break;
-            case "Children": childrencount > 0 && setChildrenCount(childrencount - 1); break;
-            case "Infant": infantcount > 0 && setinfantCount(infantcount - 1); break;
-            default: break;
-        }
-    };
 
     const handleSelectCategory = () => {
         setRotateCateg(selectVisible ? { transform: "rotate(0deg)", transition: "transform 0.3s ease-in-out" } : { transform: "rotate(180deg)", transition: "transform 0.3s ease-in-out" });
@@ -228,7 +207,6 @@ export default function FlightTicket() {
 
     const handleSearchResults = (e) => {
         e.preventDefault();
-        // setflightResultdata([]);
         fetchFlights();
         (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`)
     }
@@ -259,7 +237,7 @@ export default function FlightTicket() {
                     <div id="ticketSupport" className="flexBet">
                         <div className="headerLogo-Icons flexY">
                             {logo}
-                            <h1 onClick={() => navigate("/flights")}>{flightgo}</h1>
+                            <h1 onClick={() => navigate("/flights")}>{flightIcon}</h1>
                             <h1 onClick={() => navigate("/hotel")}>{hotelIcon}</h1>
                         </div>
                         <div className="support-Btn flex">
@@ -277,7 +255,7 @@ export default function FlightTicket() {
                             <button className="ticketHeader-btn flexXY" onClick={() => navigate('/')}>{support} Support</button>
                             <div className="Login-button">
                                 <button ref={MyRef} className="loginBtn-one flexXY" onClick={() => { handleSignin(), poptab('signin') }}>
-                                    {token ? <><svg viewBox="0 0 14 14" height="16px" width="16px" class="c-inherit"><g fill="none" fill-rule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.5"></circle><path fill="currentColor" d="M3,5 C4.38071187,5 5.5,3.88071187 5.5,2.5 C5.5,1.11928813 4.38071187,0 3,0 C1.61928813,0 0.5,1.11928813 0.5,2.5 C0.5,3.88071187 1.61928813,5 3,5 Z" transform="matrix(-1 0 0 1 10 3)"></path><path fill="currentColor" d="M7,9 C9.14219539,9 10.8910789,10.6839685 10.9951047,12.8003597 L11,13 L3,13 C3,10.790861 4.790861,9 7,9 Z"></path><circle cx="7" cy="7" r="7.75" stroke="#FFF" stroke-width="1.5"></circle></g></svg> My account</> : 'login / signup'}
+                                    {token ? <><svg viewBox="0 0 14 14" height="16px" width="16px" className="c-inherit"><g fill="none" fillRule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><circle cx="7" cy="7" r="6.25" stroke="currentColor" strokeWidth="1.5"></circle><path fill="currentColor" d="M3,5 C4.38071187,5 5.5,3.88071187 5.5,2.5 C5.5,1.11928813 4.38071187,0 3,0 C1.61928813,0 0.5,1.11928813 0.5,2.5 C0.5,3.88071187 1.61928813,5 3,5 Z" transform="matrix(-1 0 0 1 10 3)"></path><path fill="currentColor" d="M7,9 C9.14219539,9 10.8910789,10.6839685 10.9951047,12.8003597 L11,13 L3,13 C3,10.790861 4.790861,9 7,9 Z"></path><circle cx="7" cy="7" r="7.75" stroke="#FFF" strokeWidth="1.5"></circle></g></svg> My account</> : 'login / signup'}
                                 </button>
                                 {showSignup && pop['signin'] && <div className="login-popup"><Signup showSignup={showSignup} setShowSignUp={setShowSignUp} token={token} setToken={setToken} /></div>}
                             </div>
@@ -286,7 +264,7 @@ export default function FlightTicket() {
                     <div className="ticketForm flexEnd">
                         <form className="ticketSearch-sec" onSubmit={(e) => handleSearchResults(e)}>
                             <div className="inputTicket flexXY">
-                                <div className="input-text flexXY">
+                                <div className="input-text1 flexY">
                                     <input
                                         id="inputSource"
                                         type="text"
@@ -339,8 +317,8 @@ export default function FlightTicket() {
                                             ))}
                                         </div>
                                     )}
-                                    <div className="input-date flexXY">
-                                        <div className="flexXY">
+                                    <div className="input-date flexBet">
+                                        <div className="flexBet">
                                             <input
                                                 className="input-date1"
                                                 type="date"
@@ -363,10 +341,7 @@ export default function FlightTicket() {
                                 </div>
 
                                 <div className="selectTicket flex">
-                                    <div
-                                        className="selectCateg flexXY"
-                                        onClick={() => { handleSelectCategory(), poptab('selecttraveller') }}
-                                    >
+                                    <div className="selectCateg-one flexXY" onClick={() => { handleSelectCategory(), poptab('selecttraveller') }}>
                                         <h4>
                                             {adultcount && (
                                                 <>
@@ -438,21 +413,21 @@ export default function FlightTicket() {
                 <div id="main" className="flex">
                     <div id="aside">
                         <div id="stops">
-                            <div onClick={() => { poptab('stop') }} className="flexBet">
+                            <div onClick={() => { poptab('stop') }} className="stops-static flexBet">
                                 <h1>Stops</h1>
-                                <MdKeyboardArrowUp className={`fs ${!pop['stop'] ? 'rotatedegree' : 'rotatezero'}`} />
+                                <div><MdKeyboardArrowUp className={`fs ${!pop['stop'] ? 'rotatedegree' : 'rotatezero'}`} /></div>
                             </div>
                             {!pop['stop'] && (
                                 <div className="stop-container">
-                                    <label onClick={() => { airlineSelectorwithvalue("stops", 0) }} for="non-stop" className='flex g10'><div className='flexX g5'><input className="styled-checkbox" type='checkbox' id='non-stop' /><p>Non-stop</p></div></label>
-                                    <label onClick={() => { airlineSelectorwithvalue("stops", 1) }} for="1-stop" className='flex g10'><div className='flexY g5'><input className="styled-checkbox" type='checkbox' id='1-stop' /><p>1 stop</p></div></label>
-                                    <label onClick={() => { airlineSelectorwithvalue("stops", 2) }} for="2-stop" className='flex g10'><div className='flexY g5'><input className="styled-checkbox" type='checkbox' id='2-stop'  /><p>2 stop</p></div></label>
+                                    <label onClick={() => { airlineSelectorwithvalue("stops", 0) }} htmlFor="non-stop" className='flex g10'><div className='flexX g5'><input className="styled-checkbox" type='checkbox' id='non-stop' /><p>Non-stop</p></div></label>
+                                    <label onClick={() => { airlineSelectorwithvalue("stops", 1) }} htmlFor="1-stop" className='flex g10'><div className='flexY g5'><input className="styled-checkbox" type='checkbox' id='1-stop' /><p>1 stop</p></div></label>
+                                    <label onClick={() => { airlineSelectorwithvalue("stops", 2) }} htmlFor="2-stop" className='flex g10'><div className='flexY g5'><input className="styled-checkbox" type='checkbox' id='2-stop'  /><p>2 stop</p></div></label>
                                 </div>
                             )}
                         </div>
-                        <div className='wayprice flex' onClick={() => { poptab("wayprice") }}>
+                        <div className='wayprice flexXY' onClick={() => { poptab("wayprice") }}>
                             <p>One-way price</p>
-                            <MdKeyboardArrowUp className="fs" />
+                            <div><MdKeyboardArrowUp className="fs" /></div>
                         </div>
                         {!pop["wayprice"] &&
                             <div className='filterPopupwayprice flex flexc'>
@@ -461,14 +436,14 @@ export default function FlightTicket() {
                                 <div className='flexBet'><p>₹1,127</p><p>₹2,500</p></div>
                             </div>}
                         <div id="one-way-price" className="flex">
-                            <div onClick={() => { poptab('oneway') }} className="flexBet">
+                            <div onClick={() => { poptab('oneway') }} className="trip-duration flexBet">
                                 <h1>Trip duration</h1>
                                 <MdKeyboardArrowUp className="fs" />
                             </div>
                             {!pop['oneway'] && (
                                 <div className="one-way-price-sec1">
                                     <div className='flexBet'><p>{tripdurationmin} hours</p><p>{tripdurationmax} hours</p></div>
-                                    <MultiRangeSlider min={1} max={10} minValue={tripdurationmin} ruler="false" label="false" maxValue={tripdurationmax} step={1} onInput={(e) => { settripdurationmin(e.minValue); settripdurationmax(e.maxValue); }} />
+                                    <div><MultiRangeSlider min={1} max={10} minValue={tripdurationmin} ruler="false" label="false" maxValue={tripdurationmax} step={1} onInput={(e) => { settripdurationmin(e.minValue); settripdurationmax(e.maxValue); }} /></div>
                                 </div>
                             )}
                         </div>
@@ -592,7 +567,6 @@ export default function FlightTicket() {
                 <h4>...{pagination}</h4>
                 <button className={` ${(pagination === +resultforpagination / 20) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination/20===pagination} >Next</button>
             </div>
-            {/* {!loading && <span class="loader"></span>} */}
         </div>
     );
 }

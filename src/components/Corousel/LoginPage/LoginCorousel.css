@@ -37,3 +37,13 @@
 .active-class-two {
   background-color: #000;
 }
+
+
+@media only screen and (min-width: 240px) and (max-width: 768px) {
+  .img-corousel-two img {
+    width: 290px;
+  }
+  .carousel-container-two{
+    width: 290px;
+  }
+}

@@ -75,7 +75,7 @@
   }
 
   .search-way{
-    width: 13%;
+    width: 200px;
     padding: 5px 30px;
     background-color: #fff;
     border: 1px solid #9c979745;
@@ -107,13 +107,14 @@
     border-radius: 6px;
   }
   
-  
+  .selectioncaegory{
+    position: relative;
+  }
   .selectCateg{
     width:100%;
     padding: 10px;
     text-wrap: nowrap;
     cursor: pointer;
-    position: relative;
   }
 
   .selectCateg-Expand{
@@ -121,11 +122,11 @@
     border: 1px solid #9c979745;
     border-radius: 6px;
     position: absolute;
-    top: 230px;
-    left: 40%;
+    top: 50px;
+    left: 50px;
     cursor: pointer;
     z-index: 11;
-    width: 23%;
+    width: 300px;
     height: fit-content;
     position: absolute;
   }
@@ -140,7 +141,6 @@
     color: #48464684;
   }
   .selectCateg-Expand-container{
-    /* border: 1px solid red; */
     margin: 20px;
   }
   
@@ -181,7 +181,7 @@
 
   .selectCateg-Expand-btns-div{
     margin: 10px;
-    width: fit-content;
+    /* width: fit-content; */
     flex-wrap: wrap;
   }
 
@@ -202,7 +202,6 @@
   }
 
   .search-card .btns-div {
-    margin-left: 5px;
     padding: 10px 0;
     gap: 10px;
   }
@@ -233,7 +232,7 @@
   
   .input {
     width: 100%;
-    margin: 15px 10px;
+    margin: 15px 0px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -273,7 +272,7 @@
     font-size: 20px;
     position: absolute;
     left: 15px;
-    top: 10px;
+    top: 5px;
     color: rgba(0, 0, 0, 0.381);
     z-index: 1;
   }
@@ -375,7 +374,8 @@
   .whereIconTo {
     font-size: 20px;
     position: absolute;
-    right: 270px;
+    top: 10px;
+    right: 280px;
     /* transform: rotate(45deg); */
     color: rgba(0, 0, 0, 0.381);
     z-index: 1;
@@ -391,9 +391,9 @@
   
   #date2 {
     padding: 15px 35px;
+    margin: 15px 0;
     border: 1px solid rgba(0, 0, 0, 0.108);
-    border-left: none;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0px 6px 6px 0px;
     font-size: 15px;
   }
   
@@ -417,7 +417,10 @@
  
   /* -------------------Media----------------------- */
   @media only screen and (min-width: 240px) and (max-width: 768px) {
-  
+    
+    .search-card{
+      width: auto;
+    }
     .search-card .btns-div {
       display: flex;
       flex-wrap: wrap;
@@ -426,49 +429,61 @@
       font-size: 10px;
       text-wrap: nowrap;
     }
-  
     .select {
-      padding: 2px;
-      margin: 0;
-      width: 20px;
-      flex-wrap: nowrap;
+      gap: 70px;
     }
-
+    .search-way{
+      top: 320px;
+      left: 70px;
+    }
+    .selectCateg {
+      width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow-x: scroll;
+    }
+    .selectCateg-Expand{
+      top: 50px;
+      left: -80px;
+      width: 300px;
+    }
+    .search-card .btns-div  {
+      justify-content: center;
+    }
+    .search-card .btns-div h2 {
+      font-size: 10px;
+    }
     .exchangeIcon {
       display: none;
     }
   
     .input {
+      width: 100%;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
     }
 
     #input1,
-    #input2, #date1,
-    #date2  {
+    #input2 {
       width: 100%;
       border: none;
       border-radius: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.29);
       padding: 15px 30px;
-      text-align: center;
+      text-align: start;
     }
-  
+    #date1,#date2 {
+      background-color: #fff;
+      width: 140px;
+      font-size: 15px;
+    }
     .input-text {
       flex-wrap: wrap;
     }
   
     .input-date {
-      flex-direction: column;
+      width: 100%;
       justify-content: space-between;
-      gap: 30px;
-    }
-  
-    .whereIconTo,
-    .whereIconfrom {
-      display: none;
     }
   }
   
