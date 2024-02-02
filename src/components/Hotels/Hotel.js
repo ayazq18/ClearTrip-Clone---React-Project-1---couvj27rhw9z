@@ -1,22 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useMatch, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ImgCorousel from "../Corousel/FlightPage/ImgCorousel.js";
 import { FaGreaterThan, FaLessThan } from "react-icons/fa6";
-import { fetchOffer } from "../Services/index.js";
-import { Base_URL, Project_ID, App_Type } from "../Constants.js";
+import { Base_URL, Project_ID, App_Type, handleselectionCategory } from "../Constants.js";
 import './Hotel.css'
 import { BiUser } from "react-icons/bi";
 import { CgMathMinus, CgMathPlus } from "react-icons/cg";
 import { useAuthContext } from "../ContextAllData.js";
-import { location } from "../Services/Icons.js";
+import { location } from "../../Services/Icons.js";
 
 export default function Hotel() {
   const [offers, setOffers] = useState([]);
   const [counter, setCounter] = useState(0);
   const [imgCounter, setImgCounter] = useState(0);
-  const [adultcount, setAdultCount] = useState(1);
-  const [childrencount, setChildrenCount] = useState(0);
-  const [infantcount, setinfantCount] = useState(0);
   const [selectVisible, setSelectVisible] = useState(false);
   const [whereFrom, setWhereFrom] = useState(false);
   const [roomSelect, setRoomSelect] = useState(false);
@@ -27,11 +23,12 @@ export default function Hotel() {
   const [toDate, setToDate] = useState(`${new Date().toISOString().split("T")[0]}`)
   const [selection, setSelection] = useState('1Room, 1 Adult')
 
+  const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
   const navigate = useNavigate()
   const {all, setall} = useAuthContext()
 
   const arr = [
-    { category: "Adults", age: "(12+ Years)", count: 1 },
+    { category: "Adult", age: "(12+ Years)", count: 1 },
     { category: "Children", age: "(2 - 12 yrs)", count: 0 },
   ];
 
@@ -67,39 +64,6 @@ export default function Hotel() {
       }
     }
   };
-
-
-    const handleIncrease = (category) => {
-        switch (category) {
-            case "Adults":
-                setAdultCount(adultcount + 1);
-                break;
-            case "Children":
-                setChildrenCount(childrencount + 1);
-                break;
-            case "Infants":
-                setinfantCount(infantcount + 1);
-                break;
-            default:
-                break;
-        }
-    };
-
-    const handleDecrease = (category) => {
-        switch (category) {
-            case "Adults":
-                adultcount > 1 && setAdultCount(adultcount - 1);
-                break;
-            case "Children":
-                childrencount > 0 && setChildrenCount(childrencount - 1);
-                break;
-            case "Infants":
-                infantcount > 0 && setinfantCount(infantcount - 1);
-                break;
-            default:
-                break;
-        }
-    };
 
     const handleRoomSelect = ()=>{
       setRoomSelect(!roomSelect)
@@ -155,7 +119,6 @@ export default function Hotel() {
         })
             const result = await res.json()
             setOffers(result.data.offers)
-            console.log (result);
         }catch(error){
             return error
         }
@@ -191,7 +154,7 @@ export default function Hotel() {
           <div className="hotelInputExpand">
             <p>Popular destinations</p>
             {inputResult && inputResult.map((item, index)=>(
-              <div key={index} className="hotelInputExpand-content flex">
+              <div key={index} className="hotelInputExpand-content flexY">
                 <h2>{location}</h2>
                 <h1 onClick={()=>handleToInput(item)}>{item.location}</h1>
               </div>
@@ -231,7 +194,7 @@ export default function Hotel() {
                             </div>
                             <div className="hotelSelectCateg-count flexY">
                                 <CgMathMinus
-                                    className={`${(items.category === "Adults" && adultcount > 1) ||
+                                    className={`${(items.category === "Adult" && adultcount > 1) ||
                                             (items.category === "Children" && childrencount > 0)
                                             ? "hotelChangeToPosIcon"
                                             : "hotelCountNegIcon"
@@ -239,7 +202,7 @@ export default function Hotel() {
                                     onClick={() => handleDecrease(items.category)}
                                 />
                                 <h1>
-                                    {items.category === "Adults"
+                                    {items.category === "Adult"
                                         ? adultcount
                                         : childrencount}
                                 </h1>
@@ -255,22 +218,23 @@ export default function Hotel() {
                     <span>Add another room</span>
                     </div>
                 </div>
-            )}
+             )}
             </div>
         </div>
             <div className="hotelSearchDiv">
                 <button id="hotelSearchBtn" onClick={()=>handleSearchFlight()}>
-                    Search flights
+                    Search Hotels
                 </button>
             </div>
             </div>
         </form>
-       {/* <Form onClick={(e)=>handleSearchFlight(e)}/> */}
       </div>
-       {/* offer section */}
        <div className="offer-sec ">
         <ImgCorousel />
+        <div className="flexBet">
         <h1 id="more">More offers</h1>
+        <h1 style={{color:'blue'}} onClick={()=>navigate('/')} id="more">View all</h1>
+        </div>
         {offers.length && (
           <div id="offer-corousel" key={offers._id}>
             <div className="corousel-content">

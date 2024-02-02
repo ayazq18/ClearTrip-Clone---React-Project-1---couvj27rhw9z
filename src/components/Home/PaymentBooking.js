@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-// import './HotelBooking.css'
 import { IoIosArrowForward } from "react-icons/io";
-import { dropDown, logo, mastecard, safekey, visa } from '../Services/Icons';
-import { CgClose } from 'react-icons/cg';
+import { logo } from '../../Services/Icons';
 
 
 export default function HotelPayment() {
@@ -46,8 +44,6 @@ export default function HotelPayment() {
     setdetails((prev) => ({ ...prev, [key]: value }));
 }
 
-
-
   return (
     <div className='hotelBooking'>
       {payment && <div className='payment-transparent'></div>}
@@ -67,7 +63,7 @@ export default function HotelPayment() {
                 <div className='flexBet'>{logo}</div>
                 <h2 style={{color:'green', textAlign:'center'}}>Payment Successfull</h2>
                 <h2 style={{textAlign:'center'}}>Dear {fName}</h2>
-                <p style={{textAlign:'center'}}>Have a good time</p>
+                <p style={{textAlign:'center'}}>Have a good good travel</p>
               </div>
               <div style={{marginTop:'50px', textAlign:'center', borderTop:'1px dashed #808080', paddingTop:'10px'}}>The booking details is been sent to {email}</div>
             </div>

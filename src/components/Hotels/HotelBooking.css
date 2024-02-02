@@ -80,16 +80,8 @@
     box-shadow: rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     border-radius: 8px;
     background-color: #fff;
+    z-index: 2;
 }
-/* .transparent{
-    width: 100%;
-    height: 100vh;
-    background-color: #0000002c;
-    position: absolute;
-    top: 0;
-    z-index: -1;
-} */
-
 .hotelinfo-left-card-sec3, .hotelinfo-left-card-sec4, .hotelinfo-left-card-sec5{
     width: 750px;
     padding: 20px 10px;
@@ -112,12 +104,21 @@
     color: #808080;
 }
 .moreDetailsAboutRoom{
-    width: 40vw;
-    height: 100vh;
+    width: 40%;
+    height: 400px;
     position: absolute;
     background-color: #fff;
-    top: 0px;
-    right: 0;
+    top: 250px;
+    right: 300px;
+    z-index: 2;
+}
+.booking-transparent{
+    width: 100vw;
+    height: 100%;
+    background-color: #0000002c;
+    position: absolute;
+    top: 0;
+    z-index: 1;
 }
 .hotelinfo-left-card-sec5{
     position: relative;
@@ -128,6 +129,7 @@
     background-color: #fff;
     top: 0px;
     right: 0;
+    z-index: 2;
 }
 
 

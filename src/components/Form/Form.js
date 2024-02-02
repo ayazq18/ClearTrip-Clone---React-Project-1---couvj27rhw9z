@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from "react";
 import { useNavigate, } from "react-router-dom";
 import { Base_URL, Project_ID, object, arr, handleselectionCategory} from "../Constants.js";
-import { flightgo, flyFrom, swapIcon } from "../Services/Icons.js";
+import { flightgo, flyFrom, swapIcon } from "../../Services/Icons.js";
 import "./Form.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { BiUser } from "react-icons/bi";
@@ -9,7 +9,6 @@ import { CgMathMinus, CgMathPlus } from "react-icons/cg";
 import { MdKeyboardArrowDown, MdCompareArrows } from "react-icons/md";
 import { PiCheckBold } from "react-icons/pi";
 import { useAuthContext } from "../ContextAllData.js";
-import Signup from "../Signup/Signup.js";
 
 export default function Form() {
     const { all, setall } = useAuthContext()
@@ -29,8 +28,6 @@ export default function Form() {
     const [selectVisible, setSelectVisible] = useState(false);
     const [whereFrom, setWhereFrom] = useState(false);
     const [whereTo, setWhereTo] = useState(false);
-    const [showSignup, setShowSignUp] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
     const [ways, setWays] = useState("One way");
     const [rotateWay, setRotateWay] = useState({ transform: "rotate(0deg)" });
     const [classs, setClasss] = useState("Economy");
@@ -182,7 +179,6 @@ export default function Form() {
     return (
         // <div className="flexXY">
         <form className="search-card">
-            {showSignup && <Signup showSignup={showSignup} setShowSignUp={setShowLogin}/>}
             <div className="select flexBet">
                 <div className="selectWay" onClick={() => handleTrip()}>
                     <div className="selectTrip flexY">
@@ -323,7 +319,7 @@ export default function Form() {
                 <div className="input-date">
                     <div className="flex">
                         <input id="date1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)}/>
-                        <input id="date2" type="date" min={new Date().toISOString().split('T')[0]} value={isDisabled ? "Return" : whereTo} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
+                        <input id="date22" type="date" min={new Date().toISOString().split('T')[0]} value={isDisabled ? "Return" : whereTo} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
                     </div>
                     <div className="searchBtn">
                         <button onClick={(e) => handleSearchFlight(e)} id="flightSearchBtn">

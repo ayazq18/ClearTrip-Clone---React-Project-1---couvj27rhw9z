@@ -3,7 +3,7 @@ import "./FlightInfo.css";
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { IoIosArrowDown } from "react-icons/io";
 import { useAuthContext } from '../ContextAllData';
-import { getAirlineInfo } from '../Constants';
+import { Project_ID, getAirlineInfo } from '../Constants';
 
 export default function FlightInfo() {
   const {all, setall} = useAuthContext()
@@ -13,6 +13,7 @@ export default function FlightInfo() {
   const searchParams = new URLSearchParams(location.search);
   let flightid = searchParams.get("flightid");
   let ID = searchParams.get("ID");
+  let date = searchParams.get("date")
   
   const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor (Timor-Leste)", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican state", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"]
   const states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "New South Wales", "Queensland", "South Australia", "Tasmania", "Victoria", "Western Australia", "Australian Capital Territory", "Northern Territory", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan"];
@@ -23,12 +24,6 @@ export default function FlightInfo() {
   { name: "GOI", fname: "Goa, IN", lname: "- Dabolim Airport (GOI)" },
   { name: "HYD", fname: "Hyderabad, IN", lname: "- Rajiv Gandhi International (HYD)" },
   { name: "MAA", fname: "Chennai, IN", lname: "- Chennai Airport (MAA)" },];
-  const [logoflights, setlogoflights] = useState([
-    "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/6E.svg", "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/SG.svg",
-    "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/I5.svg", "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/UK.svg",
-    "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/AI.svg", "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/QP.svg",
-    "//fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/S5.svg"
-  ])
 
   const [pageLoader, setpageLoader] = useState(false);
   const [dataa, setdataa] = useState();
@@ -42,6 +37,31 @@ export default function FlightInfo() {
   function popp(key) {
     setpop({});
     setpop((prev) => ({ ...prev, [key]: !pop[key] }));
+  }
+
+  function startdate(){
+    const departureDate = new Date(date);
+    const [hours, minutes] = dataa.departureTime.split(":");
+    departureDate.setHours(hours, minutes);
+    
+    return departureDate;
+  }
+
+  function enddate(){
+    const [departureHours, departureMinutes] = dataa.departureTime.split(":");
+    const [arrivalHours, arrivalMinutes] = dataa.arrivalTime.split(":");
+    const arrivalDate = new Date(date);
+    if(departureHours>arrivalHours){
+    arrivalDate.setHours(arrivalHours,arrivalMinutes);
+    }
+    else if(departureHours==arrivalHours){
+      arrivalDate.setHours(arrivalHours,departureMinutes+arrivalMinutes)
+    }
+    else{
+      arrivalDate.setHours(departureHours+arrivalHours,departureMinutes+arrivalMinutes)
+    }
+  
+    return arrivalDate;
   }
 
   function personalInfosenderone(e) {
@@ -60,36 +80,37 @@ export default function FlightInfo() {
     setdetails((prev) => ({ ...prev, [key]: value }));
   }
 
-  const senddata=useMemo(async ()=>{
+  const senddata= async ()=>{
     try{
       if(details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress){
         const response = await (await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/booking`,
                 {
                     method: "POST",
+                    Authorizaton: `Bearer ${localStorage.getItem('token')}`,
                     headers: {
-                        projectID: "mhroh2oic5sz",
+                        projectID: Project_ID,
                         "Content-Type": "application/json",
                     },
                     body:JSON.stringify({
                       bookingType : "flight",
                       bookingDetails : {
                             flighId : `${flightid}`,
-                            startDate : `${dateObject.toISOString().split("T")[0]}T${dataa.departureTime}:00.000+00:00`,
-                            endDate : `${dateObject.toISOString().split("T")[0]}T${dataa.arrivalTime}:00.000+00:00`
+                            startDate : `${startdate()}`,
+                            endDate : `${enddate()}`
                       }
                   })
                 }
             )).json();
-          
       }
     }
     catch(error){
       alert(error);
     }
-  },[])
+  }
   
   function gotopayment() {
     if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
+      senddata();
       navigate(`/flights/results/Info/bookingpage?FirstName="${details.dfname}"&Email="${details.demail}"&Amount=${((dataa.ticketPrice * 18) / 100 + dataa.ticketPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
     }
   }
@@ -138,7 +159,6 @@ export default function FlightInfo() {
         }
       )).json();
       setdataa(response.data);
-      console.log(dataa)
       setpageLoader(true);
     } catch (error) {
       alert(error);
@@ -148,6 +168,7 @@ export default function FlightInfo() {
     setpageLoader(false);
     fetchdataforflightcarddetails();
   }, []);
+
   return (
     <div className='flightInfo flexa flexc'>
       <div className="wholenav flexja">
@@ -168,9 +189,9 @@ export default function FlightInfo() {
               <div className=' flightinfo-carddetails '>
                 <div className='flightinfo-sou-To-des flexa g20'>
                   <div className='source-to-destination flexa'>
-                    {dataa && objdropdownstate.map((item) => (<p>{item.name == dataa.source ? `${item.fname.match(/^([^,]+)/)[1]}` : ""}</p>))}&nbsp;
-                    <p><svg viewBox="0 0 24 24" height="16" width="16"><g fill="none" fill-rule="evenodd"><path fill="#FFF" d="M24 24H0V0h24z"></path><path fill="#FFF" d="M24 24H0V0h24z"></path><path fill="currentColor" d="M5 12.875h10.675l-4.9 4.9L12 19l7-7-7-7-1.225 1.225 4.9 4.9H5z"></path></g></svg></p>&nbsp;
-                    {dataa && objdropdownstate.map((item) => (<p>{item.name == dataa.destination ? `${item.fname.match(/^([^,]+)/)[1]}` : ""}</p>))}
+                    {dataa && objdropdownstate.map((item, index) => (<p key={index}>{item.name == dataa.source ? `${item.fname.match(/^([^,]+)/)[1]}` : ""}</p>))}&nbsp;
+                    <p><svg viewBox="0 0 24 24" height="16" width="16"><g fill="none" fillRule="evenodd"><path fill="#FFF" d="M24 24H0V0h24z"></path><path fill="#FFF" d="M24 24H0V0h24z"></path><path fill="currentColor" d="M5 12.875h10.675l-4.9 4.9L12 19l7-7-7-7-1.225 1.225 4.9 4.9H5z"></path></g></svg></p>&nbsp;
+                    {dataa && objdropdownstate.map((item, index) => (<p key={index}>{item.name == dataa.destination ? `${item.fname.match(/^([^,]+)/)[1]}` : ""}</p>))}
                   </div>
                   {/* <div className='flightinfodate'>
                     {`${day}, ${date} ${month} ${year}`}
@@ -182,10 +203,10 @@ export default function FlightInfo() {
                     <div className='flightinfo-flightName'>{getAirlineInfo(dataa.flightID).airlineName}</div>
                     <div className='flightinfo-flightId'>{dataa.flightID[0] + dataa.flightID[1]}-{dataa.flightID[dataa.flightID.length - 3] + dataa.flightID[dataa.flightID.length - 2] + dataa.flightID[dataa.flightID.length - 1]}</div>
                   </div>
-                  <div className='flightinfo-cardPhase2st'><svg width="9" height="97" viewBox="0 0 9 97"><g fill="none" fill-rule="evenodd"><circle fill="#999" cx="4.5" cy="4.5" r="4.5"></circle><circle fill="#999" cx="4.5" cy="92.5" r="4.5"></circle><path stroke="#999" stroke-linecap="square" stroke-dasharray="7" d="M4.5 7v84"></path></g></svg></div>
+                  <div className='flightinfo-cardPhase2st'><svg width="9" height="97" viewBox="0 0 9 97"><g fill="none" fillRule="evenodd"><circle fill="#999" cx="4.5" cy="4.5" r="4.5"></circle><circle fill="#999" cx="4.5" cy="92.5" r="4.5"></circle><path stroke="#999" strokeLinecap="square" strokeDasharray="7" d="M4.5 7v84"></path></g></svg></div>
                   <div className='flightinfo-cardPhase3st flex flexc'>
                     <div className='flexa'><h2 className='flgihtinfo-departureTime'>{dataa.departureTime}</h2>&nbsp;&nbsp;&nbsp;<p className='flgihtinfo-source'>{dataa.source}</p></div>
-                    <div className='clocksvg flexa'><svg width="20" height="20"><g fill="#4D4D4D" fill-rule="evenodd"><path d="M19.202 6.102c-1.055-2.459-2.847-4.246-5.325-5.304A9.83 9.83 0 009.984 0a9.728 9.728 0 00-3.882.798C3.643 1.853 1.844 3.64.787 6.102A9.732 9.732 0 000 9.984c0 1.356.258 2.659.787 3.893 1.057 2.462 2.857 4.26 5.315 5.314a9.728 9.728 0 003.882.798c1.355 0 2.654-.27 3.892-.798 2.48-1.057 4.271-2.856 5.326-5.314A9.782 9.782 0 0020 9.984a9.724 9.724 0 00-.798-3.882zm-1.597 8.3a8.773 8.773 0 01-3.215 3.203 8.613 8.613 0 01-4.406 1.181c-1.192 0-2.33-.23-3.412-.7-1.083-.47-2.017-1.088-2.8-1.87-.781-.781-1.404-1.725-1.87-2.81a8.61 8.61 0 01-.688-3.422c0-1.586.39-3.054 1.17-4.396a8.778 8.778 0 013.204-3.204 8.546 8.546 0 014.396-1.181c1.585 0 3.06.396 4.406 1.18a8.8 8.8 0 013.215 3.205 8.547 8.547 0 011.181 4.396 8.629 8.629 0 01-1.18 4.417z" fill-rule="nonzero"></path><path d="M10.618 9.902V4.237c0-.339-.295-.612-.634-.612a.616.616 0 00-.602.612V9.99c0 .011.022.055.022.088a.572.572 0 00.164.492l3.27 3.27a.622.622 0 00.842 0 .59.59 0 000-.854l-3.062-3.083z"></path></g></svg>&nbsp; &nbsp; 0{dataa.duration}:00</div>
+                    <div className='clocksvg flexa'><svg width="20" height="20"><g fill="#4D4D4D" fillRule="evenodd"><path d="M19.202 6.102c-1.055-2.459-2.847-4.246-5.325-5.304A9.83 9.83 0 009.984 0a9.728 9.728 0 00-3.882.798C3.643 1.853 1.844 3.64.787 6.102A9.732 9.732 0 000 9.984c0 1.356.258 2.659.787 3.893 1.057 2.462 2.857 4.26 5.315 5.314a9.728 9.728 0 003.882.798c1.355 0 2.654-.27 3.892-.798 2.48-1.057 4.271-2.856 5.326-5.314A9.782 9.782 0 0020 9.984a9.724 9.724 0 00-.798-3.882zm-1.597 8.3a8.773 8.773 0 01-3.215 3.203 8.613 8.613 0 01-4.406 1.181c-1.192 0-2.33-.23-3.412-.7-1.083-.47-2.017-1.088-2.8-1.87-.781-.781-1.404-1.725-1.87-2.81a8.61 8.61 0 01-.688-3.422c0-1.586.39-3.054 1.17-4.396a8.778 8.778 0 013.204-3.204 8.546 8.546 0 014.396-1.181c1.585 0 3.06.396 4.406 1.18a8.8 8.8 0 013.215 3.205 8.547 8.547 0 011.181 4.396 8.629 8.629 0 01-1.18 4.417z" fillRule="nonzero"></path><path d="M10.618 9.902V4.237c0-.339-.295-.612-.634-.612a.616.616 0 00-.602.612V9.99c0 .011.022.055.022.088a.572.572 0 00.164.492l3.27 3.27a.622.622 0 00.842 0 .59.59 0 000-.854l-3.062-3.083z"></path></g></svg>&nbsp; &nbsp; 0{dataa.duration}:00</div>
                     <div className='flexa'><h2 className='flgihtinfo-arrivalTime'>{dataa.arrivalTime}</h2>&nbsp;&nbsp;&nbsp;<p className='flgihtinfo-source'>{dataa.destination}</p></div>
                   </div>
                 </div>
@@ -197,9 +218,9 @@ export default function FlightInfo() {
               <div className='flightinfo-contactdetails flexj flexc'>
                 {!switcherform &&
                   <form onSubmit={(e) => personalInfosenderone(e)} className='flexj flexc'>
-                    <label for="mobile">Mobile number</label>
+                    <label htmlFor="mobile">Mobile number</label>
                     <input type="number" className='flightinfo-mobileinput' onClick={() => { popp("mobile") }} placeholder='Mobile number' ref={inputref} value={phonenumber} onChange={(e) => { seterrorcontact(false); setphonenumber(e.target.value); numbererror(e) }} />
-                    <label for="email">Email address</label>
+                    <label htmlFor="email">Email address</label>
                     <input type='email' placeholder='Email address' onClick={() => { popp("email") }} value={email} onChange={(e) => { seterrorcontact(false); setemail(e.target.value), emailerror(e) }} />
                     {errorcontact && <p className='errorcontact'>fill the form correctly</p>}
                     <button onClick={() => { popp("button") }}>Submit</button>
@@ -262,7 +283,7 @@ export default function FlightInfo() {
               <div className='flightinfo-price flexa'><p>Total price</p><h2>₹{caltotalamout()}</h2></div>
               <div className='flightinfo-base-fare flexa'><p>Base fare (travellers)</p>₹{dataa.ticketPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
               <div className='flightinfo-tax flexa'><p>Taxes and fees</p><p>₹{taxCalculate()}</p></div>
-              <div className='flightinfo-medical-benifit flexa'><p>Medi-cancel benefit <svg viewBox="0 0 12 12" className="ml-1 c-pointer c-secondary-500" height="14" width="14"><path d="M6 0c3.308 0 6 2.692 6 6s-2.692 6-6 6-6-2.692-6-6 2.692-6 6-6zm0 .75A5.257 5.257 0 00.75 6 5.257 5.257 0 006 11.25 5.257 5.257 0 0011.25 6 5.257 5.257 0 006 .75zm.577 4.525V9.4H5.452V5.275h1.125zM6.015 4.15a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="#3366cc" fill-rule="evenodd"></path></svg></p> <p><del>₹199</del>&nbsp;<span>Free</span></p></div>
+              <div className='flightinfo-medical-benifit flexa'><p>Medi-cancel benefit <svg viewBox="0 0 12 12" className="ml-1 c-pointer c-secondary-500" height="14" width="14"><path d="M6 0c3.308 0 6 2.692 6 6s-2.692 6-6 6-6-2.692-6-6 2.692-6 6-6zm0 .75A5.257 5.257 0 00.75 6 5.257 5.257 0 006 11.25 5.257 5.257 0 0011.25 6 5.257 5.257 0 006 .75zm.577 4.525V9.4H5.452V5.275h1.125zM6.015 4.15a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="#3366cc" fillRule="evenodd"></path></svg></p> <p><del>₹199</del>&nbsp;<span>Free</span></p></div>
             </div>
           </div>
         </div>

@@ -44,7 +44,6 @@ export default function Home() {
     })
         const result = await res.json()
         setOffers(result.data.offers);
-        console.log(result)
     }catch(error){
         console.log (error)
     }

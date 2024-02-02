@@ -22,16 +22,17 @@
 .hotelCardInfo-container-tab-section{
     width: 400px;
     height: 60px;
+    gap: 50px;
     align-items: flex-end;
+    justify-content: flex-start;
 }
 .hotelCardInfo-container-tab-section a{
     padding: 10px 10px 10px 0;
     color: #808080;
     cursor: pointer;
 }
-
 .activeTab{
-    border-radius: 3px;
+    /* border-radius: 3px; */
     color: #000;
     border-bottom: 1px solid #000;
 }
@@ -43,12 +44,20 @@
 }
 .hotelCardInfo-container-leftMain{
     width: 50%;
+    gap: 100px;
     height: 100vh;
     padding: 15px 0;
     flex-wrap: wrap;
+    position: sticky;
+    top: 10px;
+    overflow-y: scroll;
+}
+.hotelCardInfo-container-leftMain::-webkit-scrollbar{
+    display: none;
 }
 .hotelCardInfo-container-leftMain-contain1{
     width: 100%;
+    height: 250px;
     padding-bottom: 55px;
     flex-direction: column;
     gap: 12px;
@@ -90,7 +99,10 @@
     color: #808080;
 }
 .hotelCardInfo-container-leftMain-contain2{
-    padding: 15px 0;
+    margin: 15px;
+    justify-content: center;
+    width: 100%;
+    height: 400px;
 }
 .hotelCardInfo-container-leftMain-contain2 h1{
     font-size: 23px;
@@ -188,10 +200,13 @@
 .hotelRoomsSection{
     width: 100%;
     gap: 10px;
+    margin-bottom: 30px;
 }
 .hotelRoomsSection-section{
     width: 80%;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    margin: 40px 0;
     gap: 10px;
 }
 .hotelRoomsSection-container{
@@ -225,6 +240,8 @@
 .hotelRoomsSection-container-price-section .contain2{
     font-size: 14px;
     color: #808080;
+    width: 300px;
+    text-wrap: nowrap;
 }
 .hotelRoomsSection-container-price-section .contain3{
     font-size: 14px;

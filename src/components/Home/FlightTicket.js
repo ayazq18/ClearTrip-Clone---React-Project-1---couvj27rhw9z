@@ -1,11 +1,11 @@
 let tl;
-import React, { useEffect, useState, useContext, useRef, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./FlightTicket.css";
 import { getAirlineInfo, handleselectionCategory} from '../Constants';
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { CgArrowsExchange } from "react-icons/cg";
-import { logo, flightgo, hotelIcon, support, sortIcon, clockIcon, flightIcon, } from "../Services/Icons";
+import { logo, hotelIcon, support, sortIcon, clockIcon, flightIcon, } from "../../Services/Icons.js";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup.js";
 import { arr } from "../Constants";
@@ -58,7 +58,7 @@ export default function FlightTicket() {
     const [tripdurationmin, settripdurationmin] = useState(1);
     const [tripdurationmax, settripdurationmax] = useState(10);
     const [valuee, setvaluee] = useState(2500);
-
+    const [load, setload] = useState(false)
     const navigate = useNavigate()
     const MyRef = useRef(null);
 
@@ -129,7 +129,7 @@ export default function FlightTicket() {
     function navigateToFlightInfo(_id, flightId) {
         if (localStorage.getItem("token")) {
             setall(prev =>({...prev, dayy:dayy}))
-            navigate(`/flights/results/Info?flightid=${_id}&ID=${flightId}`)
+            navigate(`/flights/results/Info?flightid=${_id}&ID=${flightId}&date=${whereDate}`)
         }
         else {
            alert('Please login before proceed !')
@@ -141,6 +141,7 @@ export default function FlightTicket() {
 
     const fetchFlights = async () => {
         try {
+            setload(true)
             const response = await fetch(`${Base_URL}/flight?search={"source":"${flightIn[0], flightIn[1], flightIn[2]}","destination":"${flightOut[0], flightOut[1], flightOut[2]}"}&day=${dayy}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&page=${pagination}&limit=20&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`, {
                 method: "GET",
                 headers: {
@@ -151,7 +152,7 @@ export default function FlightTicket() {
             const result = await response.json()
             setflightResultdata(result.data.flights);
             setresultforpagination(result.totalResults)
-            console.log(result)
+            setload(true)
         } catch (error) {
             console.log(error);
         }
@@ -163,9 +164,11 @@ export default function FlightTicket() {
 
     const fetchFlightsIn = useMemo(async () => {
         try {
+            setload(false)
             const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn[0], flightIn[1], flightIn[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json();
             setFlightWhere(result.data.airports);
+            setload(true)
         } catch (error) {
             return error;
         }
@@ -173,9 +176,11 @@ export default function FlightTicket() {
 
     const fetchFlightsOut= useMemo(async() => {
         try {
+            setload(false)
             const response = await fetch(`${Base_URL}/airport?search={"city":"${flightOut[0], flightOut[1], flightOut[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json();
             setFlightTo(result.data.airports);
+            setload(true)
         } catch (error) {
             return error;
         }
@@ -230,7 +235,7 @@ export default function FlightTicket() {
     };
 
     return (
-        <div className="ticket">
+        <>{load && flightWhere && flightTo && flightResultdata && <div className="ticket">
             {showLogin && <Login showLogin={showLogin} setShowLogin={setShowLogin} token={token} setToken={setToken} pop={pop} poptab={poptab} />}
             <div className="ticketHeader-container">
                 <div id="ticketHeader">
@@ -415,7 +420,7 @@ export default function FlightTicket() {
                         <div id="stops">
                             <div onClick={() => { poptab('stop') }} className="stops-static flexBet">
                                 <h1>Stops</h1>
-                                <div><MdKeyboardArrowUp className={`fs ${!pop['stop'] ? 'rotatedegree' : 'rotatezero'}`} /></div>
+                                <div><MdKeyboardArrowUp className={`fs ${pop['stop'] ? 'rotatedegree' : 'rotatezero'}`} /></div>
                             </div>
                             {!pop['stop'] && (
                                 <div className="stop-container">
@@ -427,7 +432,7 @@ export default function FlightTicket() {
                         </div>
                         <div className='wayprice flexXY' onClick={() => { poptab("wayprice") }}>
                             <p>One-way price</p>
-                            <div><MdKeyboardArrowUp className="fs" /></div>
+                            <div><MdKeyboardArrowUp className={`fs ${pop['wayprice'] ? 'rotatedegree' : 'rotatezero'}`}/></div>
                         </div>
                         {!pop["wayprice"] &&
                             <div className='filterPopupwayprice flex flexc'>
@@ -436,9 +441,9 @@ export default function FlightTicket() {
                                 <div className='flexBet'><p>₹1,127</p><p>₹2,500</p></div>
                             </div>}
                         <div id="one-way-price" className="flex">
-                            <div onClick={() => { poptab('oneway') }} className="trip-duration flexBet">
+                            <div onClick={() => { poptab('oneway') }} className="trip-duration flexY">
                                 <h1>Trip duration</h1>
-                                <MdKeyboardArrowUp className="fs" />
+                                <MdKeyboardArrowUp className={`fs ${pop['oneway'] ? 'rotatedegree' : 'rotatezero'}`} />
                             </div>
                             {!pop['oneway'] && (
                                 <div className="one-way-price-sec1">
@@ -460,7 +465,7 @@ export default function FlightTicket() {
                                 </div>
                             </div>
                             <div className="ticket-content-header-sec3 flexBet">
-                                <h6 class>Smart sort</h6>{sortIcon}
+                                <h6>Smart sort</h6>{sortIcon}
                                 <div className="toggle-button flexY">
                                     <span className={`slider-round ${toggle ? 'toggled' : ""}`} onClick={() => toggleSlider()}></span>
                                 </div>
@@ -567,6 +572,29 @@ export default function FlightTicket() {
                 <h4>...{pagination}</h4>
                 <button className={` ${(pagination === +resultforpagination / 20) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination/20===pagination} >Next</button>
             </div>
-        </div>
+            <footer className="cleartrip-footer">
+                <div className="footer-top">
+                    <div className="footer-logo">{logo}</div>
+                    <div className="footerlinkscontainer">
+                        <div className="footer-links">
+                            <h3>Company</h3>
+                            <ul><li><a href="#">About Us</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Careers</a></li></ul>
+                        </div>
+                        <div className="footer-links">
+                            <h3>Products</h3>
+                            <ul><li><a href="#">Flights</a></li><li><a href="#">Hotels</a></li><li><a href="#">Trains</a></li></ul>
+                        </div>
+                        <div className="footer-links">
+                            <h3>Legal</h3>
+                            <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul>
+                        </div>
+                    </div>
+                </div>
+                <div className="footer-bottom">
+                    <p>&copy; 2024 Cleartrip. All rights reserved.</p>
+                </div>
+            </footer>
+        {!load && <div className='loader'></div>}
+        </div>}</>
     );
 }

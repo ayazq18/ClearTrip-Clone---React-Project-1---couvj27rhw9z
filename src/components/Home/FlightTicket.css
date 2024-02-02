@@ -209,7 +209,7 @@
   width: 230px;
   height: fit-content;
   position: sticky;
-  top: -150px;
+  top: -20px;
 }
 
 #stops,
@@ -386,14 +386,12 @@ label {
 
 .rotatezero {
   transform: rotate(0deg);
+  transition: all 0.5s ease-in-out;
 }
 
 .rotatedegree {
-  transform: rotate(0deg);
-}
-
-.main-content-card {
-
+  transform: rotate(180deg);
+  transition: all 0.5s ease-in-out;
 }
 
 .content-card {
@@ -1119,5 +1117,8 @@ label {
   }
   .stops-static h1 {
     text-align: center;
+  }
+  .footerlinkscontainer{
+    display: flex;
   }
 }

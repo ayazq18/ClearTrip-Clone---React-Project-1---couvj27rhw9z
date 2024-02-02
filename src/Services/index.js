@@ -1,4 +1,4 @@
-import { Base_URL, Project_ID, appType } from "../Constants";
+import { Base_URL, Project_ID, appType } from "../components/Constants";
 import React, { createContext, useContext, useState } from 'react';
 
 export const MyContext = createContext();

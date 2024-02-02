@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo, lazy, Suspense, useCallback } from 'react';
-import { Base_URL, Project_ID, App_Type } from "../Constants";
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { Base_URL, Project_ID } from "../Constants";
 
 import HotelNavBar from './HotelNavBar';
 const CardCarausal = lazy(() => import('../Corousel/HotelPage/CardCarausal'));
@@ -12,7 +12,6 @@ const HotelResults = () => {
     let toDate = searchParams.get("dateTo");
 
 
-    const [hotelId, setHotelId] = useState()
     const [hotelsResultData, setHotelResultData] = useState()
     const [pagination, setPagination] = useState(1)
     const [resultforpagination, setresultforpagination] = useState()
@@ -42,7 +41,6 @@ const HotelResults = () => {
             const result = await response.json()
             setresultforpagination(result.totalResults)
             setHotelResultData(sortingincreaseordecrease(result.data.hotels))
-            setHotelId(result.data.hotels[0]._id)
             setLoad(true)
         } catch (error) {
             console.log(error);
@@ -53,7 +51,7 @@ const HotelResults = () => {
         fetchHotels
     }, [inputResult])
 
-    const handleHotelCardInfo = () => {
+    const handleHotelCardInfo = (hotelId) => {
         if(localStorage.getItem('token')){
         navigate(`/hotels/results/hotelcardsinfo?hotelId=${hotelId}&location=${inputResult}&dateFrom=${fromDate}&dateTo=${toDate}`)
         }else{
@@ -63,13 +61,13 @@ const HotelResults = () => {
 
     return (
         <>
-        {load && <div className='hotelHome'>
+        {load && hotelsResultData && <div className='hotelHome'>
             <div><HotelNavBar lowhigh={lowhigh} setlowhigh={setlowhigh} minrange={minrange} setminrange={setminrange} maxrange={maxrange} setmaxrange={setmaxrange} rating={rating} setrating={setrating} inputResult={inputResult} fromDate={fromDate} toDate={toDate} /></div>
             <div className='hotelMain flexXY'>
                 <div className='hotelMain-container'>
                     <div className='hotelMain-container-card'>
                         {hotelsResultData && hotelsResultData.map((item, index) => (item.avgCostPerNight < maxrange && item.avgCostPerNight > minrange && (
-                            <div key={index} className='hotelMain' onClick={() => handleHotelCardInfo()}>
+                            <div key={index} className='hotelMain' onClick={() => handleHotelCardInfo(item._id)}>
                                 <Suspense fallback={<div>Loading Carausal</div>}>
                                     <div><CardCarausal data={item.images} /></div>
                                 </Suspense>
@@ -105,6 +103,7 @@ const HotelResults = () => {
                 <button className={` ${(pagination === +resultforpagination / 10) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination / 10 === pagination} >Next</button>
             </div>
         </div>}
+        {!load && <div className='loader'></div>}
         </>
     );
 }

@@ -3,7 +3,7 @@ import "./NavBar.css";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Signup from "../Signup/Signup.js";
-import {logo, flight } from "../Services/Icons.js";
+import {logo, flight } from "../../Services/Icons.js";
 import Login from "../Login/Login.js";
 
 export default function NavBar() {
@@ -46,14 +46,14 @@ export default function NavBar() {
   const navigate = useNavigate()
   return (
     <div id="navBar-home">
-       {showSignup && (<Signup token={token} setToken={setToken} showSignup = {showSignup} setShowSignUp = {setShowSignUp}/>)}
-       {showLogin && <Login className='login-component' token={token} setToken={setToken} showLogin={showLogin} setShowLogin={setShowLogin}  showSignup = {showSignup} setShowSignUp = {setShowSignUp}/>}
+       <div className="signup">{showSignup && (<Signup token={token} setToken={setToken} showSignup = {showSignup} setShowSignUp = {setShowSignUp}/>)}</div>
       <div className="navheader-container">
       <div id="navheader">
         <div onClick={()=>navigate('/')}>
           {logo}
         </div>
-          <button ref={MyRef} className="login-Btn flexXY" onClick={()=>handleSignin()}>{token ? <><svg viewBox="0 0 14 14" height="16px" width="16px" class="c-inherit"><g fill="none" fill-rule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.5"></circle><path fill="currentColor" d="M3,5 C4.38071187,5 5.5,3.88071187 5.5,2.5 C5.5,1.11928813 4.38071187,0 3,0 C1.61928813,0 0.5,1.11928813 0.5,2.5 C0.5,3.88071187 1.61928813,5 3,5 Z" transform="matrix(-1 0 0 1 10 3)"></path><path fill="currentColor" d="M7,9 C9.14219539,9 10.8910789,10.6839685 10.9951047,12.8003597 L11,13 L3,13 C3,10.790861 4.790861,9 7,9 Z"></path><circle cx="7" cy="7" r="7.75" stroke="#FFF" stroke-width="1.5"></circle></g></svg> My account</> : 'Login/Signup'}</button>
+          <button ref={MyRef} className="login-Btn flexXY" onClick={()=>handleSignin()}>{token ? <><svg viewBox="0 0 14 14" height="16px" width="16px" className="c-inherit"><g fill="none" fillRule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><circle cx="7" cy="7" r="6.25" stroke="currentColor" strokeWidth="1.5"></circle><path fill="currentColor" d="M3,5 C4.38071187,5 5.5,3.88071187 5.5,2.5 C5.5,1.11928813 4.38071187,0 3,0 C1.61928813,0 0.5,1.11928813 0.5,2.5 C0.5,3.88071187 1.61928813,5 3,5 Z" transform="matrix(-1 0 0 1 10 3)"></path><path fill="currentColor" d="M7,9 C9.14219539,9 10.8910789,10.6839685 10.9951047,12.8003597 L11,13 L3,13 C3,10.790861 4.790861,9 7,9 Z"></path><circle cx="7" cy="7" r="7.75" stroke="#FFF" strokeWidth="1.5"></circle></g></svg> My account</> : 'Login/Signup'}</button>
+       <div className='login-component'>{showLogin && <Login token={token} setToken={setToken} showLogin={showLogin} setShowLogin={setShowLogin}  showSignup = {showSignup} setShowSignUp = {setShowSignUp}/>}</div>
       </div>
       </div>
       <div className="sideNavBar-container flexXY">

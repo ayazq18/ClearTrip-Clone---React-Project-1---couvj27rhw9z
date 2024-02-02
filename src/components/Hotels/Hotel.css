@@ -4,7 +4,6 @@
     display: flex;
     justify-content: space-between;
     gap: 25px;
-    /* border: 2px solid red; */
   }
 
   .hotel-home h1 {
@@ -54,9 +53,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
-  #inputHotel:hover{
-    border: 1px solid #3366cc;
+  #inputHotel:focus{
+    border: 1px solid blue;
+    outline: none;
+  }
+  #hotelDate1:focus{
+    border: 1px solid blue;
+    outline: none;
+  }
+  #hotelDate2:focus{
+    border: 1px solid blue;
+    outline: none;
   }
 
   .hotelInputExpand{
@@ -64,7 +71,7 @@
     position: absolute;
     top: 270px;
     width: 600px;
-    height: 400px;
+    height: 300px;
     overflow-y: scroll;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
@@ -72,25 +79,30 @@
     z-index: 11;
     cursor: pointer;
   }
-
-  .hotelInputExpand::-webkit-scrollbar{
-    display: none;
+  .hotelInputExpand::-webkit-scrollbar {
+    width: 12px;
   }
-
+  .hotelInputExpand::-webkit-scrollbar-thumb {
+    background-color: #e9a208;
+    border-radius: 10px;
+    border: 2px solid #fff;
+  }
+  .hotelInputExpand::-webkit-scrollbar-track {
+    background-color: #eee;
+    border-radius: 10px;
+  }
   .hotelInputExpand p{
     font-size: 14px;
     color: #b3b3b3;
+    margin-bottom: 10px;
   }
-
   .input-hotel-date {
     justify-content: space-between;
     gap: 30px;
     margin-bottom: 18px;
-    /* border: 1px solid red; */
   }
 
   .hotelInputExpand-content{
-    padding: 10px 0 0 10px;
     gap: 10px;
   }
 
@@ -101,6 +113,8 @@
 
   .hotelInputExpand-content h1{
     font-size: 14px;
+    width: 100%;
+    padding: 5px;
   }
 
   #hotelDate1 {
@@ -145,11 +159,9 @@
     text-wrap: nowrap;
     position: relative;
   }
-
   .hotelSelectCateg h4{
     font-weight: 400;
   }
-
   .hotelSelect-expand1{
     width: 270px;
     /* height: 200px; */
@@ -264,51 +276,63 @@
     /* .home h1, .home h2 {
       visibility: hidden;
     } */
-  
+    .location-icon{
+      position: absolute;
+      top: 12px;
+      left: 0px;
+    }
     .hotel-home {
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       height: fit-content;
-      /* width: 100vw; */
-      /* flex-wrap: wrap; */
     }
-  
     .search-card-hotel .btns-div {
       display: flex;
-      /* justify-content: center; */
       flex-wrap: wrap;
     }
-
-    /* .select {
-      padding: 2px;
-      margin: 0;
-      width: 20px;
-      flex-wrap: nowrap;
-    } */
-  
-    .input {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
+    .hotelInputExpand{
+      top: 340px;
+      width: 335px;
+      height: 300px;
+      overflow-y: scroll;
     }
-  
-    #inputHotel,
-    #hotelDate1, #hotelDate2,
-    #date2  {
-      width: 50%;
+    #inputHotel{
+      width: 100%;
       border: none;
+      border-bottom: 1px solid blue;
       border-radius: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.29);
+      outline: none;
       padding: 15px 30px;
     }
-/*   
-    .input-text {
-      flex-wrap: wrap;
+    #hotelDate1, #hotelDate2,
+    #date2  {
+      width: 100%;
+      border: none;
+      background-color: #fff;
+      border-radius: 0;
+      border-bottom: 1px solid blue;
+      padding: 15px 30px;
     }
-   */
+    .hotelSelectCateg{
+      width:160px;
+      gap: 5px;
+      right: 90px;
+    }
+    .hotelSelect-expand1{
+      top: -260px;
+      left: 0px;
+    }
+    .hotelSelectCateg-Expand{
+      top: -280px;
+      left: 0px;
+    }
+    #hotelSearchBtn {
+      padding: 15px 40px;
+      position: relative;
+      bottom: 69px;
+    }
     .input-hotel-date {
       flex-direction: column;
       justify-content: space-between;

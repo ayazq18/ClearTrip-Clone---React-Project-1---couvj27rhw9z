@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './HotelResults.css'
-import { Base_URL, Project_ID, App_Type } from "../Constants";
-import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon } from '../Services/Icons';
+import { Base_URL, Project_ID, App_Type, handleselectionCategory } from "../Constants";
+import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon } from '../../Services/Icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Signup from "../Signup/Signup.js";
 import Login from "../Login/Login.js";
@@ -20,8 +20,6 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
     const [showSignup, setShowSignUp] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     const [inputValue, setInputValue] = useState(inputResult)
-    const [adultcount, setAdultCount] = useState(1);
-    const [childrencount, setChildrenCount] = useState(0);
     const [selectVisible, setSelectVisible] = useState(false);
     const [classs, setClasss] = useState("Guests");
     const [rotateCateg, setRotateCateg] = useState({ transform: "rotate(0deg)" });
@@ -41,8 +39,8 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
     const [hotelPrice, setHotelPrice] = useState(false)
     const [hotelDeal, setHotelDeal] = useState(false)
     const [guestRating, setGuestRating] = useState(false)
-    const [price, setPrice] = useState(false)
     const [pop, setpop] = useState({})
+    const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
 
 
     function ratingchanger(val) {
@@ -68,25 +66,9 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
     }
 
     const arr = [
-        { category: "Adults", age: "(12+ Years)", count: 1 },
+        { category: "Adult", age: "(12+ Years)", count: 1 },
         { category: "Children", age: "(2 - 12 yrs)", count: 0 },
     ];
-
-    const handleIncrease = (category) => {
-        switch (category) {
-            case "Adults": setAdultCount(adultcount + 1); break;
-            case "Children": setChildrenCount(childrencount + 1); break;
-            default: break;
-        }
-    };
-
-    const handleDecrease = (category) => {
-        switch (category) {
-            case "Adults": adultcount > 1 && setAdultCount(adultcount - 1); break;
-            case "Children": childrencount > 0 && setChildrenCount(childrencount - 1); break;
-            default: break;
-        }
-    };
 
     const handleSelectCategory = () => {
         setSelectVisible(!selectVisible);
@@ -145,7 +127,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
 
     const fetchHotels = async () => {
         try {
-            const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputValue}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputValue}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setHotelResult(result.data.hotels)
 

@@ -389,7 +389,7 @@
     font-size: 15px;
   }
   
-  #date2 {
+  #date22 {
     padding: 15px 35px;
     margin: 15px 0;
     border: 1px solid rgba(0, 0, 0, 0.108);
@@ -462,6 +462,9 @@
       width: 100%;
       flex-direction: column;
     }
+    .expand-whereTo{
+      top: 100px;
+    }
 
     #input1,
     #input2 {
@@ -472,10 +475,10 @@
       padding: 15px 30px;
       text-align: start;
     }
-    #date1,#date2 {
+    #date1, #date22 {
       background-color: #fff;
-      width: 140px;
       font-size: 15px;
+      width: 180px;
     }
     .input-text {
       flex-wrap: wrap;

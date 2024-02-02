@@ -1,12 +1,11 @@
-import React, { Suspense, useEffect, useMemo, useState, lazy } from 'react';
+import React, { Suspense, useEffect, useMemo, useState, lazy, useRef } from 'react';
 import './HotelCardInfo.css'
-import { Base_URL, Project_ID, App_Type } from "../Constants";
-import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon, ratingCircle, ratingOwl, rightArrow } from '../Services/Icons';
+import { Base_URL, Project_ID, App_Type, handleselectionCategory } from "../Constants";
+import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon, ratingCircle, ratingOwl, rightArrow } from '../../Services/Icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../ContextAllData.js';
 import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
 import { GiHotMeal } from "react-icons/gi";
-// import InfoCarausal from '../Corousel/HotelPage/InfoCarausal.js'
 const InfoCarausal = lazy(() => import('../Corousel/HotelPage/InfoCarausal.js'));
 import { GiGymBag } from "react-icons/gi";
 import { MdRestaurant, MdTableBar, MdOutlineSignalWifi4Bar } from "react-icons/md";
@@ -27,8 +26,6 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
 
 
     const [inputValue, setInputValue] = useState(hoteLocation)
-    const [adultcount, setAdultCount] = useState(1);
-    const [childrencount, setChildrenCount] = useState(0);
     const [classs, setClasss] = useState("Guests");
     const [selectVisible, setSelectVisible] = useState(false);
     const [rotateCateg, setRotateCateg] = useState({ transform: "rotate(0deg)" });
@@ -42,6 +39,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const [pop, setpop] = useState({})
     const [poptab, setpoptab] = useState({})
     const [showPriceSec, setShowPriceSec] = useState(false)
+    const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
 
 
     function popp(key) {
@@ -55,25 +53,9 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     }
 
     const arr = [
-        { category: "Adults", age: "(12+ Years)", count: 1 },
+        { category: "Adult", age: "(12+ Years)", count: 1 },
         { category: "Children", age: "(2 - 12 yrs)", count: 0 },
     ];
-
-    const handleIncrease = (category) => {
-        switch (category) {
-            case "Adults": setAdultCount(adultcount + 1); break;
-            case "Children": setChildrenCount(childrencount + 1); break;
-            default: break;
-        }
-    };
-
-    const handleDecrease = (category) => {
-        switch (category) {
-            case "Adults": adultcount > 1 && setAdultCount(adultcount - 1); break;
-            case "Children": childrencount > 0 && setChildrenCount(childrencount - 1); break;
-            default: break;
-        }
-    };
 
     const handleSelectCategory = () => {
         setSelectVisible(!selectVisible);
@@ -100,10 +82,9 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
 
     const fetchHotelLocation = async () => {
         try {
-            const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputValue}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputValue}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setHotelResultLocation(result.data.hotels)
-            console.log(result)
         } catch (error) {
             console.log(error);
         }
@@ -117,9 +98,8 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const fetchHotelCardInfo = useMemo(async () => {
         try {
             setLoad(false)
-            const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel/${hotelId}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/hotel/${hotelId}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
-            console.log(result)
             setHotelInfoResult(result.data)
             setLoad(true)
         } catch (error) {
@@ -127,7 +107,20 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
         }
     }, [hotelId])
 
+   
+    const [activetab, setactivetab] = useState({'gen':true, 'amenities':false, 'rooms':false})
+    const mouseLocation = ()=>{
+        window.addEventListener('scroll', (e)=>{
+            const scrolly = window.scrollY
+            if(scrolly>=530){setShowPriceSec(!showPriceSec); setactivetab({'rooms':true})}
+            else if(scrolly>=150){setShowPriceSec(false); setactivetab({'rooms':false}); setactivetab({'amenities':true})}
+            else if(scrolly<235){setactivetab({'amenities':false});setactivetab({'gen':true})}else{setactivetab({'gen':false})}
+
+        })
+    }
+
     useEffect(() => {
+        mouseLocation()
         fetchHotelCardInfo
     }, [])
 
@@ -141,11 +134,10 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
             <div className='flexX'>
             <div className='hotelResults-navBar-container flexXY'>
                 <div className='hotelResults-navBar flexBet'>
-                    <div onClick={() => navigate('/hotel')}>{logo}</div>
+                    <div id='hotelLogo' onClick={() => navigate('/hotel')}>{logo}</div>
                     <div className='hotelResults-input flexXY' >
                         <div className='hotelResults-input-destresult flexY' onClick={() => popUpTab('dest')}>
                             <div>{hoteLocation}</div>
-                            {/* <p>{inputValue}</p> */}
                         </div>
                         <div className='hotelResults-input-dateResult flexXY' type='date'>
                             <div className='flexXY'>
@@ -161,7 +153,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                     </div>
                 </div>
                 {popUp &&
-                    <div className={`hotelResults-input-expand ${poptab['dest'] ? 'popup' : ""} flexXY`}>
+                    <div className={`hotelResults-input-expand ${popUp ? 'popup' : ""} flexXY`}>
                         <div className='hotelResults-input flexXY'>
                             <div className={`hoteldynamicDiv flexXY ${pop['destination'] ? 'searchActive' : ''}`}>
                                 <div className="hotelLocation-icon flexXY">{location}</div>
@@ -234,9 +226,9 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                 {popUp && <div className='backg-transparent' onClick={() => setPopUp(false)}></div>}
                 <div className='hotelCardInfo-container-tab flexBet'>
                     <div className='hotelCardInfo-container-tab-section flex'>
-                        <a href='#general' onClick={()=>{popp('general'); setShowPriceSec(false)}} className={` ${pop['general'] ? 'activeTab' : ''}`}>General</a>
-                        <a href='#amenities' onClick={()=>{popp('amenities');setShowPriceSec(false)} } className={`${pop['amenities'] ? 'activeTab' : ''}`}>Amenities</a>
-                        <a href='#room' onClick={() => {handlePriceSecPopup(), popp('room')}} className={`${pop['room'] ? 'activeTab' : ''}`}>Rooms</a>
+                        <a href='#general' className={activetab['gen'] ? 'activeTab' : ''} onClick={()=>{popp('general')}}>General</a>
+                        <a href='#amenities' className={activetab['amenities'] ? 'activeTab' : ''} onClick={()=>{popp('amenities')} }>Amenities</a>
+                        <a href='#room' className={activetab['rooms'] ? 'activeTab' : ''} onClick={() => {popp('room')}}>Rooms</a>
                     </div>
                     {showPriceSec &&
                         <div className=' hotelPricingSec flexBet g10'>
@@ -256,7 +248,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
             </div>
             <div className='flexXY'>
                 <div className='hotelCardInfo-container-main flexBet'>
-                    <div className='hotelCardInfo-container-leftMain'>
+                    <div className='hotelCardInfo-container-leftMain flex'>
                         <div id='general' className='hotelCardInfo-container-leftMain-contain1 flex'>
                             <h1>{hotelInfoResult.name}, {hotelInfoResult.location && hotelInfoResult.location.match(/([^,]+)/) ? hotelInfoResult.location.match(/([^,]+)/)[0] : hotelInfoResult.location}</h1>
                             <h2>{hotelInfoResult.rating}-star Hotel · {hotelInfoResult.location}</h2>
@@ -273,19 +265,19 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                                 </div>
                             </div>
                         </div>
-                        <div id='amenities' className='hotelCardInfo-container-leftMain-contain2'>
-                            <h1>Amenities</h1>
-                            <div className='hotelCardInfo-container-leftMain-contain2-amenities flex'>
-                                <div className='hotelCardInfo-container-leftMain-contain2-amenities-sec1 flex'>
-                                    {hotelInfoResult.amenities && hotelInfoResult.amenities.map((item, index) => (
-                                        <div key={index} className='flexY g10'>{item == "Gym" ? <GiGymBag /> : item == "Swimming Pool" ? <FaPersonSwimming /> : item == "Restaurant" ? <MdRestaurant /> : item == "Bar" ? <MdTableBar /> : item == "Free WiFi" ? <MdOutlineSignalWifi4Bar /> : item == "Spa" ? <FaSprayCanSparkles /> : ""}<p>{item}</p></div>
-                                    ))}
+                            <div id='amenities' className='hotelCardInfo-container-leftMain-contain2 flexc'>
+                                <h1>Amenities</h1>
+                                <div className='hotelCardInfo-container-leftMain-contain2-amenities flex'>
+                                    <div className='hotelCardInfo-container-leftMain-contain2-amenities-sec1 flex'>
+                                        {hotelInfoResult.amenities && hotelInfoResult.amenities.map((item, index) => (
+                                            <div key={index} className='flexY g10'>{item == "Gym" ? <GiGymBag /> : item == "Swimming Pool" ? <FaPersonSwimming /> : item == "Restaurant" ? <MdRestaurant /> : item == "Bar" ? <MdTableBar /> : item == "Free WiFi" ? <MdOutlineSignalWifi4Bar /> : item == "Spa" ? <FaSprayCanSparkles /> : ""}<p>{item}</p></div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <div className='hotelCardInfo-container-rightMain'>
-                    <Suspense fallback={<div>Loading Carausal</div>}>
+                    <Suspense fallback={<div className='loader'></div>}>
                         <div className='hotelInfoCarausal'>{hotelInfoResult.images && <InfoCarausal data={hotelInfoResult.images} />}</div>
                     </Suspense>
                         <div className='hotelCardInfo-container-rightMain-payment '>
@@ -317,68 +309,56 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
             </div>
             <div id='room' className='hotelRoomsSection flexXY'>
                 <div className='hotelRoomsSection-section flexXY'>
-                {hotelInfoResult.rooms && hotelInfoResult.rooms.map((item, index) => (
-                    <div key={index} className='hotelRoomsSection-container flex'>
-                        <h1>{item.roomType}</h1>
-                        <div className='sec1 flexY'>
-                            <div className=' flexBet g10'>
-                                <GiHotMeal style={{ fontSize: "20px" }} />
-                                <p>Breakfast</p>
+                    {hotelInfoResult.rooms && hotelInfoResult.rooms.map((item, index) => (
+                        <div key={index} className='hotelRoomsSection-container flex'>
+                            <h1>{item.roomType}</h1>
+                            <div className='sec1 flexY'>
+                                <div className=' flexBet g10'>
+                                    <GiHotMeal style={{ fontSize: "20px" }} />
+                                    <p>Breakfast</p>
+                                </div>
+                                <div className='flexBet g10'>
+                                    <MdOutlineFreeCancellation style={{ fontSize: "20px" }} />
+                                    <p>{item.cancellationPolicy}</p>
+                                </div>
                             </div>
-                            <div className='flexBet g10'>
-                                <MdOutlineFreeCancellation style={{ fontSize: "20px" }} />
-                                <p>{item.cancellationPolicy}</p>
+                            <div className='hotelRoomsSection-container-price-section'>
+                                <div className='flexY'>
+                                    <p className='contain1'>₹{Math.floor(item.costDetails.baseCost).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
+                                    &nbsp;<p className='contain2'>+ ₹{((item.costDetails.taxesAndFees)).toString().match(/^(\d+)(?=\.)/) ? (item.costDetails.taxesAndFees).toString().match(/^(\d+)(?=\.)/)[0] : (item.costDetails.taxesAndFees)} &nbsp; tax / night</p>
+                                </div>
+                                <div className='flexY'>
+                                    <del className='contain3'>{Math.floor(item.price).toString()}</del>
+                                    &nbsp;<p className='contain4'>{item.costDetails.baseCost > 5000 && `No cost EMI from ₹${Math.floor(item.costDetails.baseCost / 2)}`}</p>
+                                </div>
                             </div>
+                            <button onClick={()=>handleToPayment()}>Book</button>
                         </div>
-                        <div className='hotelRoomsSection-container-price-section'>
-                            <div className='flexY'>
-                                <p className='contain1'>₹{Math.floor(item.costDetails.baseCost).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
-                                &nbsp;<p className='contain2'>+ ₹{((item.costDetails.taxesAndFees)).toString().match(/^(\d+)(?=\.)/) ? (item.costDetails.taxesAndFees).toString().match(/^(\d+)(?=\.)/)[0] : (item.costDetails.taxesAndFees)} &nbsp; tax / night</p>
-                            </div>
-                            <div className='flexY'>
-                                <del className='contain3'>{Math.floor(item.price).toString()}</del>
-                                &nbsp;<p className='contain4'>{item.costDetails.baseCost > 5000 && `No cost EMI from ₹${Math.floor(item.costDetails.baseCost / 2)}`}</p>
-                            </div>
-                        </div>
-                        <button onClick={()=>handleToPayment()}>Book</button>
-                    </div>
-                ))}
+                    ))}
                 </div>
             </div>
-            <footer class="cleartrip-footer">
-                <div class="footer-top">
-                    <div class="footer-logo">
-                        {logo}
-                    </div>
-                    <div class="footer-links">
+            <footer className="cleartrip-footer">
+                <div className="footer-top">
+                    <div className="footer-logo">{logo}</div>
+                    <div className="footer-links">
                         <h3>Company</h3>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                        </ul>
+                        <ul><li><a href="#">About Us</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Careers</a></li></ul>
                     </div>
-                    <div class="footer-links">
+                    <div className="footer-links">
                         <h3>Products</h3>
-                        <ul>
-                            <li><a href="#">Flights</a></li>
-                            <li><a href="#">Hotels</a></li>
-                            <li><a href="#">Trains</a></li>
-                        </ul>
+                        <ul><li><a href="#">Flights</a></li><li><a href="#">Hotels</a></li><li><a href="#">Trains</a></li></ul>
                     </div>
-                    <div class="footer-links">
+                    <div className="footer-links">
                         <h3>Legal</h3>
-                        <ul>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Use</a></li>
-                        </ul>
+                        <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul>
                     </div>
                 </div>
-                <div class="footer-bottom">
+                <div className="footer-bottom">
                     <p>&copy; 2024 Cleartrip. All rights reserved.</p>
                 </div>
             </footer>
         </div>}
+        {!load && <div className='loader'></div>}
         </>
     );
 }

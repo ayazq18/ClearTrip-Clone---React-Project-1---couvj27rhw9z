@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './HotelBooking.css'
 import { IoIosArrowForward } from "react-icons/io";
-import { dropDown, logo, mastecard, safekey, visa } from '../Services/Icons';
-import { CgClose } from 'react-icons/cg';
+import {logo} from '../../Services/Icons';
 
 
 export default function HotelPayment() {

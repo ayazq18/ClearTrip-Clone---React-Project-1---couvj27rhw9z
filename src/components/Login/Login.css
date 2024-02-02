@@ -102,3 +102,13 @@
   
   /* -------------Expanded-login------------- */
   
+  @media only screen and (min-width: 240px) and (max-width: 768px) {
+    .logout-account-sec, .logout-tools-sec-one{
+      display: none;
+    }
+    .Expand-to-logout-one{
+      width: 170px;
+      height: 150px;
+      /* border: 1px solid red; */
+    }
+  }
