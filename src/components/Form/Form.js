@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useMemo, useState} from "react";
 import { useNavigate, } from "react-router-dom";
 import { Base_URL, Project_ID, object, arr, handleselectionCategory} from "../Constants.js";
 import { flightgo, flyFrom, swapIcon } from "../../Services/Icons.js";
@@ -134,47 +134,27 @@ export default function Form() {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const days = daysOfWeek[dayOfWeek];
 
+    const fetchFlightsIn = useMemo(async () => {
+        try {
+            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn}"}`, {
+                method: "GET",
+                headers: {
+                    projectID: Project_ID,
+                    "Content-Type": "application/json",
+                }
+            })
+            const result = await response.json()
+            setFlightWhere(result.data.airports)
+            setFlightTo(result.data.airports)
+        } catch (error) {
+            console.log (error);
+        }
+    }, [])
+
     useEffect(() => {
         setDay(days)
-        const fetchFlightsIn = async () => {
-            try {
-                const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn}"}`, {
-                    method: "GET",
-                    headers: {
-                        projectID: Project_ID,
-                        "Content-Type": "application/json",
-                    }
-                })
-                const result = await response.json()
-                setFlightWhere(result.data.airports)
-            } catch (error) {
-                console.log (error);
-            }
-
-        }
-
-        const fetchFlightsOut = async () => {
-            try {
-                const response = await fetch(`${Base_URL}/airport?search={"city":"${flightOut}"}`, {
-                    method: "GET",
-                    headers: {
-                        projectID: Project_ID,
-                        "Content-Type": "application/json",
-                    }
-                })
-                const result = await response.json()
-                setFlightTo(result.data.airports)
-
-            } catch (error) {
-                console.log (error);
-            }
-          }
-       const fetchData = async ()=>{
-           await fetchFlightsIn();
-           await fetchFlightsOut();
-       }
-       fetchData()
-    }, [flightIn, flightOut]);
+        fetchFlightsIn;
+    }, []);
 
     return (
         // <div className="flexXY">

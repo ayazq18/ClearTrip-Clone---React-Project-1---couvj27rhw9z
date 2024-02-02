@@ -62,3 +62,4 @@ const handleDecrease = (category) => {
 }
   return {handleIncrease, handleDecrease, adultcount, setAdultCount, childrencount, setChildrenCount, infantcount, setinfantCount }
 };
+

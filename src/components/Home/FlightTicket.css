@@ -91,7 +91,7 @@
 .login-popup {
   position: absolute;
   top: 0px;
-  left: 50px;
+  left: 280px;
   z-index: 55;
 }
 
@@ -904,7 +904,7 @@ label {
 @media only screen and (min-width: 240px) and (max-width: 768px) {
   .login-popup {
     top: 0px;
-    left: -270px;
+    left: 0px;
     z-index: 55;
   }
   .search-card .btns-div {

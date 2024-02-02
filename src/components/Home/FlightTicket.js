@@ -152,6 +152,7 @@ export default function FlightTicket() {
             const result = await response.json()
             setflightResultdata(result.data.flights);
             setresultforpagination(result.totalResults)
+            console.log(result)
             setload(true)
         } catch (error) {
             console.log(error);
@@ -168,17 +169,6 @@ export default function FlightTicket() {
             const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn[0], flightIn[1], flightIn[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json();
             setFlightWhere(result.data.airports);
-            setload(true)
-        } catch (error) {
-            return error;
-        }
-    }, [])
-
-    const fetchFlightsOut= useMemo(async() => {
-        try {
-            setload(false)
-            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightOut[0], flightOut[1], flightOut[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
-            const result = await response.json();
             setFlightTo(result.data.airports);
             setload(true)
         } catch (error) {
@@ -205,9 +195,7 @@ export default function FlightTicket() {
         setDay(days)
 
         fetchFlights();
-            fetchFlightsIn;
-            fetchFlightsOut;
-
+        fetchFlightsIn;
     }, [valuee, filter, flightResultsortingnav, tripdurationmin, tripdurationmax, pagination]);
 
     const handleSearchResults = (e) => {
@@ -275,7 +263,7 @@ export default function FlightTicket() {
                                         type="text"
                                         placeholder="Where from?"
                                         value={flightIn}
-                                        onChange={(e) => { setFlightIn(e.target.value); fetchFlightsIn(e.target.value) }}
+                                        onChange={(e) => { setFlightIn(e.target.value);}}
                                         onClick={() => { poptab('wayfrom') }}
                                     />
                                     <CgArrowsExchange className="exchangeIcon-one" onClick={() => swapInputs()} />
@@ -298,7 +286,7 @@ export default function FlightTicket() {
                                         type="text"
                                         placeholder="Where to?"
                                         value={flightOut}
-                                        onChange={(e) => { setFlightOut(e.target.value); fetchFlightsOut(e.target.value) }}
+                                        onChange={(e) => { setFlightOut(e.target.value); }}
                                         onClick={() => { poptab('wayto') }}
                                     />
                                     {whereFrom === whereTo || whereFrom !== "" || whereTo !== "" && (

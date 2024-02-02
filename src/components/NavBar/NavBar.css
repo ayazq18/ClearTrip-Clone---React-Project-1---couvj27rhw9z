@@ -138,6 +138,13 @@
   cursor: pointer;
 }
 
+.btnonlogin{
+  background-color: transparent;
+  color: #000;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
+  
+}
+
 #navheader button:hover svg{
   color: #3366cc;
 }
