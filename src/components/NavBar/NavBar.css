@@ -125,7 +125,7 @@
   width: 170px;
 }
 
-#navheader button {
+#navheader .login-Btn {
   padding: 10px 20px;
   background-color: #3a63c3;
   color: #fff;
