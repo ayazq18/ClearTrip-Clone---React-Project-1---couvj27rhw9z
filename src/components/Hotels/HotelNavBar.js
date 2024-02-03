@@ -165,16 +165,16 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                     </div>
                     <div className='hotelResults-navBar-btnDiv flexXY' onClick={(e) => { handleLoginSignUp(e)}}>
                         {token && <div>{loginProfile}</div>}
-                        <h4 className={`hotelResults-navBar-btnDiv-loginbtn ${token ? 'loggedIn' : ''}`}>{token ? <>Hi, User {dropDown}</> : 'Login / Signup'}</h4>
+                        <h4 className={`hotelResults-navBar-btnDiv-loginbtn point ${token ? 'loggedIn' : ''}`}>{token ? <>Hi, User {dropDown}</> : 'Login / Signup'}</h4>
                         {showSignup && <div className='hotelLogin-transparent'></div>}
                     </div>
                         <div className='hotelResults-signup'>
                             {showSignup && <Signup token={token} setToken={setToken} showSignup={showSignup} setShowSignUp={setShowSignUp} />}
                         </div>
                 </div>
-                {showLogin && <div className='hotelLogin-transparent'></div>}
+                {showLogin && <div className='hotelLogin-transparent' onClick={()=>setShowLogin(false)}></div>}
                 {showLogin &&
-                    <div className='hotelResults-login'>
+                    <div className='hotelResults-login popup'>
                         <Login token={token} setToken={setToken} showLogin={showLogin} setShowLogin={setShowLogin} showSignup={showSignup} setShowSignUp={setShowSignUp} />
                     </div>
                 }
@@ -245,7 +245,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                                     </div>
                                 )}
                             </div>
-                            <button onClick={() => handleToSearch()}>Update</button>
+                            <button className='point' onClick={() => handleToSearch()}>Update</button>
                         </div>
                     </div>
                 }
@@ -294,7 +294,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                                         <p>2 star</p>
                                     </div>
                                 </div>
-                                <div className='hotelFilter-sec2-expand-container-btn flex'><button onClick={() => popp("star")} className={`hotelFilter-sec2-expand-container-button ${selectedDeals.length > 0 ? 'dealsBtnClick' : ''}`} disabled={selectedDeals.includes([]) ? !dealsDisabled : dealsDisabled}>Apply</button></div>
+                                <div className='hotelFilter-sec2-expand-container-btn flex'><button onClick={() => popp("star")} className={`hotelFilter-sec2-expand-container-button point ${selectedDeals.length > 0 ? 'dealsBtnClick' : ''}`} disabled={selectedDeals.includes([]) ? !dealsDisabled : dealsDisabled}>Apply</button></div>
                             </div>
                         }
                     </div>
@@ -338,19 +338,6 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                         }
                     </div>
                     {pop['price'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
-
-                    <div className='hotelSearch flexY' onClick={() => popp('searchHotel')}><div>{searchIcon}</div><input className='hotelSearchBar' placeholder='Taj Hotel' type='text' />
-                        {pop['searchHotel'] &&
-                            <div className={`hotelSearchBar-expand ${pop['searchHotel'] ? 'popup' : ''}`} onClick={() => popp("destination")}>
-                                {hotelResult && hotelResult.map((hotel, index) => (
-                                    <div key={index} className="hotelInputExpand-content flex">
-                                        <h2>{location}</h2>
-                                        <h1 onClick={() => handleHotelInput(hotel.name)}>{hotel.name}</h1>
-                                    </div>
-                                ))}
-                            </div>
-                        }
-                    </div>
                     {pop['searchHotel'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
                 </div>
             </div>

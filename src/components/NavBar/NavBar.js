@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import "./NavBar.css";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -7,33 +7,9 @@ import {logo, flight } from "../../Services/Icons.js";
 import Login from "../Login/Login.js";
 
 export default function NavBar() {
-  const MyRef = useRef(null)
   const [showSignup, setShowSignUp] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [token, setToken] = useState(localStorage.getItem('token'));
-  useEffect(()=>{
-      // MyRef.current.style.backgroundColor = "transparent"
-      // MyRef.current.style.color = "#000"
-      // MyRef.current.style.boxShadow = "rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px"
-      // MyRef.current.classList.add('.logout-button')
-      // MyRef.current.addEventListener('mouseenter', ()=>{
-      // MyRef.current.style.backgroundColor = "rgba(247, 245, 245, 0.567)"
-        
-      // })
-      // MyRef.current.addEventListener('mouseleave', ()=>{
-      // MyRef.current.style.backgroundColor = "transparent"
-      // })
-
-      // const icon = MyRef.current.querySelector('.fa-icon')
-      // if(icon){
-      // MyRef.current.addEventListener('mouseenter', ()=>{
-      //   icon.style.color = "blue"
-      //   })
-      // MyRef.current.addEventListener('mouseleave', ()=>{
-      //   icon.style.color = "transparent"
-      //   })
-      // }
-  }, [])
 
   const handleSignin = () => {
     if(token){

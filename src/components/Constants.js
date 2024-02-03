@@ -3,6 +3,18 @@ import { useState } from "react";
 export const Project_ID = "Ccouvj27rhw9z";
 export const Base_URL = 'https://academics.newtonschool.co/api/v1/bookingportals';
 export const App_Type= 'bookingportals';
+import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher } from "../Services/Icons";
+
+export const expandedObj = [
+  {item : 'Trips', icons : trips, toolsIcon: cancel,  tools : 'Cancellations'},
+  {item : 'ShortList', icons : shortlists, toolsIcon: change,  tools : 'Change flights'},
+  {item : 'Travellers', icons : travellers, toolsIcon: print,  tools : 'Print tickes'},
+  {item : 'Cleartrip Wallet', icons : wallet, toolsIcon: voucher,  tools : 'Print hotel voucher'},
+  {item : 'Hi-Five', icons : hiFive},
+  {item : 'Expressway', icons : Expressway},
+  {item : 'Profile', icons : profile},
+  {item : 'Settings', icons : settings},
+]
 
 export const getAirlineInfo = (flightID) => {
     let logoSrc, airlineName;
