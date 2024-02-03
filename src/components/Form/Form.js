@@ -194,7 +194,7 @@ export default function Form() {
                     <h4>{classs}</h4>
                     <MdKeyboardArrowDown style={rotateCateg} className="" />
                 </div>
-            {selectVisible && (
+                {selectVisible && (
                 <div className="selectCateg-Expand">
                     {arr.map((items, index) => (
                         <div className="selectCateg-Expand-container flexBet">
@@ -297,7 +297,7 @@ export default function Form() {
                     )}
                 </div>
                 <div className="input-date">
-                    <div className="flex">
+                    <div className="date-sec flex">
                         <input id="date1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)}/>
                         <input id="date22" type="date" min={new Date().toISOString().split('T')[0]} value={isDisabled ? "Return" : whereTo} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
                     </div>

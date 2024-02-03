@@ -23,7 +23,7 @@
 
 .search-card-hotel {
     width: 100%;
-    height: 300px;
+    /* height: 300px; */
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     margin: 20px 0;
@@ -97,6 +97,7 @@
     margin-bottom: 10px;
   }
   .input-hotel-date {
+    /* width: 200px; */
     justify-content: space-between;
     gap: 30px;
     margin-bottom: 18px;
@@ -118,21 +119,21 @@
   }
 
   #hotelDate1 {
-    width: 150px;
+    width: 50%;
     padding: 15px;
     margin: 15px 0;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-radius: 6px 0 0 6px;
-    font-size: 15px;
+    font-size: 100%;
   }
   
   #hotelDate2 {
-    width: 150px;
+    width: 50%;
     padding: 15px;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-left: none;
     border-radius: 0 6px 6px 0;
-    font-size: 15px;
+    font-size: 100%;
   }
 
   .hotelSearchDiv{
@@ -150,7 +151,7 @@
   }
 
   .hotelSelectCateg{
-    width:290px;
+    width:40%;
     padding: 15px;
     gap: 5px;
     border-radius: 6px;
@@ -288,6 +289,9 @@
       text-align: center;
       height: fit-content;
     }
+    .search-card-hotel{
+      width: 80vw;
+    }
     .search-card-hotel .btns-div {
       display: flex;
       flex-wrap: wrap;
@@ -308,15 +312,15 @@
     }
     #hotelDate1, #hotelDate2,
     #date2  {
-      width: 100%;
+      width: 40%;
       border: none;
       background-color: #fff;
       border-radius: 0;
       border-bottom: 1px solid blue;
-      padding: 15px 30px;
+      /* padding: 15px 10px; */
     }
     .hotelSelectCateg{
-      width:160px;
+      width:50%;
       gap: 5px;
       right: 90px;
     }
@@ -329,7 +333,7 @@
       left: 0px;
     }
     #hotelSearchBtn {
-      padding: 15px 40px;
+      padding: 15px 20px;
       position: relative;
       bottom: 69px;
     }

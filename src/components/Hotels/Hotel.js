@@ -179,7 +179,8 @@ export default function Hotel() {
                     <li onClick={()=>handleSelection('1 Room, 2 Adult')}>1 Room, 2 Adult</li>
                     <li onClick={()=>handleSelection('2 Room, 4 Adult')}>2 Room, 4 Adult</li>
                     <p onClick={() =>handleSelectCategory()}>Add more rooms and travellers</p>
-            </div>}
+                    </div>
+                }
             {selectVisible && (
                 <div className="hotelSelectCateg-Expand">
                     <div className="hotelSelectCateg-Expand-header flexBet">
