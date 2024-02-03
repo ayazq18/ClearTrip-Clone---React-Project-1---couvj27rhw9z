@@ -96,7 +96,7 @@ export default function Signup({token, setToken, showSignup, setShowSignUp}) {
                 onClick={() => closeLoginCard()}
               />
             </div>
-            {isSignUp ? (<form
+            {!isSignUp ? (<form
               className="login-form flexXY"
               onSubmit={(e) => handleSubmit(e)}
             >
