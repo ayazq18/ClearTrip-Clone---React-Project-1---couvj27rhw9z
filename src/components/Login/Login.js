@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import './Login.css'
 import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher } from "../../Services/Icons.js";
 
-export default function Login({token,setToken, showLogin, setShowLogin}) {
+export default function Login({token,setToken, showLogin, setShowLogin, setShowSignUp, showSignUp}) {
     const MyRef = useRef(null);
     const expandedObj = [
         {item : 'Trips', icons : trips, toolsIcon: cancel,  tools : 'Cancellations'},
@@ -19,7 +19,8 @@ export default function Login({token,setToken, showLogin, setShowLogin}) {
         if(token){
           setToken('')
           localStorage.removeItem('token')
-          setShowLogin(!showLogin)
+          // setShowLogin(!showLogin)
+          // setShowSignUp(!showSignUp)
           MyRef.current.style.backgroundColor = "blue"
           MyRef.current.style.color = "#fff"
         }
