@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import './Login.css'
 import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher } from "../../Services/Icons.js";
 
-export default function Login({token,setToken, showLogin, setShowLogin, pop}) {
+export default function Login({token,setToken, showLogin, setShowLogin}) {
     const MyRef = useRef(null);
     const expandedObj = [
         {item : 'Trips', icons : trips, toolsIcon: cancel,  tools : 'Cancellations'},

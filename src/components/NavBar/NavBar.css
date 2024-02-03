@@ -111,10 +111,21 @@
   cursor: pointer;
 }
 
+.logout-button{
+  background-color: transparent;
+  color: #000;
+  font-weight: 400;
+  gap: 10px;
+  /* border: 1px solid rgb(145, 139, 139); */
+  border-radius: 6px;
+  padding: 10px;
+}
 .logout-button:hover{
+  background-color: #f7f3f3de;
+}
+.logout-button:hover .fa-icon{
   background-color: #00000047;
-  color: red;
-  padding: 30px;
+  color: blue;
 }
 
 
