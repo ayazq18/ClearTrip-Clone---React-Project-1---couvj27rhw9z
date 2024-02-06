@@ -25,8 +25,6 @@ export default function FlightTicket() {
     let dayy = searchParams.get("dayOfWeek");
     let date = searchParams.get("date");
 
-    console.log(flightFrom)
-
     const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
     const [filter, setfilter] = useState({ "6E": true, "SG": true, "I5": true, "UK": true, "AI": true, "QP": true, "S5": true, "stops": null });
     const [flightResultdata, setflightResultdata] = useState([]);
@@ -154,7 +152,6 @@ export default function FlightTicket() {
             const result = await response.json()
             setflightResultdata(result.data.flights);
             setresultforpagination(result.totalResults)
-            console.log(result)
             setload(true)
         } catch (error) {
             console.log(error);
@@ -355,7 +352,6 @@ export default function FlightTicket() {
                                                 </>
                                             )}
                                         </h4>
-                                        {/* <h4>{classs}</h4> */}
                                         <MdKeyboardArrowDown style={rotateCateg} className="" />
                                     </div>
 
@@ -423,17 +419,17 @@ export default function FlightTicket() {
                         <div className='wayprice flexXY' onClick={() => { poptab("wayprice") }}>
                             <p>One-way price</p>
                             <div><MdKeyboardArrowUp className={`fs ${pop['wayprice'] ? 'rotatedegree' : 'rotatezero'}`}/></div>
-                        </div>
                         {!pop["wayprice"] &&
                             <div className='filterPopupwayprice flex flexc'>
                                 <p>Up to ₹{onewayPrice}</p>
                                 <input type='range' min="1127" max="2500" value={onewayPricewithoutcomma()} onChange={(e) => { onewayPricewithcomma(e.target.value); }} />
                                 <div className='flexBet'><p>₹1,127</p><p>₹2,500</p></div>
                             </div>}
+                        </div>
                         <div id="one-way-price" className="flex">
                             <div onClick={() => { poptab('oneway') }} className="trip-duration flexY">
                                 <h1>Trip duration</h1>
-                                <MdKeyboardArrowUp className={`fs ${pop['oneway'] ? 'rotatedegree' : 'rotatezero'}`} />
+                                <div><MdKeyboardArrowUp className={`fs ${pop['oneway'] ? 'rotatedegree' : 'rotatezero'}`} /></div>
                             </div>
                             {!pop['oneway'] && (
                                 <div className="one-way-price-sec1">

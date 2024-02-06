@@ -234,12 +234,14 @@
   align-items: center;
   padding: 10px 15px;
   /* height: 20px; */
+  position: relative;
   margin-top: 50px;
 }
 .filterPopupwayprice {
   padding: 0 30px;
   width: 230px;
   position: absolute;
+  top: 35px;
   right: 15px;
   color: #00000097;
 }
@@ -979,7 +981,7 @@ label {
     overflow-y: scroll;
   }
   .selectCateg-one h4{
-    font-size: 7px;
+    font-size: 9px;
   }
   .selectCateg-Expand-one {
     top: 85px;
@@ -1076,6 +1078,7 @@ label {
     flex-direction: column;
   }
   #aside {
+    position: static;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -1108,9 +1111,7 @@ label {
     padding: 0 30px;
     width: 200px;
     background-color: #fff;
-    position: absolute;
-    top: 50px;
-    left: 125px;
+    left: -30px;
   }
   .filterPopupwayprice p {
     font-size: 14px;
@@ -1121,4 +1122,7 @@ label {
   .footerlinkscontainer{
     display: flex;
   }
+  /* .trip-duration {
+    align-items: center;
+  } */
 }

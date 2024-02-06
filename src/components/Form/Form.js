@@ -121,7 +121,7 @@ export default function Form() {
     const handleSearchFlight = (e) => {
         e.preventDefault(); 
             setall(prev => ({ ...prev, flightIn: flightIn, flightOut: flightOut, flightWhere:{flightWhere}, flightTo:{flightTo}, day: day, whereDate: whereDate, selectedFlightIn:selectedFlightIn, selectedFlightOut:selectedFlightOut }));
-            (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`);
+            (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`, {state:flightWhere});
     }
 
   
