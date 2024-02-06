@@ -25,6 +25,8 @@ export default function FlightTicket() {
     let dayy = searchParams.get("dayOfWeek");
     let date = searchParams.get("date");
 
+    console.log(flightFrom)
+
     const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
     const [filter, setfilter] = useState({ "6E": true, "SG": true, "I5": true, "UK": true, "AI": true, "QP": true, "S5": true, "stops": null });
     const [flightResultdata, setflightResultdata] = useState([]);

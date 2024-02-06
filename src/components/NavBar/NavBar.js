@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./NavBar.css";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import {logo, flight } from "../../Services/Icons.js";
 import Login from "../Login/Login.js";
 
 export default function NavBar() {
-  const [showSignup, setShowSignUp] = useState(false)
+  const [showSignup, setShowSignUp] = useState(true)
   const [showLogin, setShowLogin] = useState(false)
   const [token, setToken] = useState(localStorage.getItem('token'));
 
@@ -18,6 +18,14 @@ export default function NavBar() {
       setShowSignUp(!showSignup)
     }
   };
+
+  useEffect(()=>{
+    if(token){
+      setShowSignUp(false)
+    }else{
+      setShowSignUp(true)
+    }
+  },[])
 
   const navigate = useNavigate()
   return (
