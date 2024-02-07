@@ -114,6 +114,7 @@
 
   .hotelInputExpand-content h1{
     font-size: 14px;
+    text-align: start;
     width: 100%;
     padding: 5px;
   }
