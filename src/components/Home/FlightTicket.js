@@ -126,10 +126,10 @@ export default function FlightTicket() {
         setflightResultsortingnav({ [key]: !flightResultsortingnav[key] });
     }
 
-    function navigateToFlightInfo(_id, flightId) {
+    function navigateToFlightInfo(_id, flightId, source, destination) {
         if (localStorage.getItem("token")) {
             setall(prev =>({...prev, dayy:dayy}))
-            navigate(`/flights/results/Info?flightid=${_id}&ID=${flightId}&date=${whereDate}`)
+            navigate(`/flights/results/Info?flightid=${_id}&ID=${flightId}&date=${whereDate}&source=${source}&destination=${destination}`)
         }
         else {
            alert('Please login before proceed !')
@@ -419,13 +419,14 @@ export default function FlightTicket() {
                         <div className='wayprice flexXY' onClick={() => { poptab("wayprice") }}>
                             <p>One-way price</p>
                             <div><MdKeyboardArrowUp className={`fs ${pop['wayprice'] ? 'rotatedegree' : 'rotatezero'}`}/></div>
+                        </div>
+
                         {!pop["wayprice"] &&
                             <div className='filterPopupwayprice flex flexc'>
                                 <p>Up to ₹{onewayPrice}</p>
                                 <input type='range' min="1127" max="2500" value={onewayPricewithoutcomma()} onChange={(e) => { onewayPricewithcomma(e.target.value); }} />
                                 <div className='flexBet'><p>₹1,127</p><p>₹2,500</p></div>
                             </div>}
-                        </div>
                         <div id="one-way-price" className="flex">
                             <div onClick={() => { poptab('oneway') }} className="trip-duration flexY">
                                 <h1>Trip duration</h1>
@@ -494,7 +495,7 @@ export default function FlightTicket() {
                                         </div>
                                         <div className="content-card-price-book-container flexBet">
                                             <h3>₹{result.ticketPrice}</h3>
-                                            <h2 onClick={() => {navigateToFlightInfo(result._id, result.flightID)}} className="content-card-book-btn">Book</h2>
+                                            <h2 onClick={() => {navigateToFlightInfo(result._id, result.flightID, result.source, result.destination)}} className="content-card-book-btn">Book</h2>
                                         </div>
                                     </div>
                                     {flightDetails && selectedCardIndex === index && 

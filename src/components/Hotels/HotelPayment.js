@@ -68,7 +68,7 @@ export default function HotelPayment() {
                 <div className='flexBet'>{logo}</div>
                 <h2 style={{color:'green', textAlign:'center'}}>Payment Successfull</h2>
                 <h2 style={{textAlign:'center'}}>Dear {fName}</h2>
-                <p style={{textAlign:'center'}}>Have a good time</p>
+                <p style={{textAlign:'center'}}>Have a good stay 🙂</p>
               </div>
               <div style={{marginTop:'50px', textAlign:'center', borderTop:'1px dashed #808080', paddingTop:'10px'}}>The booking details is been sent to {email}</div>
             </div>

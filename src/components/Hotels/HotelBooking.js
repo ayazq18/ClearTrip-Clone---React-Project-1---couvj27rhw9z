@@ -40,17 +40,14 @@ export default function HotelBooking() {
     const formatdatefrom = formatDate(datefrom)
     const formatdateto = formatDate(dateTo)
     const datefromString = formatdatefrom;
-    // Extract day, month, and date
     const dayfromMatch = datefromString.match(/^(\w{3}),\s(\w{3})\s(\d{1,2}),/);
     const dayfrom = dayfromMatch ? dayfromMatch[1] : null;
     const monthfrom = dayfromMatch ? dayfromMatch[2] : null;
     const datefromdate = dayfromMatch ? dayfromMatch[3] : null;
     const timefrmMatch = datefromString.match(/(\d{1,2}:\d{2}\s[APMapm]{2})$/);
     const timefrom = timefrmMatch ? timefrmMatch[1] : null;
-    // console.log(time)
 
     const datetoString = formatdateto;
-    // Extract day, month, and date
     const daytoMatch = datetoString.match(/^(\w{3}),\s(\w{3})\s(\d{1,2}),/);
     const dayto = daytoMatch ? daytoMatch[1] : null;
     const monthto = daytoMatch ? daytoMatch[2] : null;
