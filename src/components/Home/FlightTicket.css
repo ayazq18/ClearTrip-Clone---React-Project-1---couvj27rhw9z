@@ -1,9 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto",
-    Helvetica "Neue", "Ubuntu", Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* -------------Custom Styles--------------- */
@@ -180,6 +181,7 @@
   border: 1px solid rgba(0, 0, 0, 0.108);
   border-radius: 4px;
   font-size: 12px;
+  font-weight: 400;
   margin-right: 10px;
 }
 

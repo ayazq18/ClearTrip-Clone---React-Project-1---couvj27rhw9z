@@ -1,19 +1,21 @@
 import React, { useRef } from "react";
 import './Login.css'
 import { expandedObj } from "../Constants.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Login({token,setToken, showLogin, setShowLogin, setShowSignUp, showSignUp}) {
     const MyRef = useRef(null);
-
+    const navigate = useNavigate()
       const handleSignOut = ()=>{
         if(token){
           setToken('')
           localStorage.removeItem('token')
-          // setShowLogin(!showLogin)
-          // setShowSignUp(!showSignUp)
-          // MyRef.current.style.backgroundColor = "blue"
-          // MyRef.current.style.color = "#fff"
+          localStorage.removeItem('name')
         }
+      }
+
+      const handletopage = ()=>{
+        navigate('/maintenance')
       }
 
   return (
@@ -25,7 +27,7 @@ export default function Login({token,setToken, showLogin, setShowLogin, setShowS
                 <div className="logout-account-sec">
                 <h6>Account</h6>
                 {expandedObj.map((Obj, index)=>(
-                    <div key={index} className="account-items-one flexY">
+                    <div key={index} onClick={()=>handletopage()} className="account-items-one flexY">
                     {Obj.icons}
                     <h4 key={index}>{Obj.item}</h4>
                     </div>
@@ -34,7 +36,7 @@ export default function Login({token,setToken, showLogin, setShowLogin, setShowS
                 <div className="logout-tools-sec-one">
                 <h6>Quick tools</h6>
                 {expandedObj.map((Obj, index)=>(
-                    <div className="tools-items-one flexY">
+                    <div onClick={()=>handletopage()} className="tools-items-one flexY">
                     {Obj.toolsIcon}
                     <h4 key={index}>{Obj.tools}</h4>
                     </div>

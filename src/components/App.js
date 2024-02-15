@@ -1,9 +1,8 @@
 import NavBar from "./NavBar/NavBar.js";
 import Flight from "./Home/Flight.js";
-// import './App.css'
+import './App.css'
 import { BrowserRouter, Route, Routes} from 'react-router-dom'
 import Hotel from "./Hotels/Hotel.js";
-import Bus from "./Bus/Bus.js";
 import FlightTicket from "./Home/FlightTicket.js";
 import ContextAllDataProvider from './ContextAllData.js';
 import HotelResults from "./Hotels/HotelResults.js";
@@ -12,6 +11,7 @@ import FlightInfo from "./Home/FlightInfo.js";
 import PaymentBooking from "./Home/PaymentBooking.js";
 import HotelBooking from "./Hotels/HotelBooking.js";
 import HotelPayment from "./Hotels/HotelPayment.js";
+import Maintenance from "./Maintenance/Maintenance.js";
 
 function App() {
   return <div className="app">
@@ -30,6 +30,7 @@ function App() {
       <Route path="/hotels/results/:hotelcardsinfo" element={<HotelsCardInfo/>}/>
       <Route path="/hotels/results/hotelcardsinfo/:hotelBooking" element={<HotelBooking/>}/>
       <Route path="/hotels/results/hotelcardsinfo/hotelBooking/:hotelPayment" element={<HotelPayment/>}/>
+      <Route path="/maintenance" element={<Maintenance/>}/>
     </Routes>
     </BrowserRouter>
     </ContextAllDataProvider>

@@ -271,7 +271,6 @@ export default function Form() {
                             ))}
                         </div>
                     )}
-                    <h1 className="whereIconTo">{flightgo}</h1>
                     <input
                         id="input2"
                         type="text"
@@ -282,6 +281,7 @@ export default function Form() {
                             showWhereTo();
                         }}
                     />
+                    <h1 className="whereIconTo">{flightgo}</h1>
                     {(flightIn === flightOut && flightIn !== "" && flightOut !== "") && (
                         <h5 className="error" style={{ color: "red" }}>Enter arrival airport / city</h5>
                     )}
@@ -298,8 +298,8 @@ export default function Form() {
                 </div>
                 <div className="input-date">
                     <div className="date-sec flex">
-                        <input id="date1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)}/>
-                        <input id="date22" type="date" min={new Date().toISOString().split('T')[0]} value={isDisabled ? "Return" : whereTo} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
+                        <input id="inputdate1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)}/>
+                        <input id="inputdate22" type="date" min={new Date().toISOString().split('T')[0]} value={isDisabled ? "Return" : whereTo} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
                     </div>
                     <div className="searchBtn">
                         <button onClick={(e) => handleSearchFlight(e)} id="flightSearchBtn">

@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+       font-family: "Roboto", sans-serif;
   }
   .point{
     cursor: pointer;
@@ -35,6 +38,7 @@
     font-size: 30px;
     font-weight: 500;
     margin-bottom: 10px;
+    /* color: red; */
   }
   
   .home h2 {
@@ -59,8 +63,8 @@
   }
 
   .selectTrip{
-    /* background-color: red; */
-    padding: 10px;
+    padding: 10px 0;
+    margin-right: 5px;
     width: fit-content;
     position: relative;
     cursor: pointer;
@@ -114,7 +118,7 @@
   }
   .selectCateg{
     width:100%;
-    padding: 10px;
+    padding: 10px 0;
     text-wrap: nowrap;
     cursor: pointer;
   }
@@ -206,6 +210,7 @@
   .search-card .btns-div {
     padding: 10px 0;
     gap: 10px;
+    flex-wrap: wrap;
   }
   
   .search-card .btns-div h2 {
@@ -248,6 +253,7 @@
   }
   
   #input1 {
+    width: 50%;
     padding: 15px 60px;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-radius: 6px 0 0 6px;
@@ -259,6 +265,7 @@
   }
   
   #input2 {
+    width: 50%;
     padding: 15px 60px;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-left: none;
@@ -378,12 +385,13 @@
     position: absolute;
     top: 10px;
     right: 280px;
-    /* transform: rotate(45deg); */
     color: rgba(0, 0, 0, 0.381);
     z-index: 1;
   }
-  
-  #date1 {
+  .date-sec{
+    flex-wrap: wrap;
+  }
+  #inputdate1 {
     width: 50%;
     padding: 15px 35px;
     margin: 15px 0;
@@ -392,7 +400,7 @@
     font-size: 15px;
   }
   
-  #date22 {
+  #inputdate22 {
     width: 50%;
     padding: 15px 35px;
     margin: 15px 0;
@@ -415,6 +423,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 30px;
   }
   
@@ -442,7 +451,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      overflow-x: scroll;
+      /* overflow-x: scroll; */
     }
     .selectCateg-Expand{
       top: 50px;
@@ -476,7 +485,7 @@
       padding: 15px 30px;
       text-align: start;
     }
-    #date1, #date22 {
+    #inputdate1, #inputdate22 {
       background-color: #fff;
       font-size: 15px;
       width: 100%;
