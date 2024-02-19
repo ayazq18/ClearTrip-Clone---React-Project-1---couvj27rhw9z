@@ -254,7 +254,7 @@
   }
   
   #input1 {
-    width: 50%;
+    width: 280px;
     padding: 15px 60px;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-radius: 6px 0 0 6px;
@@ -266,7 +266,7 @@
   }
   
   #input2 {
-    width: 50%;
+    width: 280px;
     padding: 15px 60px;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-left: none;
@@ -280,7 +280,7 @@
   .whereIconfrom {
     font-size: 20px;
     position: absolute;
-    left: 15px;
+    left: 2%;
     top: 5px;
     color: rgba(0, 0, 0, 0.381);
     z-index: 1;
@@ -374,7 +374,7 @@
 
   .exchangeIcon {
     position: absolute;
-    left: 47.5%;
+    left: 46%;
     top: 8px;
     z-index: 1;
     cursor: pointer;
@@ -384,7 +384,7 @@
     font-size: 20px;
     position: absolute;
     top: 10px;
-    left: 54%;
+    left: 52%;
     color: rgba(0, 0, 0, 0.381);
     z-index: 1;
   }
@@ -482,7 +482,7 @@
       border: none;
       border-radius: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.29);
-      padding: 15px 30px;
+      padding: 15px 40px;
       text-align: start;
     }
     #inputdate1, #inputdate22 {
