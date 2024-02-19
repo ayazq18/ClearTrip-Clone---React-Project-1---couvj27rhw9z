@@ -22,12 +22,13 @@ export default function NavBar() {
   useEffect(()=>{
     if(token){
       setShowSignUp(false)
-    }else{
-      const inter = setInterval(() => {
-        setShowSignUp(true)
-        clearInterval(inter)
-      }, 20000);
     }
+    // else{
+    //   const inter = setInterval(() => {
+    //     setShowSignUp(true)
+    //     clearInterval(inter)
+    //   }, 20000);
+    // }
   },[])
 
   const navigate = useNavigate()

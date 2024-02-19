@@ -251,6 +251,7 @@ export default function Form() {
                 <div className="input-text">
                     <h1 className="whereIconfrom">{flyFrom}</h1>
                     <h1 className="exchangeIcon" onClick={() => swapInputs()}>{swapIcon}</h1>
+                    <h1 className="whereIconTo">{flightgo}</h1>
                     <input
                         id="input1"
                         type="text"
@@ -280,8 +281,7 @@ export default function Form() {
                         onClick={() => {
                             showWhereTo();
                         }}
-                    />
-                    <h1 className="whereIconTo">{flightgo}</h1>
+                    ></input>
                     {(flightIn === flightOut && flightIn !== "" && flightOut !== "") && (
                         <h5 className="error" style={{ color: "red" }}>Enter arrival airport / city</h5>
                     )}
