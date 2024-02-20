@@ -11,7 +11,7 @@ import { GiGymBag } from "react-icons/gi";
 import { MdRestaurant, MdTableBar, MdOutlineSignalWifi4Bar } from "react-icons/md";
 import { FaPersonSwimming, FaSprayCanSparkles } from "react-icons/fa6";
 import { MdOutlineFreeCancellation, MdOutlineVerified } from "react-icons/md";
-
+import { RxInfoCircled } from "react-icons/rx";
 
 
 const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
@@ -284,7 +284,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                                             </div>
                                         </div>
                                         <div className='hotelCardInfo-container-leftMain-contain1-meal amenities flex'>
-                                            <GiHotMeal style={{ fontSize: "20px" }} />
+                                            <RxInfoCircled style={{ fontSize: "20px" }} />
                                             <div>
                                                 <p className='meal-plans'>Additinal Info</p>
                                                 <p className='meal-offer'>{hotelInfoResult.childAndExtraBedPolicy.additionalInfo}</p>
