@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useMemo, useState, lazy, useRef } from 'react';
 import './HotelCardInfo.css'
 import { Base_URL, Project_ID, App_Type, handleselectionCategory } from "../Constants";
-import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon, ratingCircle, ratingOwl, rightArrow } from '../../Services/Icons';
+import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon, ratingCircle, ratingOwl, rightArrow, hotelIcon } from '../../Services/Icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../ContextAllData.js';
 import { CgMathMinus, CgMathPlus } from 'react-icons/cg';
@@ -10,7 +10,7 @@ const InfoCarausal = lazy(() => import('../Corousel/HotelPage/InfoCarausal.js'))
 import { GiGymBag } from "react-icons/gi";
 import { MdRestaurant, MdTableBar, MdOutlineSignalWifi4Bar } from "react-icons/md";
 import { FaPersonSwimming, FaSprayCanSparkles } from "react-icons/fa6";
-import { MdOutlineFreeCancellation } from "react-icons/md";
+import { MdOutlineFreeCancellation, MdOutlineVerified } from "react-icons/md";
 
 
 
@@ -35,6 +35,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const [popUp, setPopUp] = useState(false)
     const [date1, setDate1] = useState(dateFrom)
     const [date2, setDate2] = useState(dateTo)
+    const [activetab, setactivetab] = useState({'gen':true, 'amenities':false, 'rooms':false})
 
     const [pop, setpop] = useState({})
     const [poptab, setpoptab] = useState({})
@@ -101,6 +102,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
             const response = await fetch(`${Base_URL}/hotel/${hotelId}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setHotelInfoResult(result.data)
+            console.log(result)
             setLoad(true)
         } catch (error) {
             console.log(error);
@@ -108,14 +110,12 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     }, [hotelId])
 
    
-    const [activetab, setactivetab] = useState({'gen':true, 'amenities':false, 'rooms':false})
     const mouseLocation = ()=>{
         window.addEventListener('scroll', (e)=>{
             const scrolly = window.scrollY
             if(scrolly>=530){setShowPriceSec(!showPriceSec); setactivetab({'rooms':true})}
             else if(scrolly>=150){setShowPriceSec(false); setactivetab({'rooms':false}); setactivetab({'amenities':true})}
             else if(scrolly<235){setactivetab({'amenities':false});setactivetab({'gen':true})}else{setactivetab({'gen':false})}
-
         })
     }
 
@@ -257,15 +257,42 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                                 <div className='flexY g2'>{ratingOwl}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}</div>
                                 <div className='flexY'><p>{hotelInfoResult.rating > 4 ? '(631 reviews)' : hotelInfoResult.rating > 3 ? '(456 reviews)' : hotelInfoResult.rating > 2 ? '(330 reviews)' : hotelInfoResult.rating > 1 ? '(190 reviews)' : '(No reviews)'}</p>{rightArrow}</div>
                             </div>
+                            <div className='flex hello'>
                             <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
                                 <GiHotMeal style={{ fontSize: "20px" }} />
                                 <div>
-                                    <p id='meal-plans'>Free breakfast on select plans</p>
-                                    <p id='meal-offer'>Some plans include free breakfast</p>
+                                    <p className='meal-plans'>Free breakfast on select plans</p>
+                                    <p className='meal-offer'>Some plans include free breakfast</p>
                                 </div>
                             </div>
+                            <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
+                                {hotelIcon}
+                                <div>
+                                    <p className='meal-plans'>Child and Extra Bed Policy</p>
+                                    <p className='meal-offer'>Extra Bed for additinol guest : {hotelInfoResult.childAndExtraBedPolicy.extraBedForAdditionalGuest===true ? 'Yes' : 'No'}</p>
+                                    <p className='meal-offer'>Extra Bed provided for child : {hotelInfoResult.childAndExtraBedPolicy.extraBedProvidedForChild===true ? 'Yes' : 'No'}</p>
+                                    { (hotelInfoResult.childAndExtraBedPolicy.extraBedForAdditionalGuest===true || hotelInfoResult.childAndExtraBedPolicy.extraBedProvidedForChild===true ) && <p className='meal-offer'>Extra Bed Charge : {hotelInfoResult.childAndExtraBedPolicy.extraBedCharge}₹</p>}
+                                </div>
+                            </div>
+                            </div>
+                            <div className='flexBet hello'>
+                            <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
+                                <MdOutlineVerified style={{ fontSize: "20px" }} />
+                                <div>
+                                    <p className='meal-plans'>Best in className service</p>
+                                    <p className='meal-offer'>Service at this property rated {hotelInfoResult.rating}.0</p>
+                                </div>
+                            </div>
+                            <div className='hotelCardInfo-container-leftMain-contain1-meal amenities flex'>
+                                <GiHotMeal style={{ fontSize: "20px" }} />
+                                <div>
+                                    <p className='meal-plans'>Additinal Info</p>
+                                    <p className='meal-offer'>{hotelInfoResult.childAndExtraBedPolicy.additionalInfo}</p>
+                                </div>
+                            </div>
+                            </div>
                         </div>
-                            <div id='amenities' className='hotelCardInfo-container-leftMain-contain2 flexc'>
+                            <div className='hotelCardInfo-container-leftMain-contain2 flexc'>
                                 <h1>Amenities</h1>
                                 <div className='hotelCardInfo-container-leftMain-contain2-amenities flex'>
                                     <div className='hotelCardInfo-container-leftMain-contain2-amenities-sec1 flex'>
