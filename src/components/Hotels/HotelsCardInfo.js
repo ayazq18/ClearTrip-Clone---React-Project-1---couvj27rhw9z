@@ -35,12 +35,12 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const [popUp, setPopUp] = useState(false)
     const [date1, setDate1] = useState(dateFrom)
     const [date2, setDate2] = useState(dateTo)
-    const [activetab, setactivetab] = useState({'gen':true, 'amenities':false, 'rooms':false})
+    const [activetab, setactivetab] = useState({ 'gen': true, 'amenities': false, 'rooms': false })
 
     const [pop, setpop] = useState({})
     const [poptab, setpoptab] = useState({})
     const [showPriceSec, setShowPriceSec] = useState(false)
-    const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
+    const { infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease } = handleselectionCategory()
 
 
     function popp(key) {
@@ -102,20 +102,19 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
             const response = await fetch(`${Base_URL}/hotel/${hotelId}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setHotelInfoResult(result.data)
-            console.log(result)
             setLoad(true)
         } catch (error) {
             console.log(error);
         }
     }, [hotelId])
 
-   
-    const mouseLocation = ()=>{
-        window.addEventListener('scroll', (e)=>{
+
+    const mouseLocation = () => {
+        window.addEventListener('scroll', (e) => {
             const scrolly = window.scrollY
-            if(scrolly>=530){setShowPriceSec(!showPriceSec); setactivetab({'rooms':true})}
-            else if(scrolly>=150){setShowPriceSec(false); setactivetab({'rooms':false}); setactivetab({'amenities':true})}
-            else if(scrolly<235){setactivetab({'amenities':false});setactivetab({'gen':true})}else{setactivetab({'gen':false})}
+            if (scrolly >= 530) { setShowPriceSec(!showPriceSec); setactivetab({ 'rooms': true }) }
+            else if (scrolly >= 150) { setShowPriceSec(false); setactivetab({ 'rooms': false }); setactivetab({ 'amenities': true }) }
+            else if (scrolly < 235) { setactivetab({ 'amenities': false }); setactivetab({ 'gen': true }) } else { setactivetab({ 'gen': false }) }
         })
     }
 
@@ -124,175 +123,177 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
         fetchHotelCardInfo
     }, [])
 
-    const handleToPayment = ()=>{
+    const handleToPayment = () => {
         navigate(`/hotels/results/hotelcardsinfo/hotelBooking?hotelId=${hotelId}&dateFrom=${date1}&dateTo=${date2}`)
     }
 
     return (
         <>
-        {load && <div className='hotelCardInfo'>
-            <div className='flexX'>
-            <div className='hotelResults-navBar-container flexXY'>
-                <div className='hotelResults-navBar flexBet'>
-                    <div id='hotelLogo' onClick={() => navigate('/hotel')}>{logo}</div>
-                    <div className='hotelResults-input flexXY' >
-                        <div className='hotelResults-input-destresult flexY' onClick={() => popUpTab('dest')}>
-                            <div>{hoteLocation}</div>
-                        </div>
-                        <div className='hotelResults-input-dateResult flexXY' type='date'>
-                            <div className='flexXY'>
-                                {calender}
-                                <p id='hotelResults-input-dateResult-date1' onClick={() => popUpTab('date1')}>{dateFrom}</p>
-                                <p onClick={() => popUpTab('date2')}>{dateTo}</p>
+            {load && <div className='hotelCardInfo'>
+                <div className='flexX'>
+                    <div className='hotelResults-navBar-container flexXY'>
+                        <div className='hotelResults-navBar flexBet'>
+                            <div id='hotelLogo' onClick={() => navigate('/hotel')}>{logo}</div>
+                            <div className='hotelResults-input flexXY' >
+                                <div className='hotelResults-input-destresult flexY' onClick={() => popUpTab('dest')}>
+                                    <div>{hoteLocation}</div>
+                                </div>
+                                <div className='hotelResults-input-dateResult flexXY' type='date'>
+                                    <div className='flexXY'>
+                                        {calender}
+                                        <p id='hotelResults-input-dateResult-date1' onClick={() => popUpTab('date1')}>{dateFrom}</p>
+                                        <p onClick={() => popUpTab('date2')}>{dateTo}</p>
+                                    </div>
+                                </div>
+                                <div onClick={() => popUpTab('selectCategory')} className="hotelResults-input-selectCategResult flexBet">
+                                    {hotelProfile} &nbsp;
+                                    <p>1 Room, {adultcount} Guests</p>
+                                </div>
                             </div>
                         </div>
-                        <div onClick={() => popUpTab('selectCategory')} className="hotelResults-input-selectCategResult flexBet">
-                            {hotelProfile} &nbsp;
-                            <p>1 Room, {adultcount} Guests</p>
+                        {popUp &&
+                            <div className={`hotelResults-input-expand ${popUp ? 'popup' : ""} flexXY`}>
+                                <div className='hotelResults-input flexXY'>
+                                    <div className={`hoteldynamicDiv flexXY ${pop['destination'] ? 'searchActive' : ''}`}>
+                                        <div className="hotelLocation-icon flexXY">{location}</div>
+                                        <input className='hotelResults-input-dest' placeholder='Search destination' onClick={() => popp("destination")} type='text' value={inputValue} onChange={(e) => { setInputValue(e.target.value); fetchHotelLocation(e.target.value) }} />
+                                        <div id='iconClose' onClick={() => setInputValue('')}>{IconClose}</div>
+                                        {pop["destination"] &&
+                                            <div className='hoteldynamicDiv-expand' onClick={() => popp("dest")}>
+                                                {hotelResultLocation && hotelResultLocation.map((hotel, index) => (
+                                                    <div key={index} className="hotelInputExpand-content flex">
+                                                        <h2>{location}</h2>
+                                                        <h1 onClick={() => handleHotelInput(hotel.location)}>{hotel.name}</h1>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        }
+                                    </div>
+                                    {popUp && <input min={new Date().toISOString().split('T')[0]} className={`hotelResults-input-date fromdate ${poptab['date1'] ? 'searchActive' : ''}`} value={date1} onChange={(e) => setDate1(e.target.value)} onClick={() => popp("startdate")} type='date' />}
+                                    {popUp && <input min={new Date().toISOString().split('T')[0]} className={`hotelResults-input-date todate ${poptab['date2'] ? 'searchActive' : ''}`} value={date2} onChange={(e) => setDate2(e.target.value)} onClick={() => popp("enddate")} type='date' />}
+                                    <div className={`hotelResults-input-selectCateg flexBet ${pop['hotelSearch'] ? 'searchActive' : ''}`} onClick={() => { handleSelectCategory(); popp('hotelSearch') }}>
+                                        {hotelProfile} &nbsp;
+                                        <p>
+                                            <span>1 Room,</span>
+                                            {adultcount && (<>{adultcount}</>)}
+                                        </p> &nbsp;
+                                        <p>{classs}</p> &nbsp;
+                                        <div style={rotateCateg} >{dropDown}</div>
+                                        {pop['hotelSearch'] && (
+                                            <div className="hotelSelectCateg-Expand">
+                                                <div className="hotelSelectCateg-Expand-header flexBet">
+                                                    <h5>Room 1</h5>
+                                                </div>
+                                                {arr.map((items, index) => (
+                                                    <div className="hotelSelectCateg-Expand-container flexBet">
+                                                        <div>
+                                                            <h1>{items.category}</h1>
+                                                            <h5>{items.age}</h5>
+                                                        </div>
+                                                        <div className="hotelSelectCateg-count flexY">
+                                                            <CgMathMinus
+                                                                className={`${(items.category === "Adults" && adultcount > 1) ||
+                                                                    (items.category === "Children" && childrencount > 0)
+                                                                    ? "hotelChangeToPosIcon"
+                                                                    : "hotelCountNegIcon"
+                                                                    }`}
+                                                                onClick={() => handleDecrease(items.category)}
+                                                            />
+                                                            <h1>
+                                                                {items.category === "Adults"
+                                                                    ? adultcount
+                                                                    : childrencount}
+                                                            </h1>
+                                                            <CgMathPlus
+                                                                className="hotelChangeToPosIcon"
+                                                                onClick={() => handleIncrease(items.category)}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                <div className="hotelAddAnother flexY" onClick={() => pop('hotelSearch')}>
+                                                    <CgMathPlus />
+                                                    <span>Add another room</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <button onClick={() => handleToSearch()}>Update</button>
+                                </div>
+                            </div>
+                        }
+                        {popUp && <div className='backg-transparent' onClick={() => setPopUp(false)}></div>}
+                        <div className='hotelCardInfo-container-tab flexBet'>
+                            <div className='hotelCardInfo-container-tab-section flex'>
+                                <a href='#general' className={activetab['gen'] ? 'activeTab' : ''} onClick={() => { popp('general') }}>General</a>
+                                <a href='#amenities' className={activetab['amenities'] ? 'activeTab' : ''} onClick={() => { popp('amenities') }}>Amenities</a>
+                                <a href='#room' className={activetab['rooms'] ? 'activeTab' : ''} onClick={() => { popp('room') }}>Rooms</a>
+                            </div>
+                            {showPriceSec &&
+                                <div className=' hotelPricingSec flexBet g10'>
+                                    <div className='hotelPricingSec1 flexXY'>
+                                        <div className='hotelPricingSec-container flexXY g10'>
+                                            <p className='con2'>+ ₹{(((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/) ? (((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/)[0] : ((hotelInfoResult.avgCostPerNight * 18) / 100)}</p>
+                                            <p className='con1'>₹{Math.floor(hotelInfoResult.avgCostPerNight).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
+                                            <p className='con3'>/ night</p>
+                                            <del className='con4'>{Math.floor((hotelInfoResult.avgCostPerNight * 18) / 100).toString()} tax</del>
+                                        </div>
+                                    </div>
+                                    <a href='#room'><button>Select Room</button></a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
-                {popUp &&
-                    <div className={`hotelResults-input-expand ${popUp ? 'popup' : ""} flexXY`}>
-                        <div className='hotelResults-input flexXY'>
-                            <div className={`hoteldynamicDiv flexXY ${pop['destination'] ? 'searchActive' : ''}`}>
-                                <div className="hotelLocation-icon flexXY">{location}</div>
-                                <input className='hotelResults-input-dest' placeholder='Search destination' onClick={() => popp("destination")} type='text' value={inputValue} onChange={(e) => { setInputValue(e.target.value); fetchHotelLocation(e.target.value) }} />
-                                <div id='iconClose' onClick={() => setInputValue('')}>{IconClose}</div>
-                                {pop["destination"] &&
-                                    <div className='hoteldynamicDiv-expand' onClick={() => popp("dest")}>
-                                        {hotelResultLocation && hotelResultLocation.map((hotel, index) => (
-                                            <div key={index} className="hotelInputExpand-content flex">
-                                                <h2>{location}</h2>
-                                                <h1 onClick={() => handleHotelInput(hotel.location)}>{hotel.name}</h1>
+                <div className='flexXY'>
+                    <div className='hotelCardInfo-container-main flexBet'>
+                        <div className='hotelCardInfo-container-leftMain flex'>
+                            <div id='general' className='hotelCardInfo-container-leftMain-contain1 flex'>
+                                <h1>{hotelInfoResult.name}, {hotelInfoResult.location && hotelInfoResult.location.match(/([^,]+)/) ? hotelInfoResult.location.match(/([^,]+)/)[0] : hotelInfoResult.location}</h1>
+                                <h2>{hotelInfoResult.rating}-star Hotel · {hotelInfoResult.location}</h2>
+                                <div className='hotelCardInfo-container-leftMain-contain1-rating flexY g20'>
+                                    <h2>{hotelInfoResult.rating}/5</h2>
+                                    <div className='flexY g2'>{ratingOwl}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}</div>
+                                    <div className='flexY'><p>{hotelInfoResult.rating > 4 ? '(631 reviews)' : hotelInfoResult.rating > 3 ? '(456 reviews)' : hotelInfoResult.rating > 2 ? '(330 reviews)' : hotelInfoResult.rating > 1 ? '(190 reviews)' : '(No reviews)'}</p>{rightArrow}</div>
+                                </div>
+                                <div className=' flex'>
+                                    <div className=' hello'>
+                                        <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
+                                            <GiHotMeal style={{ fontSize: "20px" }} />
+                                            <div>
+                                                <p className='meal-plans'>Free breakfast on select plans</p>
+                                                <p className='meal-offer'>Some plans include free breakfast</p>
                                             </div>
-                                        ))}
-                                    </div>
-                                }
-                            </div>
-                            {popUp && <input min={new Date().toISOString().split('T')[0]} className={`hotelResults-input-date fromdate ${poptab['date1'] ? 'searchActive' : ''}`} value={date1} onChange={(e) => setDate1(e.target.value)} onClick={() => popp("startdate")} type='date' />}
-                            {popUp && <input min={new Date().toISOString().split('T')[0]} className={`hotelResults-input-date todate ${poptab['date2'] ? 'searchActive' : ''}`} value={date2} onChange={(e) => setDate2(e.target.value)} onClick={() => popp("enddate")} type='date' />}
-                            <div className={`hotelResults-input-selectCateg flexBet ${pop['hotelSearch'] ? 'searchActive' : ''}`} onClick={() => { handleSelectCategory(); popp('hotelSearch') }}>
-                                {hotelProfile} &nbsp;
-                                <p>
-                                    <span>1 Room,</span>
-                                    {adultcount && (<>{adultcount}</>)}
-                                </p> &nbsp;
-                                <p>{classs}</p> &nbsp;
-                                <div style={rotateCateg} >{dropDown}</div>
-                                {pop['hotelSearch'] && (
-                                    <div className="hotelSelectCateg-Expand">
-                                        <div className="hotelSelectCateg-Expand-header flexBet">
-                                            <h5>Room 1</h5>
                                         </div>
-                                        {arr.map((items, index) => (
-                                            <div className="hotelSelectCateg-Expand-container flexBet">
-                                                <div>
-                                                    <h1>{items.category}</h1>
-                                                    <h5>{items.age}</h5>
-                                                </div>
-                                                <div className="hotelSelectCateg-count flexY">
-                                                    <CgMathMinus
-                                                        className={`${(items.category === "Adults" && adultcount > 1) ||
-                                                            (items.category === "Children" && childrencount > 0)
-                                                            ? "hotelChangeToPosIcon"
-                                                            : "hotelCountNegIcon"
-                                                            }`}
-                                                        onClick={() => handleDecrease(items.category)}
-                                                    />
-                                                    <h1>
-                                                        {items.category === "Adults"
-                                                            ? adultcount
-                                                            : childrencount}
-                                                    </h1>
-                                                    <CgMathPlus
-                                                        className="hotelChangeToPosIcon"
-                                                        onClick={() => handleIncrease(items.category)}
-                                                    />
-                                                </div>
+                                        <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
+                                            {hotelIcon}
+                                            <div>
+                                                <p className='meal-plans'>Child and Extra Bed Policy</p>
+                                                <p className='meal-offer'>Extra Bed for additinol guest : {hotelInfoResult.childAndExtraBedPolicy.extraBedForAdditionalGuest === true ? 'Yes' : 'No'}</p>
+                                                <p className='meal-offer'>Extra Bed provided for child : {hotelInfoResult.childAndExtraBedPolicy.extraBedProvidedForChild === true ? 'Yes' : 'No'}</p>
+                                                {(hotelInfoResult.childAndExtraBedPolicy.extraBedForAdditionalGuest === true || hotelInfoResult.childAndExtraBedPolicy.extraBedProvidedForChild === true) && <p className='meal-offer'>Extra Bed Charge : {hotelInfoResult.childAndExtraBedPolicy.extraBedCharge}₹</p>}
                                             </div>
-                                        ))}
-                                        <div className="hotelAddAnother flexY" onClick={() => pop('hotelSearch')}>
-                                            <CgMathPlus />
-                                            <span>Add another room</span>
                                         </div>
                                     </div>
-                                )}
-                            </div>
-                            <button onClick={() => handleToSearch()}>Update</button>
-                        </div>
-                    </div>
-                }
-                {popUp && <div className='backg-transparent' onClick={() => setPopUp(false)}></div>}
-                <div className='hotelCardInfo-container-tab flexBet'>
-                    <div className='hotelCardInfo-container-tab-section flex'>
-                        <a href='#general' className={activetab['gen'] ? 'activeTab' : ''} onClick={()=>{popp('general')}}>General</a>
-                        <a href='#amenities' className={activetab['amenities'] ? 'activeTab' : ''} onClick={()=>{popp('amenities')} }>Amenities</a>
-                        <a href='#room' className={activetab['rooms'] ? 'activeTab' : ''} onClick={() => {popp('room')}}>Rooms</a>
-                    </div>
-                    {showPriceSec &&
-                        <div className=' hotelPricingSec flexBet g10'>
-                            <div className='hotelPricingSec1 flexXY'>
-                                <div className='hotelPricingSec-container flexXY g10'>
-                                    <p className='con2'>+ ₹{(((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/) ? (((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/)[0] : ((hotelInfoResult.avgCostPerNight * 18) / 100)}</p>
-                                    <p className='con1'>₹{Math.floor(hotelInfoResult.avgCostPerNight).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
-                                    <p className='con3'>/ night</p>
-                                    <del className='con4'>{Math.floor((hotelInfoResult.avgCostPerNight * 18) / 100).toString()} tax</del>
+                                    <div className=' hello'>
+                                        <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
+                                            <MdOutlineVerified style={{ fontSize: "20px" }} />
+                                            <div>
+                                                <p className='meal-plans'>Best in className service</p>
+                                                <p className='meal-offer'>Service at this property rated {hotelInfoResult.rating}.0</p>
+                                            </div>
+                                        </div>
+                                        <div className='hotelCardInfo-container-leftMain-contain1-meal amenities flex'>
+                                            <GiHotMeal style={{ fontSize: "20px" }} />
+                                            <div>
+                                                <p className='meal-plans'>Additinal Info</p>
+                                                <p className='meal-offer'>{hotelInfoResult.childAndExtraBedPolicy.additionalInfo}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <a href='#room'><button>Select Room</button></a>
-                        </div>
-                    }
-                </div>
-            </div>
-            </div>
-            <div className='flexXY'>
-                <div className='hotelCardInfo-container-main flexBet'>
-                    <div className='hotelCardInfo-container-leftMain flex'>
-                        <div id='general' className='hotelCardInfo-container-leftMain-contain1 flex'>
-                            <h1>{hotelInfoResult.name}, {hotelInfoResult.location && hotelInfoResult.location.match(/([^,]+)/) ? hotelInfoResult.location.match(/([^,]+)/)[0] : hotelInfoResult.location}</h1>
-                            <h2>{hotelInfoResult.rating}-star Hotel · {hotelInfoResult.location}</h2>
-                            <div className='hotelCardInfo-container-leftMain-contain1-rating flexY g20'>
-                                <h2>{hotelInfoResult.rating}/5</h2>
-                                <div className='flexY g2'>{ratingOwl}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}</div>
-                                <div className='flexY'><p>{hotelInfoResult.rating > 4 ? '(631 reviews)' : hotelInfoResult.rating > 3 ? '(456 reviews)' : hotelInfoResult.rating > 2 ? '(330 reviews)' : hotelInfoResult.rating > 1 ? '(190 reviews)' : '(No reviews)'}</p>{rightArrow}</div>
-                            </div>
-                            <div className='flex hello'>
-                            <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
-                                <GiHotMeal style={{ fontSize: "20px" }} />
-                                <div>
-                                    <p className='meal-plans'>Free breakfast on select plans</p>
-                                    <p className='meal-offer'>Some plans include free breakfast</p>
-                                </div>
-                            </div>
-                            <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
-                                {hotelIcon}
-                                <div>
-                                    <p className='meal-plans'>Child and Extra Bed Policy</p>
-                                    <p className='meal-offer'>Extra Bed for additinol guest : {hotelInfoResult.childAndExtraBedPolicy.extraBedForAdditionalGuest===true ? 'Yes' : 'No'}</p>
-                                    <p className='meal-offer'>Extra Bed provided for child : {hotelInfoResult.childAndExtraBedPolicy.extraBedProvidedForChild===true ? 'Yes' : 'No'}</p>
-                                    { (hotelInfoResult.childAndExtraBedPolicy.extraBedForAdditionalGuest===true || hotelInfoResult.childAndExtraBedPolicy.extraBedProvidedForChild===true ) && <p className='meal-offer'>Extra Bed Charge : {hotelInfoResult.childAndExtraBedPolicy.extraBedCharge}₹</p>}
-                                </div>
-                            </div>
-                            </div>
-                            <div className='flexBet hello'>
-                            <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
-                                <MdOutlineVerified style={{ fontSize: "20px" }} />
-                                <div>
-                                    <p className='meal-plans'>Best in className service</p>
-                                    <p className='meal-offer'>Service at this property rated {hotelInfoResult.rating}.0</p>
-                                </div>
-                            </div>
-                            <div className='hotelCardInfo-container-leftMain-contain1-meal amenities flex'>
-                                <GiHotMeal style={{ fontSize: "20px" }} />
-                                <div>
-                                    <p className='meal-plans'>Additinal Info</p>
-                                    <p className='meal-offer'>{hotelInfoResult.childAndExtraBedPolicy.additionalInfo}</p>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                            <div className='hotelCardInfo-container-leftMain-contain2 flexc'>
+                            <div id='amenities' className='hotelCardInfo-container-leftMain-contain2 flexc'>
                                 <h1>Amenities</h1>
                                 <div className='hotelCardInfo-container-leftMain-contain2-amenities flex'>
                                     <div className='hotelCardInfo-container-leftMain-contain2-amenities-sec1 flex'>
@@ -302,90 +303,90 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    <div className='hotelCardInfo-container-rightMain'>
-                    <Suspense fallback={<div className='loader'></div>}>
-                        <div className='hotelInfoCarausal'>{hotelInfoResult.images && <InfoCarausal data={hotelInfoResult.images} />}</div>
-                    </Suspense>
-                        <div className='hotelCardInfo-container-rightMain-payment '>
-                            <div className='hotelCardInfo-container-rightMain-payment-sec1 flexBet'>
-                                <div className='hotelMain-sec3'>
-                                    <div className='hotelMain-sec3-container1 flexY'>
-                                        <p className='contain1'>₹{Math.floor(hotelInfoResult.avgCostPerNight).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
-                                        <p className='contain2'>+ ₹{(((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/) ? (((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/)[0] : ((hotelInfoResult.avgCostPerNight * 18) / 100)}</p>
-                                        <p className='contain3'>tax / night</p>
-                                    </div>
-                                    <div className='hotelMain-sec3-container2 flexY'>
-                                        <del className='contain1'>{Math.floor((hotelInfoResult.avgCostPerNight * 18) / 100).toString()}</del>
-                                        &nbsp;<p className='contain3'>{hotelInfoResult.avgCostPerNight > 5000 && `No cost EMI from ₹${Math.floor(hotelInfoResult.avgCostPerNight / 2)}`}</p>
-                                    </div>
-                                </div>
-                                <a href='#room'><button onClick={() => handlePriceSecPopup()}>Select Room</button></a>
-                            </div>
-                            <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
-                                <GiHotMeal style={{ fontSize: "20px" }} />
-                                <div>
-                                    <p id='meal-plans'>Free breakfast on select plans</p>
-                                    <p id='meal-offer'>Some plans include free breakfast</p>
-                                </div>
-                            </div>
                         </div>
-                    </div>
-                </div>
-
-            </div>
-            <div id='room' className='hotelRoomsSection flexXY'>
-                <div className='hotelRoomsSection-section flexXY'>
-                    {hotelInfoResult.rooms && hotelInfoResult.rooms.map((item, index) => (
-                        <div key={index} className='hotelRoomsSection-container flex'>
-                            <h1>{item.roomType}</h1>
-                            <div className='sec1 flexY'>
-                                <div className=' flexBet g10'>
+                        <div className='hotelCardInfo-container-rightMain'>
+                            <Suspense fallback={<div className='loader'></div>}>
+                                <div className='hotelInfoCarausal'>{hotelInfoResult.images && <InfoCarausal data={hotelInfoResult.images} />}</div>
+                            </Suspense>
+                            <div className='hotelCardInfo-container-rightMain-payment '>
+                                <div className='hotelCardInfo-container-rightMain-payment-sec1 flexBet'>
+                                    <div className='hotelMain-sec3'>
+                                        <div className='hotelMain-sec3-container1 flexY'>
+                                            <p className='contain1'>₹{Math.floor(hotelInfoResult.avgCostPerNight).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
+                                            <p className='contain2'>+ ₹{(((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/) ? (((hotelInfoResult.avgCostPerNight * 18) / 100)).toString().match(/^(\d+)(?=\.)/)[0] : ((hotelInfoResult.avgCostPerNight * 18) / 100)}</p>
+                                            <p className='contain3'>tax / night</p>
+                                        </div>
+                                        <div className='hotelMain-sec3-container2 flexY'>
+                                            <del className='contain1'>{Math.floor((hotelInfoResult.avgCostPerNight * 18) / 100).toString()}</del>
+                                            &nbsp;<p className='contain3'>{hotelInfoResult.avgCostPerNight > 5000 && `No cost EMI from ₹${Math.floor(hotelInfoResult.avgCostPerNight / 2)}`}</p>
+                                        </div>
+                                    </div>
+                                    <a href='#room'><button onClick={() => handlePriceSecPopup()}>Select Room</button></a>
+                                </div>
+                                <div className='hotelCardInfo-container-leftMain-contain1-meal flex'>
                                     <GiHotMeal style={{ fontSize: "20px" }} />
-                                    <p>Breakfast</p>
-                                </div>
-                                <div className='flexBet g10'>
-                                    <MdOutlineFreeCancellation style={{ fontSize: "20px" }} />
-                                    <p>{item.cancellationPolicy}</p>
-                                </div>
-                            </div>
-                            <div className='hotelRoomsSection-container-price-section'>
-                                <div className='flexY'>
-                                    <p className='contain1'>₹{Math.floor(item.costDetails.baseCost).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
-                                    &nbsp;<p className='contain2'>+ ₹{((item.costDetails.taxesAndFees)).toString().match(/^(\d+)(?=\.)/) ? (item.costDetails.taxesAndFees).toString().match(/^(\d+)(?=\.)/)[0] : (item.costDetails.taxesAndFees)} &nbsp; tax / night</p>
-                                </div>
-                                <div className='flexY'>
-                                    <del className='contain3'>{Math.floor(item.price).toString()}</del>
-                                    &nbsp;<p className='contain4'>{item.costDetails.baseCost > 5000 && `No cost EMI from ₹${Math.floor(item.costDetails.baseCost / 2)}`}</p>
+                                    <div>
+                                        <p id='meal-plans'>Free breakfast on select plans</p>
+                                        <p id='meal-offer'>Some plans include free breakfast</p>
+                                    </div>
                                 </div>
                             </div>
-                            <button onClick={()=>handleToPayment()}>Book</button>
                         </div>
-                    ))}
-                </div>
-            </div>
-            <footer className="cleartrip-footer">
-                <div className="footer-top">
-                    <div className="footer-logo">{logo}</div>
-                    <div className="footer-links">
-                        <h3>Company</h3>
-                        <ul><li><a href="#">About Us</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Careers</a></li></ul>
                     </div>
-                    <div className="footer-links">
-                        <h3>Products</h3>
-                        <ul><li><a href="#">Flights</a></li><li><a href="#">Hotels</a></li><li><a href="#">Trains</a></li></ul>
-                    </div>
-                    <div className="footer-links">
-                        <h3>Legal</h3>
-                        <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul>
+
+                </div>
+                <div id='room' className='hotelRoomsSection flexXY'>
+                    <div className='hotelRoomsSection-section flexXY'>
+                        {hotelInfoResult.rooms && hotelInfoResult.rooms.map((item, index) => (
+                            <div key={index} className='hotelRoomsSection-container flex'>
+                                <h1>{item.roomType}</h1>
+                                <div className='sec1 flexY'>
+                                    <div className=' flexBet g10'>
+                                        <GiHotMeal style={{ fontSize: "20px" }} />
+                                        <p>Breakfast</p>
+                                    </div>
+                                    <div className='flexBet g10'>
+                                        <MdOutlineFreeCancellation style={{ fontSize: "20px" }} />
+                                        <p>{item.cancellationPolicy}</p>
+                                    </div>
+                                </div>
+                                <div className='hotelRoomsSection-container-price-section'>
+                                    <div className='flexY'>
+                                        <p className='contain1'>₹{Math.floor(item.costDetails.baseCost).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}</p>
+                                        &nbsp;<p className='contain2'>+ ₹{((item.costDetails.taxesAndFees)).toString().match(/^(\d+)(?=\.)/) ? (item.costDetails.taxesAndFees).toString().match(/^(\d+)(?=\.)/)[0] : (item.costDetails.taxesAndFees)} &nbsp; tax / night</p>
+                                    </div>
+                                    <div className='flexY'>
+                                        <del className='contain3'>{Math.floor(item.price).toString()}</del>
+                                        &nbsp;<p className='contain4'>{item.costDetails.baseCost > 5000 && `No cost EMI from ₹${Math.floor(item.costDetails.baseCost / 2)}`}</p>
+                                    </div>
+                                </div>
+                                <button onClick={() => handleToPayment()}>Book</button>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div className="footer-bottom">
-                    <p>&copy; 2024 Cleartrip. All rights reserved.</p>
-                </div>
-            </footer>
-        </div>}
-        {!load && <div className='loader'></div>}
+                <footer className="cleartrip-footer">
+                    <div className="footer-top">
+                        <div className="footer-logo">{logo}</div>
+                        <div className="footer-links">
+                            <h3>Company</h3>
+                            <ul><li><a href="#">About Us</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Careers</a></li></ul>
+                        </div>
+                        <div className="footer-links">
+                            <h3>Products</h3>
+                            <ul><li><a href="#">Flights</a></li><li><a href="#">Hotels</a></li><li><a href="#">Trains</a></li></ul>
+                        </div>
+                        <div className="footer-links">
+                            <h3>Legal</h3>
+                            <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul>
+                        </div>
+                    </div>
+                    <div className="footer-bottom">
+                        <p>&copy; 2024 Cleartrip. All rights reserved.</p>
+                    </div>
+                </footer>
+            </div>}
+            {!load && <div className='loader'></div>}
         </>
     );
 }
