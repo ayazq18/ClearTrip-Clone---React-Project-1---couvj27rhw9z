@@ -19,16 +19,10 @@ export default function NavBar() {
     }
   };
 
-  useEffect(()=>{
-    if(token){
-      setShowSignUp(false)
-    }
-  },[])
-
   const navigate = useNavigate()
   return (
     <div id="navBar-home">
-       <div className="signup">{showSignup && (<Signup token={token} setToken={setToken} showSignup = {showSignup} setShowSignUp = {setShowSignUp}/>)}</div>
+       <div className="signup">{!showSignup && (<Signup token={token} setToken={setToken} showSignup = {showSignup} setShowSignUp = {setShowSignUp}/>)}</div>
       <div className="navheader-container">
         <div id="navheader">
           <div onClick={()=>navigate('/')}>

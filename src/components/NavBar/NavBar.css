@@ -165,6 +165,7 @@
 
 .sideNavBar-container{
   /* width: 100%; */
+  background-color: #fff;
   flex-wrap: nowrap;
   height: 100%;
 }
