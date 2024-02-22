@@ -130,7 +130,6 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
             const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputValue}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setHotelResult(result.data.hotels)
-
         } catch (error) {
             console.log(error);
         }
@@ -253,7 +252,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
 
                 <div className='hotelFilter-container flexBet'>
                     <div className={`hotelFilter-sec1 ${pop["hotelprice"] ? 'searchActive' : ''} `}>
-                        <div onClick={() => popp("hotelprice")} className='sortByPrice flexXY'><div>Sort by: Price: High to Low</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
+                        <div onClick={() => popp("hotelprice")} className='sortByPrice flexXY'><div>Sort by: Price: {!lowhigh ? 'High to Low' : 'Low to high'}</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
                         {pop["hotelprice"] &&
                             <div className={`hotelFilter-sec1-expand ${pop["hotelprice"] ? 'popup' : ''}`}>
                                 <h2>Sort hotels by</h2>
@@ -271,7 +270,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                         }
                     </div>
                     {pop['hotelprice'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
-                    <div className={`hotelFilter-sec2 ${pop["star"] ? 'searchActive' : ''} `}>
+                    {/* <div className={`hotelFilter-sec2 ${pop["star"] ? 'searchActive' : ''} `}>
                         <div className='sortByDeals flexXY' onClick={() => popp("star")}><div>{deals}</div><div>Star category</div><div className={`${pop['star'] && 'rotate'}`}>{dropDown}</div></div>
                         {pop["star"] &&
                             <div className={`hotelFilter-sec2-expand ${pop["star"] ? 'popup' : ''}`}>
@@ -298,7 +297,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                             </div>
                         }
                     </div>
-                    {pop['star'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>}
+                    {pop['star'] && <div className='hotelFilterbackg-transparent' onClick={() => popp()}></div>} */}
 
                     <div className={`hotelFilter-sec3 ${pop["guestrating"] ? 'searchActive' : ''} `}>
                         <div className='sortByGuest flexXY' onClick={() => popp("guestrating")}><div>{guestrating}</div><div>Guests Rating</div><div className={`${pop['guestrating'] && 'rotate'}`}>{dropDown}</div></div>

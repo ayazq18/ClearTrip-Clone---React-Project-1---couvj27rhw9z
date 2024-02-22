@@ -226,8 +226,8 @@ body{
 /* -----------------hotelFilter----------------- */
 
 .hotelFilter-container{
-    width: 1150px;
-    gap: 20px;
+    width: 800px;
+    /* gap: 100px; */
     flex-wrap: nowrap;
     padding: 30px 20px;
     /* position: relative; */
@@ -273,7 +273,6 @@ body{
     margin-top: 30px;
     flex-direction: column;
     gap: 20px;
-    overflow-y: scroll;
 }
 
 .hotelFilter-sec1-expand-container-item{
@@ -496,6 +495,7 @@ body{
     padding: 25px;
     position: absolute;
     top: 70px;
+    right:0px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;

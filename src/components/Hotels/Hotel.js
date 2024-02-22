@@ -74,9 +74,7 @@ export default function Hotel() {
     }
 
     const handleToInput = (selectedHotel)=>{
-      const match = selectedHotel.location.match(/([^,]+)/);
-        const wordBeforeComma = match[1];
-        setInputValue(wordBeforeComma);
+        setInputValue(selectedHotel);
         setInputSelect(false)
     }
 
@@ -96,7 +94,8 @@ export default function Hotel() {
             }
         })
         const result = await response.json()
-        setInputResult(result.data.hotels)
+        const arr = result.data.hotels.map(item=>{return item.location})
+        setInputResult(new Set(arr))
     } catch (error) {
         console.log(error);
     }
@@ -153,10 +152,10 @@ export default function Hotel() {
         {inputSelect &&
           <div className="hotelInputExpand">
             <p>Popular destinations</p>
-            {inputResult && inputResult.map((item, index)=>(
-              <div key={index} className="hotelInputExpand-content flexY">
+            {Array.from(inputResult).map(item=>(
+              <div className="hotelInputExpand-content flexY">
                 <h2>{location}</h2>
-                <h1 onClick={()=>handleToInput(item)}>{item.location}</h1>
+                <h1 onClick={()=>handleToInput(item)}>{item}</h1>
               </div>
             ))}
           </div>

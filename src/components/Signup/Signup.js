@@ -32,14 +32,16 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
         body: JSON.stringify({ ...user }),
       });
       const result = await response.json()
-      if (result.status === 'success') {
-        localStorage.setItem('token', JSON.stringify(result.token))
-        localStorage.setItem('name', JSON.stringify(result.data.name))
-        setIsSignUp(false)
-        setShowSignUp(false)
-      } else {
-        alert('error');
-      }
+        if (result.status === 'success') {
+          localStorage.setItem('token', result.token)
+          localStorage.setItem('name', result.data.name)
+          setName('')
+          setEmail('')
+          setPassword('')
+          setIsSignUp(!isSignUp)
+        } else if (result.message === 'User already exists') {
+          alert('User already exists');
+        }
     } catch (error) {
       alert(error);
     }
@@ -62,7 +64,6 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
         body: JSON.stringify({ ...loginInfo })
       });
       const result = await response.json()
-      console.log(result);
       if (result.status === 'success') {
         localStorage.setItem('token', JSON.stringify(result.token));
         localStorage.setItem('name', JSON.stringify(result.data.name))
@@ -122,8 +123,9 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
             />
             <div className=" login-form-btn flexBet">
               <button>Signup</button>
-              <h1 onClick={() => handleLoginSignUp()}>Login</h1>
+              <h1 onClick={() => setShowSignUp(false)}>Close</h1>
             </div>
+            <div className="flexXY"><p>If you are an existing user please</p>&nbsp; <p onClick={() => handleLoginSignUp()} style={{ color: 'blue' }}>Sign in</p></div>
           </form>) :
             (<form
               className="login-form flexXY"
@@ -143,8 +145,9 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
               />
               <div className=" login-form-btn flexBet">
                 <button>Login</button>
-                <h1 onClick={() => handleToSignUp()}>Signup</h1>
+                <h1 onClick={() => setShowSignUp(false)}>Close</h1>
               </div>
+              <div className="flexXY"><p>If you are not an existing user please</p>&nbsp; <p onClick={() => handleToSignUp()} style={{ color: 'blue' }}>SignUp</p></div>
             </form>
             )}
           <div className="footer-section flexc">

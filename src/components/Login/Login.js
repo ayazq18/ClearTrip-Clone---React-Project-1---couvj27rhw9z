@@ -43,7 +43,7 @@ export default function Login({token,setToken, showLogin, setShowLogin, setShowS
                 ))}
                 </div>
             </div>
-            <div className="expande-signout-one"><h4 ref={MyRef} onClick={()=>{handleSignOut()}}>Sign out</h4></div>
+            <div className="expande-signout-one"><h4 ref={MyRef} onClick={()=>{handleSignOut()}}>Logout</h4></div>
             </div>
         </div>
         <div className="signUpPage flexXY">

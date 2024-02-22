@@ -239,7 +239,7 @@
   
   .input {
     width: 100%;
-    margin: 15px 0px;
+    /* margin: 15px 0px; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -298,7 +298,7 @@
     border: 1px solid #b3b0b060;
     background-color: #fff;
     border-radius: 6px;
-    width: 330px;
+    width: 50%;
     height: 200px;
     position: absolute;
     overflow-y: scroll;
@@ -326,12 +326,12 @@
     border: 1px solid #b3b0b060;
     background-color: #fff;
     border-radius: 6px;
-    width: 330px;
+    width: 50%;
     height: 200px;
     position: absolute;
     overflow-y: scroll;
     top: 50px;
-    right: -2px;
+    right: 10px;
     z-index: 2;
   }
 
@@ -363,7 +363,6 @@
     font-size: 13px;
     font-weight: 600;
     color: #000;
-    /* border: 1px solid red; */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -393,8 +392,7 @@
   }
   #inputdate1 {
     width: 50%;
-    padding: 15px 35px;
-    margin: 15px 0;
+    padding: 15px 25px;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-radius: 6px 0 0 6px;
     font-size: 15px;
@@ -402,13 +400,12 @@
   
   #inputdate22 {
     width: 50%;
-    padding: 15px 35px;
-    margin: 15px 0;
+    padding: 15px 25px;
     border: 1px solid rgba(0, 0, 0, 0.108);
     border-radius: 0px 6px 6px 0px;
     font-size: 15px;
   }
-  
+
   #flightSearchBtn {
     padding: 15px 40px;
     border: 1px solid rgba(0, 0, 0, 0.108);
@@ -420,11 +417,8 @@
   }
   
   .input-date {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 30px;
+    width: 100%;
+    gap: 20px;
   }
   
  
@@ -474,6 +468,13 @@
     }
     .expand-whereTo{
       top: 100px;
+      left: 0;
+      width: 100%;
+    }
+    .expand-whereFrom{
+      /* top: 100px; */
+      text-align: left;
+      width: 100%;
     }
 
     #input1,

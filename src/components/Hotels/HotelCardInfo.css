@@ -269,11 +269,12 @@
     background-color: #f5f5f5;
     padding: 20px;
     color: #333;
+    background-color: rgba(242, 246, 250, 0.753);
   }
   
   .footer-top {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
   }

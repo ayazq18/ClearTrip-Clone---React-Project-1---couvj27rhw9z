@@ -69,9 +69,6 @@
     padding: 10px 20px;
     background-color: orangered;
   }
-  .login-form-btn h1:hover{
-    color: #3366cc;
-  }
   .login-page p{
     font-size: 12px;
     margin-top: 10px;

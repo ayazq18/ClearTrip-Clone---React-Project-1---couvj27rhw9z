@@ -23,12 +23,6 @@ export default function NavBar() {
     if(token){
       setShowSignUp(false)
     }
-    // else{
-    //   const inter = setInterval(() => {
-    //     setShowSignUp(true)
-    //     clearInterval(inter)
-    //   }, 20000);
-    // }
   },[])
 
   const navigate = useNavigate()

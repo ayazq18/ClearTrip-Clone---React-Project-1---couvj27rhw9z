@@ -49,8 +49,6 @@ export default function FlightTicket() {
     const [flightDetails, setFlightDetails] = useState(false)
     const [selectedCardIndex, setSelectedCardIndex] = useState(null);
     const [pop, setPop] = useState({})
-    const [pagination, setPagination] = useState(1)
-    const [resultforpagination, setresultforpagination] = useState()
     const [flightResultsortingnav, setflightResultsortingnav] = useState({});
     const [minrange, setminrange] = useState(1000);
     const [maxrange, setmaxrange] = useState(5000);
@@ -142,7 +140,7 @@ export default function FlightTicket() {
     const fetchFlights = async () => {
         try {
             setload(true)
-            const response = await fetch(`${Base_URL}/flight?search={"source":"${flightIn[0], flightIn[1], flightIn[2]}","destination":"${flightOut[0], flightOut[1], flightOut[2]}"}&day=${dayy}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&page=${pagination}&limit=20&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`, {
+            const response = await fetch(`${Base_URL}/flight?search={"source":"${flightIn[0], flightIn[1], flightIn[2]}","destination":"${flightOut[0], flightOut[1], flightOut[2]}"}&day=${dayy}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&limit=500&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`, {
                 method: "GET",
                 headers: {
                     projectID: Project_ID,
@@ -151,7 +149,6 @@ export default function FlightTicket() {
             })
             const result = await response.json()
             setflightResultdata(result.data.flights);
-            setresultforpagination(result.totalResults)
             setload(true)
         } catch (error) {
             console.log(error);
@@ -195,17 +192,12 @@ export default function FlightTicket() {
 
         fetchFlights();
         fetchFlightsIn;
-    }, [valuee, filter, flightResultsortingnav, tripdurationmin, tripdurationmax, pagination]);
+    }, [valuee, filter, flightResultsortingnav, tripdurationmin, tripdurationmax]);
 
     const handleSearchResults = (e) => {
         e.preventDefault();
         fetchFlights();
         (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`)
-    }
-
-    const toggleSlider = () => {
-        setToggle(!toggle)
-        return
     }
 
     const handleFlightDetails = (index) => {
@@ -222,7 +214,8 @@ export default function FlightTicket() {
     };
 
     return (
-        <>{load && flightWhere && flightTo && flightResultdata && <div className="ticket">
+        <>
+        {load && flightWhere && flightTo && flightResultdata && <div className="ticket">
             {showLogin && <Login showLogin={showLogin} setShowLogin={setShowLogin} token={token} setToken={setToken}/>}
             <div className="ticketHeader-container">
                 <div id="ticketHeader">
@@ -451,12 +444,6 @@ export default function FlightTicket() {
                                     <div className={flightResultsortingnav["ticketPrice"] ? "activesortingnavColor" : flightResultsortingnav["ticketPrice"] == false ? "activesortingnavColor" : null} onClick={() => { sortingnav("ticketPrice") }}>Price &nbsp;{(flightResultsortingnav["ticketPrice"] == false && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" style={{ transform: `rotate(${-180}deg)` }}><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}{(flightResultsortingnav["ticketPrice"] == true && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" ><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}</div>
                                 </div>
                             </div>
-                            <div className="ticket-content-header-sec3 flexBet">
-                                <h6>Smart sort</h6>{sortIcon}
-                                <div className="toggle-button flexY">
-                                    <span className={`slider-round ${toggle ? 'toggled' : ""}`} onClick={() => toggleSlider()}></span>
-                                </div>
-                            </div>
                         </div>
                         <div className="main-content-card">
                             {flightResultdata && flightResultdata.map((result, index) => (result.ticketPrice < maxrange && result.ticketPrice > minrange && (
@@ -513,7 +500,7 @@ export default function FlightTicket() {
                                             <div className="content-card-container-details-airline flexY g20">
                                                 <div className="content-card-container-details-sec1 flexBet">
                                                     <div>
-                                                        <img src={getAirlineInfo(result.flightID).logoSrc} />
+                                                        <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} />
                                                     </div>
                                                     <div className="content-card-container-airline-name">
                                                         <h5>{getAirlineInfo(result.flightID).airlineName}</h5>
@@ -554,15 +541,12 @@ export default function FlightTicket() {
                     </div>
                 </div>
             </div>
-            <div className='paginationBtn flexXY g20'>
-                <button className={` ${(pagination === 1) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination - 1)} disabled={pagination == 1}>Prev</button>
-                <h4>...{pagination}</h4>
-                <button className={` ${(pagination === +resultforpagination / 20) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination/20===pagination} >Next</button>
-            </div>
+
+            {/* ------------------------Footer----------------------------- */}
             <footer className="cleartrip-footer">
                 <div className="footer-top">
                     <div className="footer-logo">{logo}</div>
-                    <div className="footerlinkscontainer">
+                    <div className="footerlinkscontainer flexXY">
                         <div className="footer-links">
                             <h3>Company</h3>
                             <ul><li><a href="#">About Us</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Careers</a></li></ul>
@@ -578,10 +562,12 @@ export default function FlightTicket() {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; 2024 Cleartrip. All rights reserved.</p>
+                    <p>&copy; Ayaz Qureshi 2024 Cleartrip. All rights reserved.</p>
                 </div>
             </footer>
         {!load && <div className='loader'></div>}
-        </div>}</>
+        </div>
+        }
+        </>
     );
 }

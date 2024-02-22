@@ -134,7 +134,7 @@ export default function Form() {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const days = daysOfWeek[dayOfWeek];
 
-    const fetchFlightsIn = useMemo(async () => {
+    const fetchFlightsIn = async () => {
         try {
             const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn}"}`, {
                 method: "GET",
@@ -145,15 +145,30 @@ export default function Form() {
             })
             const result = await response.json()
             setFlightWhere(result.data.airports)
+        } catch (error) {
+            console.log (error);
+        }
+    }
+    const fetchFlightsOut = async () => {
+        try {
+            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightOut}"}`, {
+                method: "GET",
+                headers: {
+                    projectID: Project_ID,
+                    "Content-Type": "application/json",
+                }
+            })
+            const result = await response.json()
             setFlightTo(result.data.airports)
         } catch (error) {
             console.log (error);
         }
-    }, [])
+    }
 
     useEffect(() => {
         setDay(days)
-        fetchFlightsIn;
+        fetchFlightsIn()
+        fetchFlightsOut()
     }, []);
 
     return (
@@ -257,7 +272,7 @@ export default function Form() {
                         type="text"
                         placeholder="Where from?"
                         value={flightIn}
-                        onChange={(e) => { setFlightIn(e.target.value); showWhereFrom(flightWhere) }}
+                        onChange={(e) => { setFlightIn(e.target.value), fetchFlightsIn(e.target.value) }}
                         onClick={() => {
                             showWhereFrom();
                         }}
@@ -277,7 +292,7 @@ export default function Form() {
                         type="text"
                         placeholder="Where to?"
                         value={flightOut}
-                        onChange={(e) => { setFlightOut(e.target.value), showWhereTo(flightTo)}}
+                        onChange={(e) => { setFlightOut(e.target.value), fetchFlightsOut(e.target.value)}}
                         onClick={() => {
                             showWhereTo();
                         }}
@@ -296,10 +311,10 @@ export default function Form() {
                         </div>
                     )}
                 </div>
-                <div className="input-date">
+                <div className="input-date flex">
                     <div className="date-sec flex">
                         <input id="inputdate1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)}/>
-                        <input id="inputdate22" type="date" min={new Date().toISOString().split('T')[0]} value={isDisabled ? "Return" : whereTo} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
+                        <input id="inputdate22" type="date" min={new Date().toISOString().split('T')[0]} value={toDate} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
                     </div>
                     <div className="searchBtn">
                         <button onClick={(e) => handleSearchFlight(e)} id="flightSearchBtn">

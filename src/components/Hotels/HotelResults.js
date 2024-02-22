@@ -49,7 +49,7 @@ const HotelResults = () => {
 
     useEffect(() => {
         fetchHotels
-    }, [inputResult])
+    }, [inputResult, lowhigh])
 
     const handleHotelCardInfo = (hotelId) => {
         if(localStorage.getItem('token')){
@@ -100,7 +100,7 @@ const HotelResults = () => {
           <div className='paginationBtn flexXY g20'>
                 <button className={` ${(pagination === 1) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination - 1)} disabled={pagination == 1}>Prev</button>
                 <h4>...{pagination}</h4>
-                <button className={` ${(pagination === +resultforpagination / 10) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination / 10 === pagination} >Next</button>
+                <button className={` ${(pagination === +resultforpagination / 10) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination / 10 == pagination} >Next</button>
             </div>
         </div>}
         {!load && <div className='loader'></div>}

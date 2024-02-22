@@ -21,7 +21,7 @@ export default function HotelPayment() {
 
 
   const object = [
-    { month: 'Jan (01)' }, { month: 'Feb (02)' }, { month: 'Mar (03)' }, { month: 'April (04)' }, { month: 'May (05)' }, { month: 'Jan (06)' }, { month: 'Juk (07)' }, { month: 'Aug (08)' }, { month: 'Sep (09)' }, { month: 'Oct (10)' }, { month: 'Nov (11)' }, { month: 'Dec (12)' }
+    { month: 'Jan (01)' }, { month: 'Feb (02)' }, { month: 'Mar (03)' }, { month: 'April (04)' }, { month: 'May (05)' }, { month: 'Jun (06)' }, { month: 'Jul (07)' }, { month: 'Aug (08)' }, { month: 'Sep (09)' }, { month: 'Oct (10)' }, { month: 'Nov (11)' }, { month: 'Dec (12)' }
   ]
   const yearsArray = Array.from({ length: 26 }, (_, index) => 2024 + index);
 
@@ -31,15 +31,23 @@ export default function HotelPayment() {
   }
 
   const clicktopay = () => {
-    if(details.UPI && details.ischecked || details.name && details.cardnumber && details.CVV && details.ischecked){
+    if(details.UPI && details.ischecked || details.name && details.cardnumber.length===12 && details.CVV.length===3 && details.ischecked){
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
         navigate('/')
-      }, 10000);
+      }, 5000);
     }
     else{
-      alert("Enter the Correct details")
+      if(details.cardnumber.length<12 || details.cardnumber.length>12){
+      alert("Enter the correct card number")
+      }else if(details.CVV.length<3 || details.CVV.length>3 ){
+        alert("Enter the correct CVV")
+      }else if(details.name === '' ){
+        alert("Enter the correct Name")
+      }else if(!details.ischecked){
+        alert("Please accept the terms")
+      }
     }
   }
 
@@ -83,7 +91,7 @@ export default function HotelPayment() {
               <div className='hotelCard'><h3>Enter Card details</h3><div className='flexXY'></div></div>
               <form className='hotelDebitform flex'>
                 <label>Card Number</label>
-                <input type='number' value={details.cardnumber} onChange={(e)=>travellerinfo('cardnumber', `${e.target.value}`)} placeholder='Enter card number' />
+                <input type='number' minLength={12} maxLength={12} value={details.cardnumber} onInput={(e)=>{if (e.target.value.length > 12) {e.target.value = e.target.value.slice(0, 12)}}} onChange={(e)=>travellerinfo('cardnumber', `${e.target.value}`)} placeholder='Enter card number' />
                 <label>Expiry date</label>
                 <div className=' g20'>
                     <select>{object.map(item=>(<option value={item.month}>{item.month}</option>))}</select>
@@ -92,7 +100,7 @@ export default function HotelPayment() {
                 <label>Cardholder name</label>
                 <input type='text' value={details.name} onChange={(e)=>travellerinfo('name', `${e.target.value}`)} placeholder='Name as on card' />
                 <label>CVV</label>
-                <input type='number' value={details.CVV} onChange={(e)=>travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
+                <input type='number' minLength={3} maxLength={3} value={details.CVV} onInput={(e)=>{if (e.target.value.length > 3) {e.target.value = e.target.value.slice(0, 3)}}}  onChange={(e)=>travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
               </form>
             </div>}
 

@@ -1,6 +1,8 @@
 import React from 'react'
 export default function Maintenance() {
   return (
-    <div className='maintenance' style={{backgroundImage: 'url("https://www.hostinger.in/tutorials/wp-content/uploads/sites/2/2018/12/under-maintenance-1024x657.png")', backgroundSize:'cover', backgroundRepeat:'no-repeat', width: '100vw', height: '100vh'}}></div>
+    <div className='flexXY' style={{width:'100vw', height:'100vh', backgroundColor:'rgba(242, 246, 250, 0.753)'}}>
+    <div className='maintenance' style={{backgroundImage: 'url("https://cdn.dribbble.com/users/88000/screenshots/2487367/shot.png")', backgroundSize:'cover', backgroundRepeat:'no-repeat', width: '50vw', height: '100vh'}}></div>
+    </div>
   )
 }

@@ -209,9 +209,10 @@
 
 #aside {
   width: 230px;
-  height: fit-content;
+  height: 100%;
   position: sticky;
   top: -20px;
+  background-color: #fff;
 }
 
 #stops,
@@ -358,34 +359,6 @@ label {
 
 .ticket-content-header-sec2 {
   width: 25%;
-}
-
-.ticket-content-header-sec3 {
-  gap: 10px;
-}
-
-.toggle-button {
-  background-color: #808080;
-  width: 40px;
-  height: 20px;
-  border-radius: 50px;
-  position: relative;
-}
-
-.slider-round {
-  background-color: #fff;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: absolute;
-  left: 0;
-  transition: left 0.3s ease-in-out;
-}
-
-.toggled {
-  position: absolute;
-  left: 20px;
-  background-color: #fff;
 }
 
 .rotatezero {
@@ -654,6 +627,7 @@ label {
   padding: 10px;
   margin-right: 10px;
   position: relative;
+  cursor: pointer;
 }
 
 .selectCateg-one h4 {
@@ -668,7 +642,7 @@ label {
   border-radius: 6px;
   position: absolute;
   top: 95px;
-  right: 340px;
+  right: 270px;
   cursor: pointer;
   z-index: 11;
   height: fit-content;
@@ -1017,14 +991,6 @@ label {
   }
   .ticket-content-header-sec3 h6{
     font-size: 10px;
-  }
-  .toggle-button {
-    width: 25px;
-    height: 10px;
-  }
-  .slider-round {
-    width: 10px;
-    height: 10px;
   }
   .content-card {
     width: 100%;
