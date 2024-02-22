@@ -45,7 +45,6 @@ export default function FlightTicket() {
     const [showSignup, setShowSignUp] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('token'));
-    const [toggle, setToggle] = useState(false)
     const [flightDetails, setFlightDetails] = useState(false)
     const [selectedCardIndex, setSelectedCardIndex] = useState(null);
     const [pop, setPop] = useState({})
@@ -159,18 +158,24 @@ export default function FlightTicket() {
 
     // --------------------FlightName_Search----------------------
 
-    const fetchFlightsIn = useMemo(async () => {
+    const fetchFlightsIn = async () => {
         try {
-            setload(false)
-            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn[0], flightIn[1], flightIn[2]}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightIn}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json();
             setFlightWhere(result.data.airports);
-            setFlightTo(result.data.airports);
-            setload(true)
         } catch (error) {
             return error;
         }
-    }, [])
+    }
+    const fetchFlightsOut = async () => {
+        try {
+            const response = await fetch(`${Base_URL}/airport?search={"city":"${flightOut}"}`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
+            const result = await response.json();
+            setFlightTo(result.data.airports);
+        } catch (error) {
+            return error;
+        }
+    }
 
     // --------------------Flight_Search----------------------
 
@@ -189,10 +194,13 @@ export default function FlightTicket() {
 
     useEffect(() => {
         setDay(days)
-
         fetchFlights();
-        fetchFlightsIn;
     }, [valuee, filter, flightResultsortingnav, tripdurationmin, tripdurationmax]);
+
+    useEffect(() => {
+        fetchFlightsIn();
+        fetchFlightsOut();
+    }, []);
 
     const handleSearchResults = (e) => {
         e.preventDefault();
@@ -255,7 +263,7 @@ export default function FlightTicket() {
                                         type="text"
                                         placeholder="Where from?"
                                         value={flightIn}
-                                        onChange={(e) => { setFlightIn(e.target.value);}}
+                                        onChange={(e) => { setFlightIn(e.target.value); fetchFlightsIn(e.target.value)}}
                                         onClick={() => { poptab('wayfrom') }}
                                     />
                                     <CgArrowsExchange className="exchangeIcon-one" onClick={() => swapInputs()} />
@@ -278,7 +286,7 @@ export default function FlightTicket() {
                                         type="text"
                                         placeholder="Where to?"
                                         value={flightOut}
-                                        onChange={(e) => { setFlightOut(e.target.value); }}
+                                        onChange={(e) => { setFlightOut(e.target.value); fetchFlightsOut(e.target.value)}}
                                         onClick={() => { poptab('wayto') }}
                                     />
                                     {whereFrom === whereTo || whereFrom !== "" || whereTo !== "" && (

@@ -54,10 +54,17 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
     function lowhighchanger(val){
         if (val == lowhigh) {
             setlowhigh("")
+            setSelectedCheckBox('')
         }
         else {
             setlowhigh(val);
+            setSelectedCheckBox(val)
         }
+    }
+
+    const handleClick = (checkBox) => {
+        setSelectedCheckBox(checkBox === selectedCheckBox ? null : checkBox)
+        setDisabled(!disabled)
     }
 
     function popp(key) {
@@ -108,10 +115,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
         setInputValue(selectedHotel)
     }
 
-    const handleClick = (checkBox) => {
-        setSelectedCheckBox(checkBox === selectedCheckBox ? null : checkBox)
-        setDisabled(!disabled)
-    }
+  
 
     const handleDeals = (checkBox) => {
         const updatedCheckBoxes = [...selectedDeals]
@@ -252,18 +256,18 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
 
                 <div className='hotelFilter-container flexBet'>
                     <div className={`hotelFilter-sec1 ${pop["hotelprice"] ? 'searchActive' : ''} `}>
-                        <div onClick={() => popp("hotelprice")} className='sortByPrice flexXY'><div>Sort by: Price: {!lowhigh ? 'High to Low' : 'Low to high'}</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
+                        <div onClick={() => popp("hotelprice")} className='sortByPrice flexXY'><div>Sort by: Price: {lowhigh==='hightolow' ?'High to Low' : lowhigh==='lowtohigh' ? 'Low to high' : 'High to Low'}</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
                         {pop["hotelprice"] &&
                             <div className={`hotelFilter-sec1-expand ${pop["hotelprice"] ? 'popup' : ''}`}>
                                 <h2>Sort hotels by</h2>
                                 <div className='hotelFilter-sec1-expand-container flex'>
-                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => {handleClick('highPrice'); popp('hotprice')}}>
-                                        <div className={`outerCircle ${selectedCheckBox === 'highPrice' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
-                                        <p onClick={() => {lowhighchanger("hightolow")}}>High to Low</p>
+                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => {lowhighchanger("hightolow"); popp('hotprice')}}>
+                                        <div className={`outerCircle ${selectedCheckBox === 'hightolow' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
+                                        <p onClick={() => {}}>High to Low</p>
                                     </div>
-                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => {handleClick('lowPrice'); popp('hotprice')}}>
-                                        <div className={`outerCircle ${selectedCheckBox === 'lowPrice' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
-                                        <p onClick={() => {lowhighchanger("lowtohigh")}}> Low to High</p>
+                                    <div className='hotelFilter-sec1-expand-container-item flexY' onClick={() => {lowhighchanger("lowtohigh"); popp('hotprice')}}>
+                                        <div className={`outerCircle ${selectedCheckBox === 'lowtohigh' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
+                                        <p onClick={() => {}}> Low to High</p>
                                     </div>
                                 </div>
                             </div>
@@ -305,19 +309,19 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                             <div className={`hotelFilter-sec3-expand ${pop["guestrating"] ? 'popup' : ''}`}>
                                 <h2>Guests Rating</h2>
                                 <div className='hotelFilter-sec3-expand-container flex'>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("4.5"); handleClick('higher'); popp('rate') }}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("4.5"); handleClick('higher');}}>
                                         <div className={`outerCircle ${selectedCheckBox === 'higher' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>4.5 & above</p>
                                     </div>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("4"); handleClick('average'); popp('rate') }}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("4"); handleClick('average') }}>
                                         <div className={`outerCircle ${selectedCheckBox === 'average' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>4 & above</p>
                                     </div>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("3.5"); handleClick('low'); popp('rate') }}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("3.5"); handleClick('low')}}>
                                         <div className={`outerCircle ${selectedCheckBox === 'low' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>3.5 & above</p>
                                     </div>
-                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("3"); handleClick('lowest'); popp('rate') }}>
+                                    <div className='hotelFilter-sec3-expand-container-item flexY' onClick={() => { ratingchanger("3"); handleClick('lowest')}}>
                                         <div className={`outerCircle ${selectedCheckBox === 'lowest' ? "hotelPrice-checked" : ""}`} ><div className='innerCircle'></div></div>
                                         <p>3 & above</p>
                                     </div>
