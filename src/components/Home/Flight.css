@@ -38,15 +38,27 @@
     font-size: 16px;
     font-weight: 500;
   }
-  
+
+  .maxbox {
+    width: 100%;
+    border-radius: 8px;
+    background: #f2edf9;
+    background: var(--Grapetini-100, #f2edf9);
+    height: 90px;
+    position: relative;
+    overflow: hidden;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+}
   
   /*-------------------- Offer section-------------------- */
   
   .offer-sec {
     height: fit-content;
-    /* padding: 20px; */
     margin-left: 25px;
-    /* border: 1px solid blue; */
   }
   
   .offer-secs h1 {
@@ -58,8 +70,8 @@
   #offer-corousel{
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     border-radius: 6px;
-    width: 250px;
-    height: 230px;
+    width: 240px;
+    height: 220px;
     padding: 5px;
     position: relative;
   }

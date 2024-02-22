@@ -133,6 +133,7 @@ export default function Hotel() {
 
   return (
     <div className="hotel-home">
+      <div>
       <div className="home-main">
         <h1>Search Hotels</h1>
         <h2>Enjoy hassle free bookings with Cleartrip</h2>
@@ -228,6 +229,8 @@ export default function Hotel() {
             </div>
             </div>
         </form>
+      </div>
+      <img alt="cancel for no reason banner" loading="lazy" width="610" height="80" decoding="async" data-nimg="1" src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpg" style={{color: "transparent"}}/>
       </div>
        <div className="offer-sec ">
         <ImgCorousel />

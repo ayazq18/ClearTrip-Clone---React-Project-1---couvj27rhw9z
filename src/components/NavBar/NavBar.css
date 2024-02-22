@@ -185,7 +185,6 @@
 #sideNavBar-links {
   width: 200px;
   margin: 0px 12px;
-  /* border: 2px solid blue; */
 }
 
 #sideNavBar-links li {
@@ -196,7 +195,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  /* border: 1px solid red; */
 }
 
 #sideNavBar-links a {
@@ -209,6 +207,10 @@
 #sideNavBar-links a:hover {
   background-color: #b0c3ef6a;
   border-radius: 6px;
+}
+.aside-links{
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .signup{
@@ -227,6 +229,7 @@
   background-color: #b0c3ef6a;
   padding: 10px;
   border-radius: 6px;
+  color:'blue'
 }
 
 

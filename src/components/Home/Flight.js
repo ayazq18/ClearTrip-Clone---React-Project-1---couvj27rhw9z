@@ -4,6 +4,7 @@ import "./Flight.css";
 import { FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import { Base_URL, Project_ID } from "../Constants.js";
 import Form from "../Form/Form.js";
+import { flightbanner } from "../../Services/Icons.js";
 
 export default function Home() {
   const [offers, setOffers] = useState([]);
@@ -33,21 +34,21 @@ export default function Home() {
   };
 
   //   -----------functions-----------------
-  const fetchOffer = async ()=>{
-    try{
-    const res = await fetch(`${Base_URL}/offers?filter={"type":"FLIGHTS"}`,{
-        method : "GET",
-          headers : {
-            projectID : Project_ID,
-            "Content-Type": "application/json",
-          }
-    })
-        const result = await res.json()
-        setOffers(result.data.offers);
-    }catch(error){
-        console.log (error)
+  const fetchOffer = async () => {
+    try {
+      const res = await fetch(`${Base_URL}/offers?filter={"type":"FLIGHTS"}`, {
+        method: "GET",
+        headers: {
+          projectID: Project_ID,
+          "Content-Type": "application/json",
+        }
+      })
+      const result = await res.json()
+      setOffers(result.data.offers);
+    } catch (error) {
+      console.log(error)
     }
-}
+  }
   useEffect(() => {
     fetchOffer();
   }, []);
@@ -58,7 +59,8 @@ export default function Home() {
       <div className="home-main">
         <h1>Search flights</h1>
         <h2>Enjoy hassle free bookings with Cleartrip</h2>
-       <Form onClick={(e)=>handleSearchFlight(e)}/>
+        <Form onClick={(e) => handleSearchFlight(e)} />
+       <div class="maxbox "><div>{flightbanner}<span class="flex flex-between statement">Free cancellation or free date change starting from ₹499. T&amp;C apply.</span></div></div>
       </div>
 
       {/* offer section */}
@@ -86,9 +88,8 @@ export default function Home() {
                   <div key={offer._id}>
                     <div
                       onClick={() => setCounter(index)}
-                      className={`dot ${
-                        offer._id === imgCounter ? "active-class" : ""
-                      }`}
+                      className={`dot ${offer._id === imgCounter ? "active-class" : ""
+                        }`}
                     ></div>
                   </div>
                 ))}

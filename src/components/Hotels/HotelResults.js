@@ -4,6 +4,7 @@ import { Base_URL, Project_ID } from "../Constants";
 import HotelNavBar from './HotelNavBar';
 const CardCarausal = lazy(() => import('../Corousel/HotelPage/CardCarausal'));
 import { useLocation, useNavigate } from 'react-router-dom';
+import Footer from '../Footer';
 const HotelResults = () => {
     const hotelLocation = useLocation();
     const searchParams = new URLSearchParams(hotelLocation.search);
@@ -61,7 +62,9 @@ const HotelResults = () => {
 
     return (
         <>
-        {load && hotelsResultData && <div className='hotelHome'>
+        {load && hotelsResultData && 
+        <div>
+        <div className='hotelHome'>
             <div><HotelNavBar lowhigh={lowhigh} setlowhigh={setlowhigh} minrange={minrange} setminrange={setminrange} maxrange={maxrange} setmaxrange={setmaxrange} rating={rating} setrating={setrating} inputResult={inputResult} fromDate={fromDate} toDate={toDate} /></div>
             <div className='hotelMain flexXY'>
                 <div className='hotelMain-container'>
@@ -102,6 +105,8 @@ const HotelResults = () => {
                 <h4>...{pagination}</h4>
                 <button className={` ${(pagination === +resultforpagination / 10) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination / 10 == pagination} >Next</button>
             </div>
+        </div>
+        <Footer/>
         </div>}
         {!load && <div className='loader'></div>}
         </>

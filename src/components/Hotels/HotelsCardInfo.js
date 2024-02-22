@@ -12,6 +12,7 @@ import { MdRestaurant, MdTableBar, MdOutlineSignalWifi4Bar } from "react-icons/m
 import { FaPersonSwimming, FaSprayCanSparkles } from "react-icons/fa6";
 import { MdOutlineFreeCancellation, MdOutlineVerified } from "react-icons/md";
 import { RxInfoCircled } from "react-icons/rx";
+import Footer from '../Footer.js';
 
 
 const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
@@ -365,26 +366,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                         ))}
                     </div>
                 </div>
-                <footer className="cleartrip-footer">
-                    <div className="footer-top">
-                        <div className="footer-logo">{logo}</div>
-                        <div className="footer-links">
-                            <h3>Company</h3>
-                            <ul><li><a href="#">About Us</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Careers</a></li></ul>
-                        </div>
-                        <div className="footer-links">
-                            <h3>Products</h3>
-                            <ul><li><a href="#">Flights</a></li><li><a href="#">Hotels</a></li><li><a href="#">Trains</a></li></ul>
-                        </div>
-                        <div className="footer-links">
-                            <h3>Legal</h3>
-                            <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul>
-                        </div>
-                    </div>
-                    <div className="footer-bottom">
-                        <p>&copy; 2024 Cleartrip. All rights reserved.</p>
-                    </div>
-                </footer>
+                <Footer/>
             </div>}
             {!load && <div className='loader'></div>}
         </>
