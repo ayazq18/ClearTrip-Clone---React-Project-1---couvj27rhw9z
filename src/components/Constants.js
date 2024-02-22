@@ -16,9 +16,9 @@ export const expandedObj = [
   {item : 'Settings', icons : settings},
 ]
 
-export const getAirlineInfo = (flightID) => {
+export const getAirlineInfo = (flightIDs) => {
     let logoSrc, airlineName;
-    switch (flightID.slice(0, 2)) {
+    switch (flightIDs.slice(0, 2)) {
       case '6E': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/6E.svg'; airlineName = 'Indigo'; break;
       case 'AI': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/AI.svg'; airlineName = 'Air India'; break;
       case 'QP': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/QP.svg'; airlineName = 'Akasa Air'; break;

@@ -57,6 +57,7 @@ export default function FlightTicket() {
     const [tripdurationmax, settripdurationmax] = useState(10);
     const [valuee, setvaluee] = useState(2500);
     const [load, setload] = useState(false)
+    const [toggle, settoggle] = useState(true)
     const navigate = useNavigate()
     const MyRef = useRef(null);
 
@@ -140,7 +141,7 @@ export default function FlightTicket() {
     const fetchFlights = async () => {
         try {
             setload(true)
-            const response = await fetch(`${Base_URL}/flight?search={"source":"${flightIn[0], flightIn[1], flightIn[2]}","destination":"${flightOut[0], flightOut[1], flightOut[2]}"}&day=${dayy}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&limit=500&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`, {
+            const response = await fetch(`${Base_URL}/flight?search={"source":"${flightFrom[0]+flightFrom[1]+flightFrom[2]}","destination":"${flightToo[0]+flightToo[1]+flightToo[2]}"}&day=${dayy}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&limit=20&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`, {
                 method: "GET",
                 headers: {
                     projectID: Project_ID,
@@ -196,7 +197,7 @@ export default function FlightTicket() {
     useEffect(() => {
         setDay(days)
         fetchFlights();
-    }, [valuee, filter, flightResultsortingnav, tripdurationmin, tripdurationmax]);
+    }, [valuee, filter, flightResultsortingnav, tripdurationmin, tripdurationmax, toggle]);
 
     useEffect(() => {
         fetchFlightsIn();
@@ -205,8 +206,9 @@ export default function FlightTicket() {
 
     const handleSearchResults = (e) => {
         e.preventDefault();
-        fetchFlights();
+        // fetchFlights();
         (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`)
+        
     }
 
     const handleFlightDetails = (index) => {
@@ -258,7 +260,7 @@ export default function FlightTicket() {
                                 </div>
                             </div>
                             <div className="ticketForm flexEnd">
-                                <form className="ticketSearch-sec" onSubmit={(e) => handleSearchResults(e)}>
+                                <form className="ticketSearch-sec" onSubmit={(e) => {handleSearchResults(e), ((flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && settoggle(!toggle))}}>
                                     <div className="inputTicket flexXY">
                                         <div className="input-text1 flexY">
                                             <input
@@ -465,10 +467,10 @@ export default function FlightTicket() {
                                                     <div className="content-card-container-airline">
                                                         <div className="flexXY">
                                                             <div>
-                                                                <img src={getAirlineInfo(flightResultdata[0].flightID.slice(0, 2)).logoSrc} alt="Logo" />
+                                                                <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} alt="Logo" />
                                                             </div>
                                                             <div className="content-card-container-airline-name">
-                                                                <h5>{getAirlineInfo(result.flightID).airlineName}</h5>
+                                                                <h5>{getAirlineInfo(result.flightID.slice(0, 2)).airlineName}</h5>
                                                                 <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
                                                             </div>
                                                         </div>
@@ -514,7 +516,7 @@ export default function FlightTicket() {
                                                                 <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} />
                                                             </div>
                                                             <div className="content-card-container-airline-name">
-                                                                <h5>{getAirlineInfo(result.flightID).airlineName}</h5>
+                                                                <h5>{getAirlineInfo(result.flightID.slice(0, 2)).airlineName}</h5>
                                                             </div>
                                                             <div className="flexC">
                                                                 <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
