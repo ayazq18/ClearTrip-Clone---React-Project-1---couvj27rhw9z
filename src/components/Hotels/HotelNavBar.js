@@ -194,7 +194,7 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                                         {Array.from(hotelResult).map((hotel, index) => (
                                             <div key={index} className="hotelInputExpand-content flex">
                                                 <h2>{location}</h2>
-                                                <h1 onClick={() => handleHotelInput(hotel.location)}>{hotel}</h1>
+                                                <h1 onClick={() => handleHotelInput(hotel)}>{hotel}</h1>
                                             </div>
                                         ))}
                                     </div>
