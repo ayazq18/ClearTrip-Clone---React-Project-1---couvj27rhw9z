@@ -67,8 +67,9 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
       if (result.status === 'success') {
         localStorage.setItem('token', JSON.stringify(result.token));
         localStorage.setItem('name', JSON.stringify(result.data.name))
-        setShowSignUp(false)
         setToken(localStorage.getItem('token'))
+        setShowSignUp(false)
+        setShowSignUp(!showSignup);
       } else {
         alert('error')
       }
@@ -121,9 +122,9 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div className=" login-form-btn flexBet">
+            <div className=" login-form-btn flexXY">
               <button>Signup</button>
-              <h1 onClick={() => setShowSignUp(false)}>Close</h1>
+              {/* <h1 onClick={() => setShowSignUp(false)}>Close</h1>  */}
             </div>
             <div className="flexXY"><p>If you are an existing user please</p>&nbsp; <p onClick={() => handleLoginSignUp()} style={{ color: 'blue' }}>Sign in</p></div>
           </form>) :
@@ -143,9 +144,9 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <div className=" login-form-btn flexBet">
+              <div className=" login-form-btn flexXY">
                 <button>Login</button>
-                <h1 onClick={() => setShowSignUp(false)}>Close</h1>
+                {/* <h1 onClick={() => setShowSignUp(false)}>Close</h1> */}
               </div>
               <div className="flexXY"><p>If you are not an existing user please</p>&nbsp; <p onClick={() => handleToSignUp()} style={{ color: 'blue' }}>SignUp</p></div>
             </form>
