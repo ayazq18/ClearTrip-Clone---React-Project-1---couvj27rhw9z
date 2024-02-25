@@ -133,7 +133,8 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
         try {
             const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputValue}"}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
-            setHotelResult(result.data.hotels)
+        const arr = result.data.hotels.map(item=>{return item.location})
+            setHotelResult(new Set(arr))
         } catch (error) {
             console.log(error);
         }
@@ -190,10 +191,10 @@ const HotelNavBar = ({lowhigh,setlowhigh, minrange, setminrange, maxrange, setma
                                 <div id='iconClose' onClick={() => setInputValue('')}>{IconClose}</div>
                                 {pop["destination"] &&
                                     <div className='hoteldynamicDiv-expand' onClick={() => popp("destination")}>
-                                        {hotelResult && hotelResult.map((hotel, index) => (
+                                        {Array.from(hotelResult).map((hotel, index) => (
                                             <div key={index} className="hotelInputExpand-content flex">
                                                 <h2>{location}</h2>
-                                                <h1 onClick={() => handleHotelInput(hotel.location)}>{hotel.location}</h1>
+                                                <h1 onClick={() => handleHotelInput(hotel.location)}>{hotel}</h1>
                                             </div>
                                         ))}
                                     </div>
