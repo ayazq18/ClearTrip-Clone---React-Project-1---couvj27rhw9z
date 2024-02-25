@@ -69,7 +69,7 @@ scale: 0.7;
     border-radius: 50%;
     padding: 6px 7px 6px 5px;
     left: 0px;
-    opacity: 0;
+    opacity: 0.3;
     transition: all 0.15s ease-in; 
 }
 .HotelsResultCardsCarousalMainDiv .leftarrow:hover{
@@ -82,7 +82,7 @@ scale: 0.7;
     position: absolute;
     top: -100px;
     right: 0px;
-    opacity: 0;
+    opacity: 0.3;
     transition: all 0.15s ease-in; 
 }
 .HotelsResultCardsCarousalMainDiv .rightarrow:hover{

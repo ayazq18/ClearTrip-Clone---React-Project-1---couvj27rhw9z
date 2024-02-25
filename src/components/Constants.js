@@ -3,7 +3,7 @@ import { useState } from "react";
 export const Project_ID = "Ccouvj27rhw9z";
 export const Base_URL = 'https://academics.newtonschool.co/api/v1/bookingportals';
 export const App_Type= 'bookingportals';
-import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher } from "../Services/Icons";
+import { trips, shortlists, travellers, wallet, hiFive, Expressway, profile, settings, cancel, change, print, voucher } from "../Resources/Icons";
 
 export const expandedObj = [
   {item : 'Trips', icons : trips, toolsIcon: cancel,  tools : 'Cancellations'},

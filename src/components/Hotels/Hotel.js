@@ -7,7 +7,7 @@ import './Hotel.css'
 import { BiUser } from "react-icons/bi";
 import { CgMathMinus, CgMathPlus } from "react-icons/cg";
 import { useAuthContext } from "../ContextAllData.js";
-import { location } from "../../Services/Icons.js";
+import { location } from "../../Resources/Icons.js";
 
 export default function Hotel() {
   const [offers, setOffers] = useState([]);

@@ -208,11 +208,12 @@
     height: 100%;
 }
 .hotelPayment-Upi-options{
-    width: 400px;
+    /* width: 400px; */
     height: 100%;
     padding: 10px;
 }
 .hotelPayment-Upi-option1, .hotelPayment-Upi-option2{
+    width: 170px;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 6px;
@@ -251,6 +252,9 @@
 .hotelPayment-debit-option1-form{
     width: 500px;
     padding: 10px;
+}
+.hotelPayment-debit-option1-form .CVV{
+    width: 50px;
 }
 .hotelDebitform{
     flex-direction: column;

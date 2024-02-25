@@ -5,7 +5,7 @@ import HotelNavBar from './HotelNavBar';
 const CardCarausal = lazy(() => import('../Corousel/HotelPage/CardCarausal'));
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../Footer';
-import { notrainsfound } from '../../Services/Icons';
+import { notrainsfound } from '../../Resources/Icons';
 const HotelResults = () => {
     const hotelLocation = useLocation();
     const searchParams = new URLSearchParams(hotelLocation.search);

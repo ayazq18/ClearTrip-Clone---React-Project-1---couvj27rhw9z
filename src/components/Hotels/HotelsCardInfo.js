@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useMemo, useState, lazy, useRef } from 'react';
 import './HotelCardInfo.css'
 import { Base_URL, Project_ID, App_Type, handleselectionCategory } from "../Constants";
-import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon, ratingCircle, ratingOwl, rightArrow, hotelIcon } from '../../Services/Icons';
+import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon, ratingCircle, ratingOwl, rightArrow, hotelIcon } from '../../Resources/Icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../ContextAllData.js';
 import { CgMathMinus, CgMathPlus } from 'react-icons/cg';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { IoIosArrowForward } from "react-icons/io";
-import { logo } from '../../Services/Icons';
+import { logo } from '../../Resources/Icons';
 
 
 export default function HotelPayment() {
@@ -69,7 +69,7 @@ export default function HotelPayment() {
             <div className='paymentPopup'>
               <div className='flexc g20'>
                 <div className='flexBet'>{logo}</div>
-                <h2 style={{color:'green', textAlign:'center'}}>Payment Successfull</h2>
+                <h2 style={{color:'green', textAlign:'center'}}>Payment Successful</h2>
                 <h2 style={{textAlign:'center'}}>Dear {fName}</h2>
                 <p style={{textAlign:'center'}}>Have a good journey 🙂</p>
               </div>

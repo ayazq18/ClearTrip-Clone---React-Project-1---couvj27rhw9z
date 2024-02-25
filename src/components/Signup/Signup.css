@@ -56,18 +56,13 @@
     width: 60%;
     gap: 30px;
   }
-  .login-page .login-form-btn h1{
-    font-size: 12px;
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: orangered;
-  }
   .login-page .login-form-btn button{
     font-size: 12px;
     cursor: pointer;
     border-radius: 0;
     padding: 10px 20px;
     background-color: orangered;
+    color: #fff;
   }
   .login-page p{
     font-size: 12px;

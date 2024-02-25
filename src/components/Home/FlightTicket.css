@@ -91,7 +91,7 @@
 }
 .login-popup {
   position: absolute;
-  top: 0px;
+  top: -100px;
   left: 280px;
   z-index: 55;
 }

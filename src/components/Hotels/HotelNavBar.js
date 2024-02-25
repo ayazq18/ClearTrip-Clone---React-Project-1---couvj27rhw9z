@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './HotelResults.css'
 import { Base_URL, Project_ID, App_Type, handleselectionCategory } from "../Constants";
-import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon } from '../../Services/Icons';
+import { calender, dropDown, hotelProfile, location, loginProfile, logo, IconClose, negative, positive, deals, guestrating, searchIcon } from '../../Resources/Icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Signup from "../Signup/Signup.js";
 import Login from "../Login/Login.js";

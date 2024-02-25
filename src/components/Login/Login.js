@@ -15,7 +15,7 @@ export default function Login({token,setToken, showLogin, setShowLogin, setShowS
       }
 
       const handletopage = ()=>{
-        navigate('/maintenance')
+        navigate('/ComingSoon')
       }
 
   return (

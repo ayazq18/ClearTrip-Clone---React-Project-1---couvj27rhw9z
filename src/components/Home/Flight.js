@@ -4,7 +4,7 @@ import "./Flight.css";
 import { FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import { Base_URL, Project_ID } from "../Constants.js";
 import Form from "../Form/Form.js";
-import { flightbanner } from "../../Services/Icons.js";
+import { flightbanner } from "../../Resources/Icons.js";
 
 export default function Home() {
   const [offers, setOffers] = useState([]);

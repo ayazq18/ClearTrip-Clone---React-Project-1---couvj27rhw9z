@@ -551,16 +551,16 @@ body{
     width: 100%;
 }
 .nohotelsfound{
-    width: 50vw;
+    width: 70vw;
     height: 50vh;
-    margin: 0 250px;
+    margin: 0 100px;
 }
 .nohotelsfound h3{
-    font-size: 24px;
+    font-size: 30px;
     margin: 28px 0 0;
   }
   .nohotelsfound p{
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
     text-align: center;
     color: #666666;

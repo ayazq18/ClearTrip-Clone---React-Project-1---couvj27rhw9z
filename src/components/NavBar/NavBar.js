@@ -3,7 +3,7 @@ import "./NavBar.css";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Signup from "../Signup/Signup.js";
-import {logo, flight, flightsidelogo, hotelsidelogo } from "../../Services/Icons.js";
+import {logo, flight, flightsidelogo, hotelsidelogo } from "../../Resources/Icons.js";
 import Login from "../Login/Login.js";
 
 export default function NavBar() {

@@ -1,5 +1,5 @@
 import React from 'react'
-export default function Maintenance() {
+export default function ComingSoon() {
   return (
     <div className='flexXY' style={{width:'100vw', height:'100vh', overflowY:'hidden'}}>
     {/* <div className='maintenance' style={{backgroundImage: 'url("https://cdn.dribbble.com/users/5481358/screenshots/17990906/media/fd92a679d6a824962260807fe72ff86f.gif")', backgroundSize:'cover', backgroundRepeat:'no-repeat', width: '100vw', height: '100vh'}}></div> */}

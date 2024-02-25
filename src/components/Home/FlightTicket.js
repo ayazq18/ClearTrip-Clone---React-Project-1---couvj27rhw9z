@@ -5,7 +5,7 @@ import "./FlightTicket.css";
 import { getAirlineInfo, handleselectionCategory } from '../Constants';
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { CgArrowsExchange } from "react-icons/cg";
-import { logo, hotelIcon, support, sortIcon, clockIcon, flightIcon, notrainsfound, } from "../../Services/Icons.js";
+import { logo, hotelIcon, support, sortIcon, clockIcon, flightIcon, notrainsfound, } from "../../Resources/Icons.js";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup.js";
 import { arr } from "../Constants";
@@ -15,7 +15,6 @@ import { CgMathMinus, CgMathPlus } from "react-icons/cg";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useAuthContext } from "../ContextAllData.js";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-import Footer from "../Footer.js";
 
 export default function FlightTicket() {
     const { all, setall } = useAuthContext();
@@ -29,8 +28,8 @@ export default function FlightTicket() {
     const { infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease } = handleselectionCategory()
     const [filter, setfilter] = useState({ "6E": true, "SG": true, "I5": true, "UK": true, "AI": true, "QP": true, "S5": true, "stops": null });
     const [flightResultdata, setflightResultdata] = useState([]);
-    const [flightIn, setFlightIn] = useState("");
-    const [flightOut, setFlightOut] = useState("");
+    const [flightIn, setFlightIn] = useState(flightFrom);
+    const [flightOut, setFlightOut] = useState(flightToo);
     const [flightWhere, setFlightWhere] = useState();
     const [flightTo, setFlightTo] = useState();
     const [selectedFlightIn, setSelectedFlightIn] = useState(all.selectedFlightIn);
@@ -240,6 +239,7 @@ export default function FlightTicket() {
             {load && flightWhere && flightTo &&
                 <div className="ticket">
                     {showLogin && <Login showLogin={showLogin} setShowLogin={setShowLogin} token={token} setToken={setToken} />}
+                    {showSignup && <div className="login-popup"><Signup showSignup={showSignup} setShowSignUp={setShowSignUp} token={token} setToken={setToken} /></div>}
                     <div className="ticketHeader-container">
                         <div id="ticketHeader">
                             <div id="ticketSupport" className="flexBet">
@@ -260,12 +260,11 @@ export default function FlightTicket() {
                                             <h5 className="expand-INR-currencies">Other currencies</h5>
                                         </div>
                                     )}
-                                    <button className="ticketHeader-btn flexXY" onClick={() => navigate('/')}>{support} Support</button>
+                                    <button className="ticketHeader-btn flexXY" onClick={() => navigate('/ComingSoon')}>{support} Support</button>
                                     <div className="Login-button">
                                         <button ref={MyRef} className="loginBtn-one flexXY" onClick={() => handleSignin()}>
                                             {token ? <><svg viewBox="0 0 14 14" height="16px" width="16px" className="c-inherit"><g fill="none" fillRule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><circle cx="7" cy="7" r="6.25" stroke="currentColor" strokeWidth="1.5"></circle><path fill="currentColor" d="M3,5 C4.38071187,5 5.5,3.88071187 5.5,2.5 C5.5,1.11928813 4.38071187,0 3,0 C1.61928813,0 0.5,1.11928813 0.5,2.5 C0.5,3.88071187 1.61928813,5 3,5 Z" transform="matrix(-1 0 0 1 10 3)"></path><path fill="currentColor" d="M7,9 C9.14219539,9 10.8910789,10.6839685 10.9951047,12.8003597 L11,13 L3,13 C3,10.790861 4.790861,9 7,9 Z"></path><circle cx="7" cy="7" r="7.75" stroke="#FFF" strokeWidth="1.5"></circle></g></svg> {JSON.parse(localStorage.getItem('name'))}</> : 'login / signup'}
                                         </button>
-                                        {showSignup && <div className="login-popup"><Signup showSignup={showSignup} setShowSignUp={setShowSignUp} token={token} setToken={setToken} /></div>}
                                     </div>
                                 </div>
                             </div>
@@ -339,7 +338,7 @@ export default function FlightTicket() {
                                                         className="input-date2"
                                                         type="date"
                                                         min={new Date().toISOString().split("T")[0]}
-                                                        value={isDisabled ? "Return" : whereTo}
+                                                        value={isDisabled}
                                                         onChange={(e) => setToDate(e.target.value)}
                                                         onClick={() => poptab('date2')}
                                                         disabled={isDisabled}

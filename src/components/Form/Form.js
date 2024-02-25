@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState} from "react";
 import { useNavigate, } from "react-router-dom";
 import { Base_URL, Project_ID, object, arr, handleselectionCategory} from "../Constants.js";
-import { flightgo, flyFrom, swapIcon } from "../../Services/Icons.js";
+import { flightgo, flyFrom, swapIcon } from "../../Resources/Icons.js";
 import "./Form.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { BiUser } from "react-icons/bi";

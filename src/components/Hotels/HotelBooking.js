@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './HotelBooking.css'
 import { Base_URL, Project_ID } from "../Constants";
-import { dropDown, offerSaving, ratingCircle, ratingOwl } from '../../Services/Icons'
+import { dropDown, offerSaving, ratingCircle, ratingOwl } from '../../Resources/Icons'
 import { useAuthContext } from '../ContextAllData'
 import { CgClose } from 'react-icons/cg';
 export default function HotelBooking() {
@@ -22,7 +22,7 @@ export default function HotelBooking() {
     const [load, setLoad] = useState(false)
     const [popp, setpopp] = useState({})
     const [details, setdetails] = useState({ dnumber: "", demail: "", dfname: "", dlname: "", dgender: "", dcountry: "", dstate: "", dbillingAddress: "" })
-
+    const [paymnentdone, setpaymentdone] = useState(false)
 
     const pop = (key) => {
         setTimeout(() => {
@@ -72,9 +72,9 @@ export default function HotelBooking() {
     }
 
     function gotopayment() {
-        if (phonenumber && details.demail && details.dfname && details.dlname) {
+        if (phonenumber && details.demail && details.dfname && details.dlname && paymnentdone===true) {
+            setpaymentdone(false)
             navigate(`/hotels/results/hotelcardsinfo/hotelBooking/hotelPayment?FirstName=${details.dfname}&Email=${details.demail}&Amount=${Math.floor((hotelcard.rooms[0].costDetails.baseCost) + (hotelcard.rooms[0].costDetails.taxesAndFees) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100)).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}`);
-            // console.log(hello)
         }
     }
 
@@ -93,8 +93,11 @@ export default function HotelBooking() {
 
 
     useEffect(() => {
+        if (phonenumber && details.demail && details.dfname && details.dlname) {
+            setpaymentdone(true)
+        }
         fetchHotelCardInfo
-    }, [])
+    }, [phonenumber,details.demail,details.dfname,details.dlname])
 
     return (
         <>

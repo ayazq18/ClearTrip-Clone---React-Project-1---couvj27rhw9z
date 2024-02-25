@@ -249,12 +249,13 @@ input[type="number"]::-webkit-inner-spin-button{
 
 .gender{
     position: relative;
-    width:80px ;
+    gap: 20px;
+    width:100px ;
     border-radius: 3px;
     border: 0.5px solid lightgray;
 }
 .gender input{
-    width: 50px;
+    width: 60px;
     height: 30px;
     z-index: -1;
     background-color: white;
