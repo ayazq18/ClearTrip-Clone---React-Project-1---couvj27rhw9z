@@ -5,8 +5,10 @@ export function useAuthContext(){
 }
 export default function ContextAllDataProvider({children}) {
     const [all,setall]=useState({});
+    const [paymnentdone, setpaymentdone] = useState(false)
+    const [flightpaymnentdone, setflightpaymentdone] = useState(false)
   return (
-  <MyContext.Provider value={{all,setall}}>
+  <MyContext.Provider value={{all, setall, paymnentdone, setpaymentdone, flightpaymnentdone, setflightpaymentdone}}>
     {children}
   </MyContext.Provider>
   )

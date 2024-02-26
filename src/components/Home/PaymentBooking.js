@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { IoIosArrowForward } from "react-icons/io";
 import { logo } from '../../Resources/Icons';
+import { useAuthContext } from '../ContextAllData';
 
 
 export default function HotelPayment() {
   const location = useLocation()
+  const { flightpaymnentdone, setflightpaymentdone} = useAuthContext()
   const searchParams = new URLSearchParams(location.search)
   let totalAmount = searchParams.get('Amount')
   let fName = searchParams.get('FirstName')
@@ -28,17 +30,18 @@ export default function HotelPayment() {
   }
 
   const clicktopay = () => {
-    if(details.UPI && details.ischecked || details.name && details.cardnumber.length===16 && details.CVV.length===4 && details.ischecked){
+    if(details.name && details.cardnumber.length===16 && details.CVV.length===4 && details.ischecked){
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
+        setflightpaymentdone(false)
         navigate('/')
       }, 10000);
     }
     else{
       if(details.cardnumber.length<12 || details.cardnumber.length>16){
         alert("Enter the correct card number")
-        }else if(details.CVV.length<3 || details.CVV.length>4 ){
+        }else if(details.CVV.length<4 || details.CVV.length>4 ){
           alert("Enter the correct CVV")
         }else if(details.name === '' ){
           alert("Enter the correct Name")
@@ -48,9 +51,31 @@ export default function HotelPayment() {
     }
   }
 
+  const clicktopayUpi = () => {
+    if (details.UPI && details.ischecked) {
+      setPayment(!payment)
+      setTimeout(() => {
+        setPayment(false)
+        setflightpaymentdone(false)
+        navigate('/')
+      }, 5000);
+    } else if(details.UPI === ''){
+      alert ("Please enter the correct UPI")
+    }
+    else if (!details.ischecked) {
+      alert("Please accept the terms")
+    }
+  }
+
   function travellerinfo(key, value) {
     setdetails((prev) => ({ ...prev, [key]: value }));
 }
+
+useEffect(()=>{
+  if(flightpaymnentdone === false){
+    navigate('/')
+  }
+},[])
 
   return (
     <div className='hotelBooking'>
@@ -78,10 +103,9 @@ export default function HotelPayment() {
           }
           <div className='hotelPayment-Upi flex'>
             <div className='hotelPayment-Upi-options'>
-              <div className={`hotelPayment-Upi-option1 flexBet ${popp['UPI'] ? 'payment-active' : ''}`} onClick={() => pop('UPI')}><h4>UPI</h4>{popp['UPI'] && <IoIosArrowForward />}</div>
-              <div className={`hotelPayment-Upi-option2 flexBet ${popp['DEBIT'] ? 'payment-active' : ''}`} onClick={() => pop('DEBIT')}><h4>Debit/Credit card</h4>{popp['DEBIT'] && <IoIosArrowForward />}</div>
+              <div className={`hotelPayment-Upi-option1 flexBet ${popp['UPI'] ? 'payment-active' : ''}`} onClick={() => {pop('UPI')}}><h4>UPI</h4>{popp['UPI'] && <IoIosArrowForward />}</div>
+              <div className={`hotelPayment-Upi-option2 flexBet ${popp['DEBIT'] ? 'payment-active' : ''}`} onClick={() =>{ pop('DEBIT')}}><h4>Debit/Credit card</h4>{popp['DEBIT'] && <IoIosArrowForward />}</div>
             </div>
-
             {popp['DEBIT'] && <div className='hotelPayment-debit-option1-form'>
               <div className='hotelCard'><h3>Enter Card details</h3><div className='flexXY'></div></div>
               <form className='hotelDebitform flex'>
@@ -95,7 +119,7 @@ export default function HotelPayment() {
                 <label>Cardholder name</label>
                 <input type='text' value={details.name} onChange={(e)=>travellerinfo('name', `${e.target.value}`)} placeholder='Name as on card' />
                 <label>CVV</label>
-                <input type='number' minLength={4} maxLength={4} value={details.CVV} onInput={(e)=>{if (e.target.value.length > 4) {e.target.value = e.target.value.slice(0, 4)}}}  onChange={(e)=>travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
+                <input className='CVV' type='number' minLength={4} maxLength={4} value={details.CVV} onInput={(e)=>{if (e.target.value.length > 4) {e.target.value = e.target.value.slice(0, 4)}}}  onChange={(e)=>travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
               </form>
             </div>}
 
@@ -125,10 +149,11 @@ export default function HotelPayment() {
         <div className='termsandsubmission flexXY'>
           <div className='termssubmit flexBet g10'>
             <div>
-              <div className='flexY g10'><input type='checkbox' className='styled-checkbox' value={details.ischecked} onChange={(e)=>travellerinfo('ischecked', true)} /><label>I understand and agree to the rules and restrictions of this fare, the booking policy, the privacy policy and the terms and conditions of Cleartrip and confirm address details entered are correct</label></div>
+              <div className='flexY g10'><input type='checkbox' className='styled-checkbox' value={details.ischecked} onClick={()=>travellerinfo('ischecked', !details.ischecked)} /><label>I understand and agree to the rules and restrictions of this fare, the booking policy, the privacy policy and the terms and conditions of Cleartrip and confirm address details entered are correct</label></div>
             </div>
             <div className='paysubmit flexc'><h1>₹{totalAmount}</h1><p>Total, inclusive of all taxes</p></div>
-            <button onClick={() => clicktopay()}>Pay now</button>
+            {popp['DEBIT'] && <button onClick={() => clicktopay()}>Pay now</button>}
+            {popp['UPI'] && <button onClick={() => clicktopayUpi()}>Pay now</button>}
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { dropDown, offerSaving, ratingCircle, ratingOwl } from '../../Resources/
 import { useAuthContext } from '../ContextAllData'
 import { CgClose } from 'react-icons/cg';
 export default function HotelBooking() {
-    const { all, setall } = useAuthContext()
+    const { all, setall, paymnentdone, setpaymentdone } = useAuthContext()
     const hotelCardInfoLocation = useLocation();
     const searchParams = new URLSearchParams(hotelCardInfoLocation.search);
     let hotelId = searchParams.get("hotelId");
@@ -22,7 +22,6 @@ export default function HotelBooking() {
     const [load, setLoad] = useState(false)
     const [popp, setpopp] = useState({})
     const [details, setdetails] = useState({ dnumber: "", demail: "", dfname: "", dlname: "", dgender: "", dcountry: "", dstate: "", dbillingAddress: "" })
-    const [paymnentdone, setpaymentdone] = useState(false)
 
     const pop = (key) => {
         setTimeout(() => {
@@ -72,8 +71,8 @@ export default function HotelBooking() {
     }
 
     function gotopayment() {
-        if (phonenumber && details.demail && details.dfname && details.dlname && paymnentdone===true) {
-            setpaymentdone(false)
+        if (phonenumber && details.demail && details.dfname && details.dlname ) {
+            setpaymentdone(true)
             navigate(`/hotels/results/hotelcardsinfo/hotelBooking/hotelPayment?FirstName=${details.dfname}&Email=${details.demail}&Amount=${Math.floor((hotelcard.rooms[0].costDetails.baseCost) + (hotelcard.rooms[0].costDetails.taxesAndFees) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100)).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}`);
         }
     }
@@ -93,11 +92,8 @@ export default function HotelBooking() {
 
 
     useEffect(() => {
-        if (phonenumber && details.demail && details.dfname && details.dlname) {
-            setpaymentdone(true)
-        }
         fetchHotelCardInfo
-    }, [phonenumber,details.demail,details.dfname,details.dlname])
+    }, [])
 
     return (
         <>

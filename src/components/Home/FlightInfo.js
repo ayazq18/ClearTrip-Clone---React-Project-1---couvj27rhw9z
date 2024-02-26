@@ -28,6 +28,7 @@ export default function FlightInfo() {
   const [errorcontact, seterrorcontact] = useState(false);
   const [pop, setpop] = useState({});
   const [switcherform, setswitcherform] = useState(false);
+  const { flightpaymnentdone, setflightpaymentdone} = useAuthContext()
 
   function popp(key) {
     setpop({});
@@ -106,6 +107,7 @@ export default function FlightInfo() {
   function gotopayment() {
     if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
       senddata();
+      setflightpaymentdone(true)
       navigate(`/flights/results/Info/bookingpage?FirstName="${details.dfname}"&Email="${details.demail}"&Amount=${((dataa.ticketPrice * 18) / 100 + dataa.ticketPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
     }
   }

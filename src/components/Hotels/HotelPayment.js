@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './HotelBooking.css'
 import { IoIosArrowForward } from "react-icons/io";
 import { logo } from '../../Resources/Icons';
+import { useAuthContext } from '../ContextAllData';
 
 
 export default function HotelPayment() {
   const location = useLocation()
+  const { paymnentdone, setpaymentdone } = useAuthContext()
   const searchParams = new URLSearchParams(location.search)
   let totalAmount = searchParams.get('Amount')
   let fName = searchParams.get('FirstName')
@@ -33,6 +35,7 @@ export default function HotelPayment() {
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
+        setpaymentdone(false)
         navigate('/')
       }, 5000);
     }
@@ -54,6 +57,7 @@ export default function HotelPayment() {
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
+        setpaymentdone(false)
         navigate('/')
       }, 5000);
     } else if(details.UPI === ''){
@@ -68,7 +72,11 @@ export default function HotelPayment() {
     setdetails((prev) => ({ ...prev, [key]: value }));
   }
 
-
+  useEffect(()=>{
+    if(paymnentdone === false){
+      navigate('/')
+    }
+  },[])
 
   return (
     <div className='hotelBooking'>
@@ -113,7 +121,7 @@ export default function HotelPayment() {
                 <label>Cardholder name</label>
                 <input type='text' value={details.name} onChange={(e) => travellerinfo('name', `${e.target.value}`)} placeholder='Name as on card' />
                 <label>CVV</label>
-                <input  className='CVV' type='number' minLength={4} maxLength={4} value={details.CVV} onInput={(e) => { if (e.target.value.length > 4) { e.target.value = e.target.value.slice(0, 4) } }} onChange={(e) => travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
+                <input className='CVV' type='number' minLength={4} maxLength={4} value={details.CVV} onInput={(e) => { if (e.target.value.length > 4) { e.target.value = e.target.value.slice(0, 4) } }} onChange={(e) => travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
               </form>
             </div>}
 
