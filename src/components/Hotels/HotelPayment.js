@@ -40,9 +40,9 @@ export default function HotelPayment() {
       }, 5000);
     }
     else {
-      if (details.cardnumber.length < 12 || details.cardnumber.length > 16) {
+      if (details.cardnumber.length < 16 ) {
         alert("Enter the correct card number")
-      } else if (details.CVV.length < 3 || details.CVV.length > 4) {
+      } else if (details.CVV.length < 4) {
         alert("Enter the correct CVV")
       } else if (details.name === '') {
         alert("Enter the correct Name")
