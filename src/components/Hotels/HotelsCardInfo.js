@@ -13,6 +13,8 @@ import { FaPersonSwimming, FaSprayCanSparkles } from "react-icons/fa6";
 import { MdOutlineFreeCancellation, MdOutlineVerified } from "react-icons/md";
 import { RxInfoCircled } from "react-icons/rx";
 import Footer from '../Footer.js';
+import Signup from '../Signup/Signup.js';
+import Login from '../Login/Login.js';
 
 
 const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
@@ -37,12 +39,13 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const [date1, setDate1] = useState(dateFrom)
     const [date2, setDate2] = useState(dateTo)
     const [activetab, setactivetab] = useState({ 'gen': true, 'amenities': false, 'rooms': false })
-
     const [pop, setpop] = useState({})
     const [poptab, setpoptab] = useState({})
+    const [showSignup, setShowSignUp] = useState(false)
+    const [showLogin, setShowLogin] = useState(false)
     const [showPriceSec, setShowPriceSec] = useState(false)
     const { infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease } = handleselectionCategory()
-
+    const [token, setToken] = useState(localStorage.getItem('token'))
 
     function popp(key) {
         setpop({});
@@ -71,7 +74,6 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const handleToSearch = () => {
         fetchHotelLocation()
         setPopUp(false)
-        
         inputValue && date1 && date2 && navigate(`/hotels/results?location=${inputValue}&dateFrom=${date1}&dateTo=${date2}`)
     }
 
@@ -92,6 +94,14 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
             console.log(error);
         }
     }
+
+    const handleLoginSignUp = (e) => {
+        if (token) {
+            setShowLogin(!showLogin)
+        } else {
+            setShowSignUp(!showSignup)
+        }
+    };
 
     useEffect(() => {
         fetchHotelLocation()
@@ -126,7 +136,12 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     }, [])
 
     const handleToPayment = () => {
-        navigate(`/hotels/results/hotelcardsinfo/hotelBooking?hotelId=${hotelId}&dateFrom=${date1}&dateTo=${date2}`)
+        if (localStorage.getItem('token')) {
+            navigate(`/hotels/results/hotelcardsinfo/hotelBooking?hotelId=${hotelId}&dateFrom=${date1}&dateTo=${date2}`)
+        } else {
+            setShowSignUp(!showSignup)
+        }
+
     }
 
     return (
@@ -152,7 +167,21 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                                     <p>1 Room, {adultcount} Guests</p>
                                 </div>
                             </div>
+                            <div className='hotelResults-navBar-btnDiv flexXY' onClick={(e) => { handleLoginSignUp(e) }}>
+                                {token && <div>{loginProfile}</div>}
+                                <h4 className={`hotelResults-navBar-btnDiv-loginbtn point ${token ? 'loggedIn' : ''}`}>{token ? <>{JSON.parse(localStorage.getItem('name'))} {dropDown}</> : 'Login / Signup'}</h4>
+                                {showSignup && <div className='hotelLogin-transparent'></div>}
+                            </div>
+                            <div className='hotelResults-signup'>
+                                {showSignup && <Signup token={token} setToken={setToken} showSignup={showSignup} setShowSignUp={setShowSignUp} />}
+                            </div>
                         </div>
+                        {showLogin && <div className='hotelLogin-transparent' onClick={() => setShowLogin(false)}></div>}
+                        {showLogin &&
+                            <div className='hotelResults-login popup'>
+                                <Login token={token} setToken={setToken} showLogin={showLogin} setShowLogin={setShowLogin} showSignup={showSignup} setShowSignUp={setShowSignUp} />
+                            </div>
+                        }
                         {popUp &&
                             <div className={`hotelResults-input-expand ${popUp ? 'popup' : ""} flexXY`}>
                                 <div className='hotelResults-input flexXY'>
@@ -367,7 +396,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                         ))}
                     </div>
                 </div>
-                <Footer/>
+                <Footer />
             </div>}
             {!load && <div className='loader'></div>}
         </>

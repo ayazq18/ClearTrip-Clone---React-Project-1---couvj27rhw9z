@@ -130,7 +130,7 @@ export default function FlightTicket() {
             navigate(`/flights/results/Info?flightid=${_id}&ID=${flightId}&date=${whereDate}&source=${source}&destination=${destination}`)
         }
         else {
-            alert('Please login before proceed !')
+            setShowSignUp(!showSignup)
         }
     }
 
@@ -238,6 +238,7 @@ export default function FlightTicket() {
             {load && flightWhere && flightTo &&
                 <div className="ticket">
                     {showLogin && <Login showLogin={showLogin} setShowLogin={setShowLogin} token={token} setToken={setToken} />}
+                    {showSignup && <div className='hotelLogin-transparent' onClick={() => setShowSignUp(false)}></div>}
                     {showSignup && <div className="login-popup"><Signup showSignup={showSignup} setShowSignUp={setShowSignUp} token={token} setToken={setToken} /></div>}
                     <div className="ticketHeader-container">
                         <div id="ticketHeader">
