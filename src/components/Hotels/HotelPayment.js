@@ -31,7 +31,7 @@ export default function HotelPayment() {
   }
 
   const clicktopay = () => {
-    if (details.name && details.cardnumber.length === 16 && details.CVV.length === 4 && details.ischecked) {
+    if (details.name && details.cardnumber.length === 16 && details.CVV.length === 3 && details.ischecked) {
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
@@ -42,7 +42,7 @@ export default function HotelPayment() {
     else {
       if (details.cardnumber.length < 16 ) {
         alert("Enter the correct card number")
-      } else if (details.CVV.length < 4) {
+      } else if (details.CVV.length < 3) {
         alert("Enter the correct CVV")
       } else if (details.name === '') {
         alert("Enter the correct Name")
@@ -53,14 +53,14 @@ export default function HotelPayment() {
   }
 
   const clicktopayUpi = () => {
-    if (details.UPI && details.ischecked) {
+    if (details.UPI && details.ischecked && details.UPI.includes('@')) {
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
         setpaymentdone(false)
         navigate('/')
       }, 5000);
-    } else if(details.UPI === ''){
+    } else if(details.UPI === '' || !details.UPI.includes('@')){
       alert ("Please enter the correct UPI")
     }
     else if (!details.ischecked) {
@@ -121,7 +121,7 @@ export default function HotelPayment() {
                 <label>Cardholder name</label>
                 <input type='text' value={details.name} onChange={(e) => travellerinfo('name', `${e.target.value}`)} placeholder='Name as on card' />
                 <label>CVV</label>
-                <input className='CVV' type='number' minLength={4} maxLength={4} value={details.CVV} onInput={(e) => { if (e.target.value.length > 4) { e.target.value = e.target.value.slice(0, 4) } }} onChange={(e) => travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
+                <input className='CVV' type='number' minLength={3} maxLength={4} value={details.CVV} onInput={(e) => { if (e.target.value.length > 4) { e.target.value = e.target.value.slice(0, 4) } }} onChange={(e) => travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
               </form>
             </div>}
 

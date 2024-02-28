@@ -135,14 +135,15 @@ export default function FlightInfo() {
   function numbererror(e) {
     const inputValue = e.target.value;
     const inputElement = e.target;
+    const numbersRegex = /^[0-9]+$/;
+  
     if (inputValue.length == 0) {
       inputElement.style.outline = "none";
-    } else if (inputValue.length == 10) {
+    } else if (inputValue.length == 10 && numbersRegex.test(inputValue)) {
       inputElement.style.outline = "1px solid green";
     } else {
       inputElement.style.outline = "1px solid red";
     }
-
   }
   async function fetchdataforflightcarddetails() {
     try {
@@ -259,7 +260,7 @@ export default function FlightInfo() {
                       }
                     </div>
                     <div className='state flexa' onClick={() => { popp("state") }} >
-                      <input type='text' className='state-input' placeholder='state (e.g. India)' value={details.dstate} disabled />
+                      <input type='text' className='state-input' placeholder='state (e.g. Maharashtra)' value={details.dstate} disabled />
                       <IoIosArrowDown className={pop["state"] ? "state-downarrow" : "state-uparrow"} />
                       {pop["state"] &&
                         <div className='state-pop flexa g10 flexc'>

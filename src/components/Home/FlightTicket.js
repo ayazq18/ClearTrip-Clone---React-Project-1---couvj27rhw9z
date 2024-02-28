@@ -202,7 +202,6 @@ export default function FlightTicket() {
         const formattedDate = new Date(inputdate).toLocaleDateString('en-US', options);
         return formattedDate;
     }
-
     const formatdatefrom = formatDate(date)
 
     useEffect(() => {
