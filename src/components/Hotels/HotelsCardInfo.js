@@ -71,6 +71,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const handleToSearch = () => {
         fetchHotelLocation()
         setPopUp(false)
+        
         inputValue && date1 && date2 && navigate(`/hotels/results?location=${inputValue}&dateFrom=${date1}&dateTo=${date2}`)
     }
 
