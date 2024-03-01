@@ -6,7 +6,6 @@ import { useAuthContext } from '../ContextAllData';
 import { Project_ID, getAirlineInfo } from '../Constants';
 
 export default function FlightInfo() {
-  const {all, setall} = useAuthContext()
   const navigate = useNavigate();
   const inputref = useRef()
   const location = useLocation();
@@ -16,7 +15,7 @@ export default function FlightInfo() {
   let date = searchParams.get("date")
   let source = searchParams.get("source")
   let destination = searchParams.get("destination")
-  
+
   const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor (Timor-Leste)", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican state", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"]
   const states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming", "New South Wales", "Queensland", "South Australia", "Tasmania", "Victoria", "Western Australia", "Australian Capital Territory", "Northern Territory", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan"];
 
@@ -28,37 +27,46 @@ export default function FlightInfo() {
   const [errorcontact, seterrorcontact] = useState(false);
   const [pop, setpop] = useState({});
   const [switcherform, setswitcherform] = useState(false);
-  const { flightpaymnentdone, setflightpaymentdone} = useAuthContext()
+  const { flightpaymnentdone, setflightpaymentdone } = useAuthContext()
 
   function popp(key) {
     setpop({});
     setpop((prev) => ({ ...prev, [key]: !pop[key] }));
   }
 
-  function startdate(){
-    const departureDate = new Date(date);
+  
+  //-----------------------------StartDate and EndDate maker for Post data-----------------------------------
+  
+  const dateformat = new Date()
+  const dateformatter = () => {
+    dateformat.setDate(+(date.slice(8)))
+    dateformat.setMonth(+(date.slice(5, 7)) - 1)
+    dateformat.setFullYear(+(date.slice(0, 4)))
+  }
+  
+  function startdate() {
+    const departureDate = new Date(dateformat);
     const [hours, minutes] = dataa.departureTime.split(":");
     departureDate.setHours(hours, minutes);
-    
     return departureDate;
   }
-
-  function enddate(){
+  function enddate() {
     const [departureHours, departureMinutes] = dataa.departureTime.split(":");
     const [arrivalHours, arrivalMinutes] = dataa.arrivalTime.split(":");
-    const arrivalDate = new Date(date);
-    if(departureHours>arrivalHours){
-    arrivalDate.setHours(arrivalHours,arrivalMinutes);
+    const arrivalDate = new Date(dateformat);
+    if (departureHours > arrivalHours) {
+      arrivalDate.setHours(arrivalHours, arrivalMinutes);
     }
-    else if(departureHours==arrivalHours){
-      arrivalDate.setHours(arrivalHours,departureMinutes+arrivalMinutes)
+    else if (departureHours == arrivalHours) {
+      arrivalDate.setHours(arrivalHours, departureMinutes + arrivalMinutes)
     }
-    else{
-      arrivalDate.setHours(departureHours+arrivalHours,departureMinutes+arrivalMinutes)
+    else {
+      arrivalDate.setHours(departureHours + arrivalHours, departureMinutes + arrivalMinutes)
     }
-  
     return arrivalDate;
   }
+  //-----------------------------StartDate and EndDate maker for Post data-----------------------------------
+
 
   function personalInfosenderone(e) {
     e.preventDefault();
@@ -72,38 +80,39 @@ export default function FlightInfo() {
       seterrorcontact(true);
     }
   }
+
   function travellerinfo(key, value) {
     setdetails((prev) => ({ ...prev, [key]: value }));
   }
 
-  const senddata= async ()=>{
-    try{
-      if(details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress){
+  const senddata = async () => {
+    try {
+      if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
         const response = await (await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/booking`,
-                {
-                    method: "POST",
-                    Authorizaton: `Bearer ${localStorage.getItem('token')}`,
-                    headers: {
-                        projectID: Project_ID,
-                        "Content-Type": "application/json",
-                    },
-                    body:JSON.stringify({
-                      bookingType : "flight",
-                      bookingDetails : {
-                            flighId : `${flightid}`,
-                            startDate : `${startdate()}`,
-                            endDate : `${enddate()}`
-                      }
-                  })
-                }
-            )).json();
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+              projectID: Project_ID,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              bookingType: "flight",
+              bookingDetails: {
+                flightId: `${flightid}`,
+                startDate: `${startdate()}`,
+                endDate: `${enddate()}`
+              }
+            })
+          }
+        )).json();
       }
     }
-    catch(error){
+    catch (error) {
       alert(error);
     }
   }
-  
+
   function gotopayment() {
     if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
       senddata();
@@ -136,7 +145,7 @@ export default function FlightInfo() {
     const inputValue = e.target.value;
     const inputElement = e.target;
     const numbersRegex = /^[0-9]+$/;
-  
+
     if (inputValue.length == 0) {
       inputElement.style.outline = "none";
     } else if (inputValue.length == 10 && numbersRegex.test(inputValue)) {
@@ -145,6 +154,7 @@ export default function FlightInfo() {
       inputElement.style.outline = "1px solid red";
     }
   }
+
   async function fetchdataforflightcarddetails() {
     try {
       const response = await (await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/flight/${flightid}`,
@@ -165,6 +175,7 @@ export default function FlightInfo() {
   useEffect(() => {
     setpageLoader(false);
     fetchdataforflightcarddetails();
+    dateformatter()
   }, []);
 
   return (

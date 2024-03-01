@@ -6,7 +6,7 @@ import { dropDown, offerSaving, ratingCircle, ratingOwl } from '../../Resources/
 import { useAuthContext } from '../ContextAllData'
 import { CgClose } from 'react-icons/cg';
 export default function HotelBooking() {
-    const { all, setall, paymnentdone, setpaymentdone } = useAuthContext()
+    const { setpaymentdone } = useAuthContext()
     const hotelCardInfoLocation = useLocation();
     const searchParams = new URLSearchParams(hotelCardInfoLocation.search);
     let hotelId = searchParams.get("hotelId");
@@ -30,12 +30,6 @@ export default function HotelBooking() {
         }, 100);
     }
 
-    function formatDate(inputDate) {
-        const options = { month: 'short', day: 'numeric', weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true };
-        const formattedDate = new Date(inputDate).toLocaleDateString('en-US', options);
-        return formattedDate;
-    }
-
     const formatdatefrom = formatDate(datefrom)
     const formatdateto = formatDate(dateTo)
     const datefromString = formatdatefrom;
@@ -54,6 +48,71 @@ export default function HotelBooking() {
     const timetoMatch = datetoString.match(/(\d{1,2}:\d{2}\s[APMapm]{2})$/);
     const timeto = timetoMatch ? timetoMatch[1] : null;
 
+    //-----------------------------StartDate and EndDate maker for Post data-----------------------------------
+
+    // const datefromformat = new Date()
+    // const datefromformatter = () => {
+    //     datefromformat.setDate(+(datefrom.slice(8)))
+    //     datefromformat.setMonth(+(datefrom.slice(5, 7)) - 1)
+    //     datefromformat.setFullYear(+(datefrom.slice(0, 4)))
+    // }
+    // function startdate() {
+    //     const departureDate = new Date(datefromformat);
+    //     const [hours, minutes] = timefrom.split(":");
+    //     departureDate.setHours(hours, minutes);
+    //     return departureDate;
+    //   }
+
+    // const datetoformat = new Date()
+    // const datetoformatter = () => {
+    //     datetoformat.setDate(+(dateTo.slice(8)))
+    //     datetoformat.setMonth(+(dateTo.slice(5, 7)) - 1)
+    //     datetoformat.setFullYear(+(dateTo.slice(0, 4)))
+    //     console.log(datetoformat)
+    // }
+    // function enddate() {
+    //     const departureDate = new Date(datetoformat);
+    //     const [hours, minutes] = timeto.split(":");
+    //     departureDate.setHours(hours, minutes);
+    //     return departureDate;
+    //   }
+
+    //-----------------------------StartDate and EndDate maker for Post data-----------------------------------
+
+    const senddata = async () => {
+        try {
+          if (phonenumber && details.demail && details.dfname && details.dlname ) {
+            const response = await (await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/booking`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+                  projectID: Project_ID,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  bookingType: "hotel",
+                  bookingDetails: {
+                    hotelId: hotelId,
+                    startDate: datefrom,
+                    endDate: dateTo
+                  }
+                })
+              }
+            )).json();
+          }
+        }
+        catch (error) {
+          alert(error);
+        }
+      }
+
+    function formatDate(inputDate) {
+        const options = { month: 'short', day: 'numeric', weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true };
+        const formattedDate = new Date(inputDate).toLocaleDateString('en-US', options);
+        return formattedDate;
+    }
+
     function travellerinfo(key, value) {
         setdetails((prev) => ({ ...prev, [key]: value }));
     }
@@ -71,9 +130,10 @@ export default function HotelBooking() {
     }
 
     function gotopayment() {
-        if (phonenumber && details.demail && details.dfname && details.dlname ) {
+        if (phonenumber && details.demail && details.dfname && details.dlname) {
             setpaymentdone(true)
             navigate(`/hotels/results/hotelcardsinfo/hotelBooking/hotelPayment?FirstName=${details.dfname}&Email=${details.demail}&Amount=${Math.floor((hotelcard.rooms[0].costDetails.baseCost) + (hotelcard.rooms[0].costDetails.taxesAndFees) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100)).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}`);
+            senddata()
         }
     }
 
@@ -82,7 +142,6 @@ export default function HotelBooking() {
             setLoad(false)
             const response = await fetch(`${Base_URL}/hotel/${hotelId}`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
-            console.log(result)
             sethotelcard(result.data)
             setLoad(true)
         } catch (error) {
@@ -203,7 +262,6 @@ export default function HotelBooking() {
                                 <button onClick={() => { gotopayment(); }}>Continue to Payment</button>
                             </div>
                         </div>
-
 
                     </div>
                     <div className='main-section-right flexX'>

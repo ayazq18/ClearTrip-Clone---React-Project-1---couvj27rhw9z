@@ -44,7 +44,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
     const [showSignup, setShowSignUp] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
     const [showPriceSec, setShowPriceSec] = useState(false)
-    const { infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease } = handleselectionCategory()
+    const { childrencount, adultcount, handleIncrease, handleDecrease } = handleselectionCategory()
     const [token, setToken] = useState(localStorage.getItem('token'))
 
     function popp(key) {

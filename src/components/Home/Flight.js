@@ -60,7 +60,7 @@ export default function Home() {
         <h1>Search flights</h1>
         <h2>Enjoy hassle free bookings with Cleartrip</h2>
         <Form onClick={(e) => handleSearchFlight(e)} />
-       <div class="maxbox "><div>{flightbanner}<span class="flex flex-between statement">Free cancellation or free date change starting from ₹499. T&amp;C apply.</span></div></div>
+       <div className="maxbox "><div>{flightbanner}<span className="flex flex-between statement">Free cancellation or free date change starting from ₹499. T&amp;C apply.</span></div></div>
       </div>
 
       {/* offer section */}

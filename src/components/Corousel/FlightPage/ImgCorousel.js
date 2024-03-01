@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaLessThan, FaGreaterThan, FaCircle } from "react-icons/fa";
+import { FaLessThan, FaGreaterThan, } from "react-icons/fa";
 import './ImgCorousel.css'
 const Carousel = () => {
   const images = [

@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, } from "react-router-dom";
-import { Base_URL, Project_ID, object, arr, handleselectionCategory} from "../Constants.js";
+import { Base_URL, Project_ID, object, arr, handleselectionCategory } from "../Constants.js";
 import { flightgo, flyFrom, swapIcon } from "../../Resources/Icons.js";
 import "./Form.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
@@ -12,7 +12,7 @@ import { useAuthContext } from "../ContextAllData.js";
 
 export default function Form() {
     const { all, setall } = useAuthContext()
-    const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
+    const { infantcount, childrencount, adultcount, setAdultCount, handleIncrease, handleDecrease } = handleselectionCategory()
     const [flightIn, setFlightIn] = useState("");
     const [flightOut, setFlightOut] = useState("");
     const [flightWhere, setFlightWhere] = useState([]);
@@ -119,12 +119,12 @@ export default function Form() {
 
     const navigate = useNavigate()
     const handleSearchFlight = (e) => {
-        e.preventDefault(); 
-            setall(prev => ({ ...prev, flightIn: flightIn, flightOut: flightOut, flightWhere:{flightWhere}, flightTo:{flightTo}, day: day, whereDate: whereDate, selectedFlightIn:selectedFlightIn, selectedFlightOut:selectedFlightOut }));
-            (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`, {state:flightWhere});
+        e.preventDefault();
+        setall(prev => ({ ...prev, flightIn: flightIn, flightOut: flightOut, flightWhere: { flightWhere }, flightTo: { flightTo }, day: day, whereDate: whereDate, selectedFlightIn: selectedFlightIn, selectedFlightOut: selectedFlightOut }));
+        (flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && navigate(`/flights/results?source=${flightIn}&destination=${flightOut}&date=${whereDate}&dayOfWeek=${day}`, { state: flightWhere });
     }
 
-  
+
 
     //   -----------functions-----------------
 
@@ -146,7 +146,7 @@ export default function Form() {
             const result = await response.json()
             setFlightWhere(result.data.airports)
         } catch (error) {
-            console.log (error);
+            console.log(error);
         }
     }
     const fetchFlightsOut = async () => {
@@ -161,7 +161,7 @@ export default function Form() {
             const result = await response.json()
             setFlightTo(result.data.airports)
         } catch (error) {
-            console.log (error);
+            console.log(error);
         }
     }
 
@@ -172,9 +172,9 @@ export default function Form() {
     }, []);
 
     return (
-        // <div className="flexXY">
         <form className="search-card">
             <div className="select flexBet">
+                {/* --------------Trip way------------------ */}
                 <div className="selectWay" onClick={() => handleTrip()}>
                     <div className="selectTrip flexY">
                         {ways === "One way" ? (
@@ -198,61 +198,69 @@ export default function Form() {
                         </div>
                     )}
                 </div>
+                {/* --------------Trip way------------------ */}
+
+                {/* --------------Selection category------------------ */}
+
                 <div className="selectioncaegory">
-                <div className="selectCateg flexXY" onClick={() => handleSelectCategory()}>
-                    <BiUser className="" />
-                    <h4>
-                        {adultcount && (<> {adultcount} <span>Adult, </span> </>)}
-                        {childrencount > 0 && (<>{childrencount} <span>Childrens, </span></>)}
-                        {infantcount > 0 && (<>{infantcount} <span>Infant, </span></>)}
-                    </h4>
-                    <h4>{classs}</h4>
-                    <MdKeyboardArrowDown style={rotateCateg} className="" />
-                </div>
-                {selectVisible && (
-                <div className="selectCateg-Expand">
-                    {arr.map((items, index) => (
-                        <div className="selectCateg-Expand-container flexBet">
-                            <div>
-                                <h1>{items.category}</h1>
-                                <h5>{items.age}</h5>
-                            </div>
-                            <div className="selectCateg-count flexXY">
-                                <CgMathMinus
-                                    className={`${(items.category === "Adult" && adultcount > 1) ||
-                                            (items.category === "Children" && childrencount > 0) ||
-                                            (items.category === "Infant" && infantcount > 0)
-                                            ? "changeToPosIcon"
-                                            : "countNegIcon"
-                                        }`}
-                                    onClick={() => handleDecrease(items.category)}
-                                />
-                                <h1>
-                                    {items.category === "Adult"
-                                        ? adultcount
-                                        : items.category === "Children"
-                                            ? childrencount
-                                            : infantcount}
-                                </h1>
-                                <CgMathPlus
-                                    className="countPosIcon"
-                                    onClick={() => handleIncrease(items.category)}
-                                />
+                    <div className="selectCateg flexXY" onClick={() => handleSelectCategory()}>
+                        <BiUser className="" />
+                        <h4>
+                            {adultcount && (<> {adultcount} <span>Adult, </span> </>)}
+                            {childrencount > 0 && (<>{childrencount} <span>Childrens, </span></>)}
+                            {infantcount > 0 && (<>{infantcount} <span>Infant, </span></>)}
+                        </h4>
+                        <h4>{classs}</h4>
+                        <MdKeyboardArrowDown style={rotateCateg} className="" />
+                    </div>
+                    {selectVisible && (
+                        <div className="selectCateg-Expand">
+                            {arr.map((items, index) => (
+                                <div key={index} className="selectCateg-Expand-container flexBet">
+                                    <div>
+                                        <h1>{items.category}</h1>
+                                        <h5>{items.age}</h5>
+                                    </div>
+                                    <div className="selectCateg-count flexXY">
+                                        <CgMathMinus
+                                            className={`${(items.category === "Adult" && adultcount > 1) ||
+                                                (items.category === "Children" && childrencount > 0) ||
+                                                (items.category === "Infant" && infantcount > 0)
+                                                ? "changeToPosIcon"
+                                                : "countNegIcon"
+                                                }`}
+                                            onClick={() => handleDecrease(items.category)}
+                                        />
+                                        <h1>
+                                            {items.category === "Adult"
+                                                ? adultcount
+                                                : items.category === "Children"
+                                                    ? childrencount
+                                                    : infantcount}
+                                        </h1>
+                                        <CgMathPlus
+                                            className="countPosIcon"
+                                            onClick={() => handleIncrease(items.category)}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                            <div className="selectCateg-Expand-btns-div flexY">
+                                {object.map((category, index) => (
+                                    <h2 onClick={() => handleClass(category.class)} key={index}
+                                        className={`category ${classs === category.class ? "active-classs" : ""}`}>
+                                        {category.class}
+                                    </h2>
+                                ))}
                             </div>
                         </div>
-                    ))}
-                    <div className="selectCateg-Expand-btns-div flexY">
-                        {object.map((category, index) => (
-                            <h2 onClick={() => handleClass(category.class)} key={index}
-                                className={`category ${classs === category.class ? "active-classs" : ""}`}>
-                                {category.class}
-                            </h2>
-                        ))}
-                    </div>
+                    )}
                 </div>
-            )}
+
+                {/* --------------Selection category------------------ */}
             </div>
-            </div>
+
+            {/* --------------Fare type------------------ */}
 
             <div className="btns-div flexY">
                 {object.map((category, index) => (
@@ -262,6 +270,11 @@ export default function Form() {
                     </h2>
                 ))}
             </div>
+
+            {/* --------------Selection category------------------ */}
+
+            {/* --------------Flight search section ------------------ */}
+
             <div className="input">
                 <div className="input-text">
                     <h1 className="whereIconfrom">{flyFrom}</h1>
@@ -292,7 +305,7 @@ export default function Form() {
                         type="text"
                         placeholder="Where to?"
                         value={flightOut}
-                        onChange={(e) => { setFlightOut(e.target.value), fetchFlightsOut(e.target.value)}}
+                        onChange={(e) => { setFlightOut(e.target.value), fetchFlightsOut(e.target.value) }}
                         onClick={() => {
                             showWhereTo();
                         }}
@@ -313,7 +326,7 @@ export default function Form() {
                 </div>
                 <div className="input-date flex">
                     <div className="date-sec flex">
-                        <input id="inputdate1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)}/>
+                        <input id="inputdate1" type="date" min={new Date().toISOString().split('T')[0]} value={whereDate} onChange={(e) => setWhereDate(e.target.value)} />
                         <input id="inputdate22" type="date" min={new Date().toISOString().split('T')[0]} value={toDate} onChange={(e) => setToDate(e.target.value)} disabled={isDisabled} />
                     </div>
                     <div className="searchBtn">
@@ -324,7 +337,7 @@ export default function Form() {
                 </div>
             </div>
 
+            {/* --------------Flight search section ------------------ */}
         </form>
-        // </div>
     )
 }

@@ -54,11 +54,7 @@ const HotelResults = () => {
     }, [inputResult, lowhigh])
 
     const handleHotelCardInfo = (hotelId) => {
-        // if (localStorage.getItem('token')) {
             navigate(`/hotels/results/hotelcardsinfo?hotelId=${hotelId}&location=${inputResult}&dateFrom=${fromDate}&dateTo=${toDate}`)
-        // } else {
-        //     alert("You need to signin first!")
-        // }
     }
 
     return (

@@ -1,11 +1,11 @@
 let tl;
-import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useRef, } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./FlightTicket.css";
 import { getAirlineInfo, handleselectionCategory } from '../Constants';
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { CgArrowsExchange } from "react-icons/cg";
-import { logo, hotelIcon, support, sortIcon, clockIcon, flightIcon, notrainsfound, } from "../../Resources/Icons.js";
+import { logo, hotelIcon, support, clockIcon, flightIcon, notrainsfound, } from "../../Resources/Icons.js";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup.js";
 import { arr } from "../Constants";
@@ -25,7 +25,7 @@ export default function FlightTicket() {
     let dayy = searchParams.get("dayOfWeek");
     let date = searchParams.get("date");
 
-    const { infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease } = handleselectionCategory()
+    const { infantcount, childrencount, adultcount, handleIncrease, handleDecrease } = handleselectionCategory()
     const [filter, setfilter] = useState({ "6E": true, "SG": true, "I5": true, "UK": true, "AI": true, "QP": true, "S5": true, "stops": null });
     const [flightResultdata, setflightResultdata] = useState([]);
     const [flightIn, setFlightIn] = useState(flightFrom);
@@ -69,7 +69,6 @@ export default function FlightTicket() {
                 setfilter((prev) => ({ ...prev, [key]: value }));
             }
         }, 10);
-
     }
 
     const onewayPricewithoutcomma = () => {
@@ -240,6 +239,8 @@ export default function FlightTicket() {
                     {showLogin && <Login showLogin={showLogin} setShowLogin={setShowLogin} token={token} setToken={setToken} />}
                     {showSignup && <div className='hotelLogin-transparent' onClick={() => setShowSignUp(false)}></div>}
                     {showSignup && <div className="login-popup"><Signup showSignup={showSignup} setShowSignUp={setShowSignUp} token={token} setToken={setToken} /></div>}
+
+                    {/* ---------------Ticket header------------- */}
                     <div className="ticketHeader-container">
                         <div id="ticketHeader">
                             <div id="ticketSupport" className="flexBet">
@@ -415,8 +416,11 @@ export default function FlightTicket() {
                             </div>
                         </div>
                     </div>
+                    {/* ---------------Ticket header------------- */}
+
                     <div className="ticketMain-container">
                         <div id="main" className="flex">
+                            {/* ---------------Filter Section------------- */}
                             <div id="aside">
                                 <div id="stops">
                                     <div onClick={() => { poptab('stop') }} className="stops-static flexBet">
@@ -455,6 +459,9 @@ export default function FlightTicket() {
                                     )}
                                 </div>
                             </div>
+                            {/* ---------------Filter Section------------- */}
+
+                            {/* ---------------Main Content------------- */}
                             <div id="main-content">
                                 <div className="ticket-content-header flexBet">
                                     <div className="ticket-content-header-sec1 flexBet">
@@ -467,110 +474,110 @@ export default function FlightTicket() {
                                         </div>
                                     </div>
                                 </div>
-                                    <div className="main-content-card">
-                                        {flightResultdata.length > 0 ? (flightResultdata.map((result, index) => (result.ticketPrice < maxrange && result.ticketPrice > minrange && (
-                                            <div key={index} className="content-card">
-                                                <h6>Enjoy free meal</h6>
-                                                <div className=" flexBet">
-                                                    <div className=" content-card-container flexBet">
-                                                        <div className="content-card-container-airline">
-                                                            <div className="flexXY">
-                                                                <div>
-                                                                    <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} alt="Logo" />
-                                                                </div>
-                                                                <div className="content-card-container-airline-name">
-                                                                    <h5>{getAirlineInfo(result.flightID.slice(0, 2)).airlineName}</h5>
-                                                                    <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
-                                                                </div>
+                                <div className="main-content-card">
+                                    {flightResultdata.length > 0 ? (flightResultdata.map((result, index) => (result.ticketPrice < maxrange && result.ticketPrice > minrange && (
+                                        <div key={index} className="content-card">
+                                            <h6>Enjoy free meal</h6>
+                                            <div className=" flexBet">
+                                                <div className=" content-card-container flexBet">
+                                                    <div className="content-card-container-airline">
+                                                        <div className="flexXY">
+                                                            <div>
+                                                                <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} alt="Logo" />
                                                             </div>
-                                                            <h4 onClick={() => handleFlightDetails(index)}>{flightDetails && selectedCardIndex === index ? 'Hide details' : 'Flight details'}</h4>
-                                                        </div>
-                                                        <div className="content-card-links flexBet">
-                                                            <h3>{result.departureTime}</h3>
-                                                            <div className="content-card-duration flexXY">
-                                                                <h4>{result.duration}h {result.duration}m</h4>
-                                                                <div id="line">
-                                                                    <div className="line-circle-container flexBet">
-                                                                        <div className="line-circle"></div>
-                                                                        <div className="line-circle"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <h4>{result.stops === 0 && 'Non stop'}</h4>
-                                                                <h4>{result.stops === 1 && '1 stop'}</h4>
-                                                                <h4>{result.stops === 2 && '2 stop'}</h4>
+                                                            <div className="content-card-container-airline-name">
+                                                                <h5>{getAirlineInfo(result.flightID.slice(0, 2)).airlineName}</h5>
+                                                                <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
                                                             </div>
-                                                            <h3>{result.arrivalTime}</h3>
                                                         </div>
+                                                        <h4 onClick={() => handleFlightDetails(index)}>{flightDetails && selectedCardIndex === index ? 'Hide details' : 'Flight details'}</h4>
                                                     </div>
-                                                    <div className="content-card-price-book-container flexBet">
-                                                        <h3>₹{result.ticketPrice}</h3>
-                                                        <h2 onClick={() => { navigateToFlightInfo(result._id, result.flightID, result.source, result.destination) }} className="content-card-book-btn">Book</h2>
+                                                    <div className="content-card-links flexBet">
+                                                        <h3>{result.departureTime}</h3>
+                                                        <div className="content-card-duration flexXY">
+                                                            <h4>{result.duration}h {result.duration}m</h4>
+                                                            <div id="line">
+                                                                <div className="line-circle-container flexBet">
+                                                                    <div className="line-circle"></div>
+                                                                    <div className="line-circle"></div>
+                                                                </div>
+                                                            </div>
+                                                            <h4>{result.stops === 0 && 'Non stop'}</h4>
+                                                            <h4>{result.stops === 1 && '1 stop'}</h4>
+                                                            <h4>{result.stops === 2 && '2 stop'}</h4>
+                                                        </div>
+                                                        <h3>{result.arrivalTime}</h3>
                                                     </div>
                                                 </div>
-                                                {flightDetails && selectedCardIndex === index &&
-                                                    <div className="content-card-flight-details">
-                                                        <div className="content-card-flight-details-header flexBet">
-                                                            <div className="content-card-header-head1 flexXY">
-                                                                <h4>{result.source} <HiOutlineArrowNarrowRight /> {result.destination}</h4>
-                                                                <p>{formatdatefrom}</p>
+                                                <div className="content-card-price-book-container flexBet">
+                                                    <h3>₹{result.ticketPrice}</h3>
+                                                    <h2 onClick={() => { navigateToFlightInfo(result._id, result.flightID, result.source, result.destination) }} className="content-card-book-btn">Book</h2>
+                                                </div>
+                                            </div>
+                                            {flightDetails && selectedCardIndex === index &&
+                                                <div className="content-card-flight-details">
+                                                    <div className="content-card-flight-details-header flexBet">
+                                                        <div className="content-card-header-head1 flexXY">
+                                                            <h4>{result.source} <HiOutlineArrowNarrowRight /> {result.destination}</h4>
+                                                            <p>{formatdatefrom}</p>
+                                                        </div>
+                                                        <div className="content-card-header-head2 flexXY">
+                                                            <h6>Partially Refundable</h6>
+                                                            <p>Know more</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="content-card-container-details-airline flexY g20">
+                                                        <div className="content-card-container-details-sec1 flexBet">
+                                                            <div>
+                                                                <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} />
                                                             </div>
-                                                            <div className="content-card-header-head2 flexXY">
-                                                                <h6>Partially Refundable</h6>
-                                                                <p>Know more</p>
+                                                            <div className="content-card-container-airline-name">
+                                                                <h5>{getAirlineInfo(result.flightID.slice(0, 2)).airlineName}</h5>
+                                                            </div>
+                                                            <div className="flexC">
+                                                                <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
+                                                                <h5>Economy</h5>
                                                             </div>
                                                         </div>
-                                                        <div className="content-card-container-details-airline flexY g20">
-                                                            <div className="content-card-container-details-sec1 flexBet">
-                                                                <div>
-                                                                    <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} />
-                                                                </div>
-                                                                <div className="content-card-container-airline-name">
-                                                                    <h5>{getAirlineInfo(result.flightID.slice(0, 2)).airlineName}</h5>
-                                                                </div>
-                                                                <div className="flexC">
-                                                                    <h6>{result.flightID.slice(0, 2)}-{result.flightID.slice(13, 16)}</h6>
-                                                                    <h5>Economy</h5>
-                                                                </div>
+                                                        <div className="content-card-expanded flexBet">
+                                                            <div className="content-card-expanded-sec1">
+                                                                <div className="flexY g5"><h3>{result.source}</h3><h4>{result.departureTime}</h4></div>
+                                                                <p>{formatdatefrom}</p>
                                                             </div>
-                                                            <div className="content-card-expanded flexBet">
-                                                                <div className="content-card-expanded-sec1">
-                                                                    <div className="flexY g5"><h3>{result.source}</h3><h4>{result.departureTime}</h4></div>
-                                                                    <p>{formatdatefrom}</p>
-                                                                </div>
-                                                                <div className="content-card-expanded-sec2">
-                                                                    {clockIcon}
-                                                                    <p>{result.duration}h {result.duration}m</p>
-                                                                </div>
-                                                                <div className="content-card-expanded-sec3">
-                                                                    <div className="flexY g5"><h3>{result.destination}</h3><h4>{result.arrivalTime}</h4></div>
-                                                                    <p>{formatdatefrom}</p>
-                                                                </div>
-                                                                <div className="content-card-expanded-sec4">
-                                                                    <p>Check-in baggage</p>
-                                                                    <p>Cabin baggage</p>
-                                                                </div>
-                                                                <div className="content-card-expanded-sec5">
-                                                                    <p>15 kg / adult</p>
-                                                                    <p>7 kg / adult</p>
-                                                                </div>
+                                                            <div className="content-card-expanded-sec2">
+                                                                {clockIcon}
+                                                                <p>{result.duration}h {result.duration}m</p>
+                                                            </div>
+                                                            <div className="content-card-expanded-sec3">
+                                                                <div className="flexY g5"><h3>{result.destination}</h3><h4>{result.arrivalTime}</h4></div>
+                                                                <p>{formatdatefrom}</p>
+                                                            </div>
+                                                            <div className="content-card-expanded-sec4">
+                                                                <p>Check-in baggage</p>
+                                                                <p>Cabin baggage</p>
+                                                            </div>
+                                                            <div className="content-card-expanded-sec5">
+                                                                <p>15 kg / adult</p>
+                                                                <p>7 kg / adult</p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                }
-                                            </div>
-                                        )))) :
-                                            <div className="notrainsfound flexXY">
-                                                <div>
+                                                </div>
+                                            }
+                                        </div>
+                                    )))) :
+                                        <div className="notrainsfound flexXY">
+                                            <div>
                                                 <div className="flexXY">{notrainsfound}</div>
                                                 <h3>We couldn't find flights to match your filters</h3>
                                                 <p>Please reset your filters to see flights</p>
-                                                </div>
-                                            </div>}
-                                    </div>
+                                            </div>
+                                        </div>}
+                                </div>
                             </div>
+                            {/* ---------------Main Content------------- */}
                         </div>
                     </div>
-
                 </div>}
             {!load && <div className='loader'></div>}
         </>

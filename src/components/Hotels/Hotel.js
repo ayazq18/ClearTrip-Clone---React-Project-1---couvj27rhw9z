@@ -23,9 +23,9 @@ export default function Hotel() {
   const [toDate, setToDate] = useState(`${new Date().toISOString().split("T")[0]}`)
   const [selection, setSelection] = useState('1Room, 1 Adult')
 
-  const {infantcount, setinfantCount, childrencount, setChildrenCount, adultcount, setAdultCount, handleIncrease, handleDecrease} = handleselectionCategory()
+  const { childrencount, adultcount, handleIncrease, handleDecrease } = handleselectionCategory()
   const navigate = useNavigate()
-  const {all, setall} = useAuthContext()
+  const { all, setall } = useAuthContext()
 
   const arr = [
     { category: "Adult", age: "(12+ Years)", count: 1 },
@@ -45,6 +45,7 @@ export default function Hotel() {
     setWhereFrom(false);
   };
 
+  // ----------------------------------Carausal buttons------------------------------------
   const handleCarouselButtonClick = (type, direction) => {
     if (type === "offer-corousel") {
       if (direction === "next") {
@@ -64,180 +65,183 @@ export default function Hotel() {
       }
     }
   };
+  // ----------------------------------Carausal buttons------------------------------------
 
-    const handleRoomSelect = ()=>{
-      setRoomSelect(!roomSelect)
-    }
+  const handleRoomSelect = () => {
+    setRoomSelect(!roomSelect)
+  }
 
-    const handleInputSelect = ()=>{
-      setInputSelect(!inputSelect)
-    }
+  const handleInputSelect = () => {
+    setInputSelect(!inputSelect)
+  }
 
-    const handleToInput = (selectedHotel)=>{
-        setInputValue(selectedHotel);
-        setInputSelect(false)
-    }
+  const handleToInput = (selectedHotel) => {
+    setInputValue(selectedHotel);
+    setInputSelect(false)
+  }
 
-    const handleSelection = (selection)=>{
-      setSelection(selection)
-    }
+  const handleSelection = (selection) => {
+    setSelection(selection)
+  }
 
   //   -----------functions-----------------
+
   const fetchHotels = useCallback(async (inputVal) => {
     try {
-        const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputVal}"}`, {
-            method: "GET",
-            headers: {
-                Authorization:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow',
-                projectID: Project_ID,
-                "Content-Type": "application/json",
-            }
-        })
-        const result = await response.json()
-        const arr = result.data.hotels.map(item=>{return item.location})
-        setInputResult(new Set(arr))
+      const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputVal}"}`, {
+        method: "GET",
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow',
+          projectID: Project_ID,
+          "Content-Type": "application/json",
+        }
+      })
+      const result = await response.json()
+      const arr = result.data.hotels.map(item => { return item.location })
+      setInputResult(new Set(arr))
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-  },[inputValue])
-
-    useEffect(()=>{
-      fetchHotels("")
-    }, [])
+  }, [inputValue])
 
   useEffect(() => {
-      // Offers
-       const fetchOffer = async ()=>{
-        try{
-        const res = await fetch(`${Base_URL}/offers?filter={"type":"CABS"}`,{
-            method : "GET",
-              headers : {
-                projectID : Project_ID,
-                "Content-Type": "application/json",
-              }
-        })
-            const result = await res.json()
-            setOffers(result.data.offers)
-        }catch(error){
-            return error
-        }
-      }
-      fetchOffer()
-    }, []);
+    fetchHotels("")
+  }, [])
 
-  const handleSearchFlight = ()=>{
-      setall(prev => ({ ...prev, inputValue:inputValue }));
-      (inputValue !== '' && fromDate !== '' && toDate !== '') && navigate(`/hotels/results?location=${inputValue}&dateFrom=${fromDate}&dateTo=${toDate}`)
+  useEffect(() => {
+    const fetchOffer = async () => {
+      try {
+        const res = await fetch(`${Base_URL}/offers?filter={"type":"CABS"}`, {
+          method: "GET",
+          headers: {
+            projectID: Project_ID,
+            "Content-Type": "application/json",
+          }
+        })
+        const result = await res.json()
+        setOffers(result.data.offers)
+      } catch (error) {
+        return error
+      }
+    }
+    fetchOffer()
+  }, []);
+
+  const handleSearchFlight = () => {
+    setall(prev => ({ ...prev, inputValue: inputValue }));
+    (inputValue !== '' && fromDate !== '' && toDate !== '') && navigate(`/hotels/results?location=${inputValue}&dateFrom=${fromDate}&dateTo=${toDate}`)
   }
-  
+
 
   return (
     <div className="hotel-home">
       <div>
-      <div className="home-main">
-        <h1>Search Hotels</h1>
-        <h2>Enjoy hassle free bookings with Cleartrip</h2>
-        <form className="search-card-hotel">
-        <div className="hotelSearch-sec">
-          <div className="search-card-hotel-input-div">
-            <input
-                id="inputHotel"
-                type="text"
-                placeholder="Enter locality, landmark, city or hotel"
-                value={inputValue}
-                onChange={(e)=>{setInputValue(e.target.value); fetchHotels(e.target.value)}}
-                onClick={()=>handleInputSelect()}
-            />
-            <div className="location-icon">{location}</div>
-          </div>
-        {inputSelect &&
-          <div className="hotelInputExpand">
-            <p>Popular destinations</p>
-            {Array.from(inputResult).map(item=>(
-              <div className="hotelInputExpand-content flexY">
-                <h2>{location}</h2>
-                <h1 onClick={()=>handleToInput(item)}>{item}</h1>
+        <div className="home-main">
+          <h1>Search Hotels</h1>
+          <h2>Enjoy hassle free bookings with Cleartrip</h2>
+          <form className="search-card-hotel">
+            <div className="hotelSearch-sec">
+              <div className="search-card-hotel-input-div">
+                <input
+                  id="inputHotel"
+                  type="text"
+                  placeholder="Enter locality, landmark, city or hotel"
+                  value={inputValue}
+                  onChange={(e) => { setInputValue(e.target.value); fetchHotels(e.target.value) }}
+                  onClick={() => handleInputSelect()}
+                />
+                <div className="location-icon">{location}</div>
               </div>
-            ))}
-          </div>
-        }
-        <div className="input-hotel-date flexXY">
-            <div className="flexXY">
-                <input id="hotelDate1" value={fromDate} onChange={(e)=>setFromDate(e.target.value)} type="date" min={new Date().toISOString().split('T')[0]}/>
-                <input id="hotelDate2" value={toDate} onChange={(e)=>setToDate(e.target.value)} type="date" min={new Date().toISOString().split('T')[0]}/>
-            </div>
-            <div className="hotelSelectCateg flex" onClick={()=>handleRoomSelect()}>
-                    <BiUser/>
-                    <h4>
-                        {selection || adultcount || `1 Room, ${adultcount} Adults `} &nbsp;
-                        {childrencount > 0 && (<>{childrencount} <span>Childrens</span></>)}
-                    </h4>
-                    <h4></h4>
-               {roomSelect && <div className="hotelSelect-expand1 flexX">
-                    <h5>Quick select</h5>
-                    <li onClick={()=>handleSelection(`1 Room, 1 Adult`)}>1 Room, 1 Adult</li>
-                    <li onClick={()=>handleSelection('1 Room, 2 Adult')}>1 Room, 2 Adult</li>
-                    <li onClick={()=>handleSelection('2 Room, 4 Adult')}>2 Room, 4 Adult</li>
-                    <p onClick={() =>handleSelectCategory()}>Add more rooms and travellers</p>
+              {inputSelect &&
+                <div className="hotelInputExpand">
+                  <p>Popular destinations</p>
+                  {Array.from(inputResult).map((item, index) => (
+                    <div key={index} className="hotelInputExpand-content flexY">
+                      <h2>{location}</h2>
+                      <h1 onClick={() => handleToInput(item)}>{item}</h1>
                     </div>
-                }
-            {selectVisible && (
-                <div className="hotelSelectCateg-Expand">
-                    <div className="hotelSelectCateg-Expand-header flexBet">
-                        <h5>Quick select</h5>
-                        <p onClick={()=>setSelectVisible(!selectVisible)}>Show options</p>
-                    </div>
-                    {arr.map((items, index) => (
-                        <div className="hotelSelectCateg-Expand-container flexBet">
-                            <div>
-                                <h1>{items.category}</h1>
-                                <h5>{items.age}</h5>
-                            </div>
-                            <div className="hotelSelectCateg-count flexY">
-                                <CgMathMinus
-                                    className={`${(items.category === "Adult" && adultcount > 1) ||
-                                            (items.category === "Children" && childrencount > 0)
-                                            ? "hotelChangeToPosIcon"
-                                            : "hotelCountNegIcon"
-                                        }`}
-                                    onClick={() => handleDecrease(items.category)}
-                                />
-                                <h1>
-                                    {items.category === "Adult"
-                                        ? adultcount
-                                        : childrencount}
-                                </h1>
-                                <CgMathPlus
-                                    className="hotelChangeToPosIcon"
-                                    onClick={() => handleIncrease(items.category)}
-                                />
-                            </div>
-                        </div>
-                    ))}
-                    <div className="hotelAddAnother flexY" onClick={() => handleSelectCategory()}>
-                    <CgMathPlus/>
-                    <span>Add another room</span>
-                    </div>
+                  ))}
                 </div>
-             )}
-            </div>
-        </div>
-            <div className="hotelSearchDiv">
-                <button id="hotelSearchBtn" onClick={()=>handleSearchFlight()}>
-                    Search Hotels
+              }
+              <div className="input-hotel-date flexXY">
+                <div className="flexXY">
+                  <input id="hotelDate1" value={fromDate} onChange={(e) => setFromDate(e.target.value)} type="date" min={new Date().toISOString().split('T')[0]} />
+                  <input id="hotelDate2" value={toDate} onChange={(e) => setToDate(e.target.value)} type="date" min={new Date().toISOString().split('T')[0]} />
+                </div>
+                <div className="hotelSelectCateg flex" onClick={() => handleRoomSelect()}>
+                  <BiUser />
+                  <h4>
+                    {selection || adultcount || `1 Room, ${adultcount} Adults `} &nbsp;
+                    {childrencount > 0 && (<>{childrencount} <span>Childrens</span></>)}
+                  </h4>
+                  <h4></h4>
+                  {roomSelect && <div className="hotelSelect-expand1 flexX">
+                    <h5>Quick select</h5>
+                    <li onClick={() => handleSelection(`1 Room, 1 Adult`)}>1 Room, 1 Adult</li>
+                    <li onClick={() => handleSelection('1 Room, 2 Adult')}>1 Room, 2 Adult</li>
+                    <li onClick={() => handleSelection('2 Room, 4 Adult')}>2 Room, 4 Adult</li>
+                    <p onClick={() => handleSelectCategory()}>Add more rooms and travellers</p>
+                  </div>
+                  }
+                  {selectVisible && (
+                    <div className="hotelSelectCateg-Expand">
+                      <div className="hotelSelectCateg-Expand-header flexBet">
+                        <h5>Quick select</h5>
+                        <p onClick={() => setSelectVisible(!selectVisible)}>Show options</p>
+                      </div>
+                      {arr.map((items, index) => (
+                        <div key={index} className="hotelSelectCateg-Expand-container flexBet">
+                          <div>
+                            <h1>{items.category}</h1>
+                            <h5>{items.age}</h5>
+                          </div>
+                          <div className="hotelSelectCateg-count flexY">
+                            <CgMathMinus
+                              className={`${(items.category === "Adult" && adultcount > 1) ||
+                                (items.category === "Children" && childrencount > 0)
+                                ? "hotelChangeToPosIcon"
+                                : "hotelCountNegIcon"
+                                }`}
+                              onClick={() => handleDecrease(items.category)}
+                            />
+                            <h1>
+                              {items.category === "Adult"
+                                ? adultcount
+                                : childrencount}
+                            </h1>
+                            <CgMathPlus
+                              className="hotelChangeToPosIcon"
+                              onClick={() => handleIncrease(items.category)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                      <div className="hotelAddAnother flexY" onClick={() => handleSelectCategory()}>
+                        <CgMathPlus />
+                        <span>Add another room</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="hotelSearchDiv">
+                <button id="hotelSearchBtn" onClick={() => handleSearchFlight()}>
+                  Search Hotels
                 </button>
+              </div>
             </div>
-            </div>
-        </form>
+          </form>
+        </div>
+        <img alt="cancel for no reason banner" loading="lazy" width="610" height="80" decoding="async" data-nimg="1" src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpg" style={{ color: "transparent" }} />
       </div>
-      <img alt="cancel for no reason banner" loading="lazy" width="610" height="80" decoding="async" data-nimg="1" src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpg" style={{color: "transparent"}}/>
-      </div>
-       <div className="offer-sec ">
+      <div className="offer-sec ">
         <ImgCorousel />
         <div className="flexBet">
-        <h1 id="more">More offers</h1>
-        <h1 style={{color:'blue'}} onClick={()=>navigate('/')} id="more">View all</h1>
+          <h1 id="more">More offers</h1>
+          <h1 style={{ color: 'blue' }} onClick={() => navigate('/')} id="more">View all</h1>
         </div>
+
+        {/* ----------------------------------Offer-------------------------------- */}
         {offers.length && (
           <div id="offer-corousel" key={offers._id}>
             <div className="corousel-content">
@@ -259,9 +263,8 @@ export default function Hotel() {
                   <div key={offer._id}>
                     <div
                       onClick={() => setCounter(index)}
-                      className={`dot ${
-                        offer._id === imgCounter ? "active-class" : ""
-                      }`}
+                      className={`dot ${offer._id === imgCounter ? "active-class" : ""
+                        }`}
                     ></div>
                   </div>
                 ))}
@@ -277,7 +280,9 @@ export default function Hotel() {
             </div>
           </div>
         )}
-        </div>
+        {/* ----------------------------------Offer-------------------------------- */}
+
+      </div>
     </div>
   );
 }
