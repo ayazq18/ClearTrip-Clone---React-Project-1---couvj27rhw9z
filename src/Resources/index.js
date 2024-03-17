@@ -4,14 +4,14 @@ import React, { createContext, useContext, useState } from 'react';
 import React, { useEffect, useMemo, useState } from 'react'
 import { Project_ID } from '../Constants';
 
-{/* <li>
-<NavLink to={token && "/mytrips"} onClick={()=>!token && setShowSignUp(!showSignup)}>
-<div className="flexY g10">
-    <div>{mytrips}</div>
-    <h2 className="aside-links">My trips</h2>
-    </div>
-</NavLink>
-</li> */}
+//  <li>
+// <NavLink to={token && "/mytrips"} onClick={()=>!token && setShowSignUp(!showSignup)}>
+// <div className="flexY g10">
+//     <div>{mytrips}</div>
+//     <h2 className="aside-links">My trips</h2>
+//     </div>
+// </NavLink>
+// </li> 
 // export default function MyTrips() {
 //     const [ data, setdata] = useState([]);
 //     const [toggle, settoggle] = useState(false)

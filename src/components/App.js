@@ -12,6 +12,7 @@ import PaymentBooking from "./Home/PaymentBooking.js";
 import HotelBooking from "./Hotels/HotelBooking.js";
 import HotelPayment from "./Hotels/HotelPayment.js";
 import ComingSoon from "./ComingSoon/ComingSoon.js";
+import MyTrips from "./Trips/MyTrips.js";
 
 function App() {
   return <div className="app">
@@ -22,6 +23,7 @@ function App() {
         <Route index element={<Flight/>}/>
         <Route path="/flights" element={<Flight/>}/>
         <Route  path="/hotel" element={<Hotel/>}/>
+        <Route  path="/myTrips" element={<MyTrips/>}/>
       </Route>
       <Route path="/flights/:results" element={<FlightTicket/>}/>
       <Route path="/flights/results/:Info" element={<FlightInfo/>}/>

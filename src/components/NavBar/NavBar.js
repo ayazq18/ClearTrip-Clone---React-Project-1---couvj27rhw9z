@@ -52,6 +52,14 @@ export default function NavBar() {
                   </div>
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/myTrips">
+              <div className="flexY g10">
+                  <div></div>
+                  <h2 className="aside-links">My Trips</h2>
+                  </div>
+              </NavLink>
+            </li>
           </ul>
           <Outlet />
         </div>
