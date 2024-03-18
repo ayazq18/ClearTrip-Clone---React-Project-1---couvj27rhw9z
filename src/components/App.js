@@ -22,8 +22,8 @@ function App() {
       <Route path="/" element={<NavBar/>}>
         <Route index element={<Flight/>}/>
         <Route path="/flights" element={<Flight/>}/>
-        <Route  path="/hotel" element={<Hotel/>}/>
-        <Route  path="/myTrips" element={<MyTrips/>}/>
+        <Route path="/hotel" element={<Hotel/>}/>
+        <Route path="/myTrips" element={<MyTrips/>}/>
       </Route>
       <Route path="/flights/:results" element={<FlightTicket/>}/>
       <Route path="/flights/results/:Info" element={<FlightInfo/>}/>

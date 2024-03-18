@@ -191,7 +191,7 @@ export default function HotelBooking() {
                                         </div>
                                         <p>1 night</p>
                                         <div>
-                                            <p>Check-in</p>
+                                            <p>Check-out</p>
                                             <h2>{dateto}&nbsp;{monthto}</h2>
                                             <p>{dayto}, {timeto}</p>
                                         </div>
