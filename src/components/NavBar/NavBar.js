@@ -53,7 +53,7 @@ export default function NavBar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/myTrips">
+              <NavLink to={token && "/myTrips"}>
               <div className="flexY g10">
                   <div></div>
                   <h2 className="aside-links">My Trips</h2>
