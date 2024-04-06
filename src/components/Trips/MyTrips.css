@@ -5,7 +5,7 @@
     text-align: center;
 }
 .trips-button{
-    background-color: orangered;
+    background-color: gray;
     color: #ffff;
     margin-top: 10px;
     padding: 10px 20px;
@@ -14,7 +14,7 @@
 }
 
 .activeBtn{
-    background-color: black;
+    background-color: orangered;
     color: #ffff;
     margin-top: 10px;
     padding: 10px 20px;

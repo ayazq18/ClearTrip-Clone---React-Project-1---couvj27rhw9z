@@ -103,8 +103,8 @@ useEffect(()=>{
           }
           <div className='hotelPayment-Upi flex'>
             <div className='hotelPayment-Upi-options'>
-              <div className={`hotelPayment-Upi-option1 flexBet ${popp['UPI'] ? 'payment-active' : ''}`} onClick={() => {pop('UPI')}}><h4>UPI</h4>{popp['UPI'] && <IoIosArrowForward />}</div>
-              <div className={`hotelPayment-Upi-option2 flexBet ${popp['DEBIT'] ? 'payment-active' : ''}`} onClick={() =>{ pop('DEBIT')}}><h4>Debit/Credit card</h4>{popp['DEBIT'] && <IoIosArrowForward />}</div>
+              <div className={`hotelPayment-Upi-option1 c flexBet ${popp['UPI'] ? 'payment-active' : ''}`} onClick={() => {pop('UPI')}}><h4>UPI</h4>{popp['UPI'] && <IoIosArrowForward />}</div>
+              <div className={`hotelPayment-Upi-option2 c flexBet ${popp['DEBIT'] ? 'payment-active' : ''}`} onClick={() =>{ pop('DEBIT')}}><h4>Debit/Credit card</h4>{popp['DEBIT'] && <IoIosArrowForward />}</div>
             </div>
             {popp['DEBIT'] && <div className='hotelPayment-debit-option1-form'>
               <div className='hotelCard'><h3>Enter Card details</h3><div className='flexXY'></div></div>

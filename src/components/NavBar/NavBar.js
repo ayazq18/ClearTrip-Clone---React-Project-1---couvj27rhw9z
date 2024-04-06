@@ -24,7 +24,7 @@ export default function NavBar() {
     <div id="navBar-home">
        <div className="signup">{!showSignup && (<Signup token={token} setToken={setToken} showSignup = {showSignup} setShowSignUp = {setShowSignUp}/>)}</div>
       <div className="navheader-container">
-        <div id="navheader">
+        <div id="navheader" className="c">
           <div onClick={()=>navigate('/')}>
             {logo}
           </div>

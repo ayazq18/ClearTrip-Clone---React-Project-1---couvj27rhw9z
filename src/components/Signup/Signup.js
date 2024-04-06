@@ -16,6 +16,7 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if(name && email && password){
     try {
       const user = {
         name,
@@ -45,6 +46,9 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
     } catch (error) {
       alert(error);
     }
+  }else{
+    alert("Enter correct details")
+  }
   };
 
   const handleLogin = async (e) => {
@@ -125,7 +129,7 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
             <div className=" login-form-btn flexXY">
               <button>Signup</button>
             </div>
-            <div className="flexXY"><p>If you are an existing user please</p>&nbsp; <p onClick={() => handleLoginSignUp()} style={{ color: 'blue' }}>Log in</p></div>
+            <div className="flexXY"><p>If you are an existing user please</p>&nbsp; <p onClick={() => handleLoginSignUp()} style={{ color: 'blue', cursor:'pointer' }}>Log in</p></div>
           </form>) :
             (<form
               className="login-form flexXY"
@@ -146,7 +150,7 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
               <div className=" login-form-btn flexXY">
                 <button>Login</button>
               </div>
-              <div className="flexXY"><p>If you are not an existing user please</p>&nbsp; <p onClick={() => handleToSignUp()} style={{ color: 'blue' }}>SignUp</p></div>
+              <div className="flexXY"><p>If you are not an existing user please</p>&nbsp; <p onClick={() => handleToSignUp()} style={{ color: 'blue', cursor:'pointer'  }}>SignUp</p></div>
             </form>
             )}
           <div className="footer-section flexc">

@@ -210,7 +210,7 @@ export default function HotelBooking() {
                             <h3>{hotelcard.rooms[0].roomType}</h3>
                             <div className='flexY g20'>
                                 <img src={hotelcard.images[1]} />
-                                <div><p>Room only</p><p style={{ color: 'rgba(0, 0, 255, 0.732)' }} onClick={() => pop('moreDetailsAboutRoom')}>See more details</p></div>
+                                <div><p>Room only</p><p style={{ color: 'rgba(0, 0, 255, 0.732)', cursor:'pointer'}} onClick={() => pop('moreDetailsAboutRoom')}>See more details</p></div>
                                 {popp['moreDetailsAboutRoom'] && <div className='moreDetailsAboutRoom ' style={{ boxShadow: 'rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px' }}>
                                     <div className='hotelinfo-left-card-sec3 flexc g20'>
                                         <CgClose onClick={() => pop('moreDetailsAboutRoom')} style={{ fontSize: '25px', backgroundColor: 'black', color: 'white', borderRadius: '50%', padding: '3px' }} />
@@ -233,11 +233,11 @@ export default function HotelBooking() {
                                 <div className='flightinfo-3-logo flexja'>18</div>
                                 <p>{hotelcard.childAndExtraBedPolicy.extraBedProvidedForChild === true ? 'Guests below 18 years of age allowed' : 'Guests below 18 years of age not allowed'}</p>
                             </div>
-                            <p style={{ color: 'rgba(0, 0, 255, 0.732)', paddingTop: '10px' }} onClick={() => pop('seemore')}>See more</p>
+                            <p style={{ color: 'rgba(0, 0, 255, 0.732)', paddingTop: '10px', cursor:"pointer" }} onClick={() => pop('seemore')}>See more</p>
                             {popp['seemore'] && <div className='seemore ' style={{ borderRadius: '8px', boxShadow: 'rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px' }}>
                                 <div className='hotelinfo-left-card-sec3 flexc g20'>
                                     <CgClose onClick={() => pop('seemore')} style={{ fontSize: '25px', backgroundColor: 'black', color: 'white', borderRadius: '50%', padding: '3px' }} />
-                                    <h3>Booking policy</h3>
+                                    <h3>Guests below 18 years of age not allowed</h3>
                                 </div>
                             </div>}
                         </div>
@@ -259,7 +259,7 @@ export default function HotelBooking() {
                             </div>
                             {errorcontact && <p className='errorcontact'>fill the form correctly</p>}
                             <div className='hotelInfo-buttondiv flex'>
-                                <button onClick={() => { gotopayment(); }}>Continue to Payment</button>
+                                <button className='c' onClick={() => { gotopayment(); }}>Continue to Payment</button>
                             </div>
                         </div>
 

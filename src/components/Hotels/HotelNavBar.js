@@ -255,7 +255,7 @@ const HotelNavBar = ({ lowhigh, setlowhigh, minrange, setminrange, maxrange, set
                 {/* ----------------------------------Low/Hight Rating------------------------------------- */}
                 <div className='hotelFilter-container flexBet'>
                     <div className={`hotelFilter-sec1 ${pop["hotelprice"] ? 'searchActive' : ''} `}>
-                        <div onClick={() => popp("hotelprice")} className='sortByPrice flexXY'><div>Sort by: Price: {lowhigh === 'hightolow' ? 'High to Low' : lowhigh === 'lowtohigh' ? 'Low to high' : 'High to Low'}</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
+                        <div onClick={() => popp("hotelprice")} className='sortByPrice c flexXY'><div>Sort by: Price: {lowhigh === 'hightolow' ? 'High to Low' : lowhigh === 'lowtohigh' ? 'Low to high' : 'High to Low'}</div><div className={`${pop['hotelprice'] && 'rotate'}`}>{dropDown}</div></div>
                         {pop["hotelprice"] &&
                             <div className={`hotelFilter-sec1-expand ${pop["hotelprice"] ? 'popup' : ''}`}>
                                 <h2>Sort hotels by</h2>
@@ -276,7 +276,7 @@ const HotelNavBar = ({ lowhigh, setlowhigh, minrange, setminrange, maxrange, set
                     {/* ----------------------------------Low/Hight Rating------------------------------------- */}
 
                     {/* ----------------------------------Guest Rating------------------------------------- */}
-                    <div className={`hotelFilter-sec3 ${pop["guestrating"] ? 'searchActive' : ''} `}>
+                    <div className={`hotelFilter-sec3 c ${pop["guestrating"] ? 'searchActive' : ''} `}>
                         <div className='sortByGuest flexXY' onClick={() => popp("guestrating")}><div>{guestrating}</div><div>Guests Rating</div><div className={`${pop['guestrating'] && 'rotate'}`}>{dropDown}</div></div>
                         {pop["guestrating"] &&
                             <div className={`hotelFilter-sec3-expand ${pop["guestrating"] ? 'popup' : ''}`}>
@@ -306,7 +306,7 @@ const HotelNavBar = ({ lowhigh, setlowhigh, minrange, setminrange, maxrange, set
                     {/* ----------------------------------Guest Rating------------------------------------- */}
 
                     {/* ----------------------------------Price Rating------------------------------------- */}
-                    <div className={`hotelFilter-sec4 ${pop["price"] ? 'searchActive' : ''} `}>
+                    <div className={`hotelFilter-sec4 c ${pop["price"] ? 'searchActive' : ''} `}>
                         <div className='sortByPrice flexXY' onClick={() => popp("price")}><div>{deals}</div><div>Price</div><div className={`${pop['price'] && 'rotate'}`}>{dropDown}</div></div>
                         {pop["price"] &&
                             <div className={`hotelFilter-sec4-expand ${pop["price"] ? 'popup' : ''}`}>

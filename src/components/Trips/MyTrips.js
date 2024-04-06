@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Project_ID, getAirlineInfo } from '../Constants';
-import { clockIcon, ratingCircle, ratingOwl } from '../../Resources/Icons';
+import { clockIcon, notrainsfound, ratingCircle, ratingOwl } from '../../Resources/Icons';
 import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import './MyTrips.css'
 export default function MyTrips() {
@@ -37,7 +37,7 @@ export default function MyTrips() {
         senddata()
     }, [])
     return (
-        <div style={{ width: '70vw' }}>
+        <div style={{ width: '60vw' }}>
             <h1 className='trips-heading'>Booking history</h1>
             <div className='trips-filter-btn'>
                 <button className={toggle ? 'activeBtn' : 'trips-button'} onClick={() => settoggle(true)}>Flight</button> &nbsp;&nbsp;
@@ -45,8 +45,8 @@ export default function MyTrips() {
             </div>
 
             {/* --------------------Flight section------------------------ */}
-            {tripdata && toggle && tripdata.map((item, index) => item.booking_type === 'flight' && (
-                <div className="trip-card-flight-details">
+            {toggle && tripdata.length > 0 && tripdata.map((item, index) => item.booking_type === 'flight' && (
+                <div key={index} className="trip-card-flight-details">
                     <div className="trip-card-flight-details-header flexBet">
                         <div className="trip-card-header-head1 flexXY">
                             <h4>{item.flight.source} <HiOutlineArrowNarrowRight /> {item.flight.destination}</h4>
@@ -93,39 +93,40 @@ export default function MyTrips() {
                         </div>
                     </div>
                 </div>
-            ))}
+            ))
+            }
             {/* --------------------Flight section------------------------ */}
 
             {/* --------------------Hotel section------------------------ */}
             <div className='hotel-trip flex'>
-            {tripdata && !toggle && tripdata.map((item, index) => item.booking_type === 'hotel' && (
-            <div className='hotelinfo-left-card'>
-                <div className='hotelinfo-left-card-sec1 flexBet'>
-                    <div className='flexc g20'>
-                        {/* <p>{hotelcard.amenities.length}-star hotel</p> */}
-                        <h1>{item.hotel.name} {item.hotel.location}</h1>
-                        <div className='flexY'><div>{ratingOwl}</div> &nbsp; <div>{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}</div></div>
-                    <div className=''>Status : {item.status}</div>
-                    </div>
-                </div>
-                <div className='hotelinfo-left-card-sec2 '>
-                    <div className='flex'>
-                        <div className='hotelinfo-left-card-sec2-travell flexBet'>
-                            <div>
-                                <p>Check-in</p>
-                                <h2>{formatDate(item.start_date)}</h2>
+                {tripdata && !toggle && tripdata.map((item, index) => item.booking_type === 'hotel' && (
+                    <div className='hotelinfo-left-card'>
+                        <div className='hotelinfo-left-card-sec1 flexBet'>
+                            <div className='flexc g20'>
+                                {/* <p>{hotelcard.amenities.length}-star hotel</p> */}
+                                <h1>{item.hotel.name} {item.hotel.location}</h1>
+                                <div className='flexY'><div>{ratingOwl}</div> &nbsp; <div>{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}{ratingCircle}</div></div>
+                                <div className=''>Status : {item.status}</div>
                             </div>
-                            <p>1 night</p>
-                            <div>
-                                <p>Check-out</p>
-                                <h2>{formatDate(item.end_date)}</h2>
+                        </div>
+                        <div className='hotelinfo-left-card-sec2 '>
+                            <div className='flex'>
+                                <div className='hotelinfo-left-card-sec2-travell flexBet'>
+                                    <div>
+                                        <p>Check-in</p>
+                                        <h2>{formatDate(item.start_date)}</h2>
+                                    </div>
+                                    <p>1 night</p>
+                                    <div>
+                                        <p>Check-out</p>
+                                        <h2>{formatDate(item.end_date)}</h2>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                ))}
             </div>
-            ))}
-                </div>
             {/* --------------------Hotel section------------------------ */}
 
         </div>
