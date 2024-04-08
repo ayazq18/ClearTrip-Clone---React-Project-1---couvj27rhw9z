@@ -154,7 +154,7 @@
     gap: 26px;
   }
   .homebanner-img{
-    width: 30%;
+    width: 300px;
   }
   /* -------------------Media----------------------- */
   @media only screen and (min-width: 240px) and (max-width: 768px) {
@@ -227,6 +227,10 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
+    }
+
+    .homebanner-list{
+      justify-content: center;
     }
   }
   
