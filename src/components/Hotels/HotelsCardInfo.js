@@ -150,7 +150,7 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                 <div className='flexX'>
                     <div className='hotelResults-navBar-container flexXY'>
                         <div className='hotelResults-navBar flexBet'>
-                            <div id='hotelLogo' onClick={() => navigate('/hotel')}>{logo}</div>
+                            <div id='hotelLogo' className='c' onClick={() => navigate('/hotel')}>{logo}</div>
                             <div className='hotelResults-input flexXY' >
                                 <div className='hotelResults-input-destresult flexY' onClick={() => popUpTab('dest')}>
                                     <div>{hoteLocation}</div>

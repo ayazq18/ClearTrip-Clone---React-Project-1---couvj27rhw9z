@@ -146,7 +146,7 @@ const HotelNavBar = ({ lowhigh, setlowhigh, minrange, setminrange, maxrange, set
         <div className='hotelResults'>
             <div className='hotelResults-navBar-container flexXY'>
                 <div className='hotelResults-navBar flexBet'>
-                    <div onClick={() => navigate('/hotel')}>{logo}</div>
+                    <div className='c' onClick={() => navigate('/hotel')}>{logo}</div>
                     <div className='hotelResults-input flexXY' >
                         <div className='hotelResults-input-destresult flexY' onClick={() => handlePopUpNav('destination')}>
                             <div>{location}</div>
