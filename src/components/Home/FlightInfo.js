@@ -28,6 +28,7 @@ export default function FlightInfo() {
   const [pop, setpop] = useState({});
   const [switcherform, setswitcherform] = useState(false);
   const { flightpaymnentdone, setflightpaymentdone } = useAuthContext()
+  const[userdetail, setuserdetail] = useState(false)
 
   function popp(key) {
     setpop({});
@@ -113,11 +114,14 @@ export default function FlightInfo() {
     }
   }
 
+
   function gotopayment() {
     if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
       senddata();
       setflightpaymentdone(true)
       navigate(`/flights/results/Info/bookingpage?FirstName="${details.dfname}"&Email="${details.demail}"&Amount=${((dataa.ticketPrice * 18) / 100 + dataa.ticketPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
+    }else{
+      setuserdetail(true)
     }
   }
 
@@ -280,6 +284,7 @@ export default function FlightInfo() {
                       }
                     </div>
                   </div>
+                  {userdetail && <p className='flightinfo-userdetails'>Fill the required fields</p>}
                   <div className='flightinfo-buttondiv flex'>
                     <button onClick={() => { setswitcherform(false) }}>back</button>
                     <button onClick={() => { gotopayment(); popp("submitdetails") }}>Submit</button>

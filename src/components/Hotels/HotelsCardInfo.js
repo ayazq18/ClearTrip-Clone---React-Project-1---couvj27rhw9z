@@ -242,14 +242,14 @@ const HotelsCardInfo = ({ inputResult, fromDate, toDate }) => {
                                                         </div>
                                                     </div>
                                                 ))}
-                                                <div className="hotelAddAnother flexY" onClick={() => pop('hotelSearch')}>
+                                                <div className="hotelAddAnother flexY" onClick={() => popp('hotelSearch')}>
                                                     <CgMathPlus />
                                                     <span>Add another room</span>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
-                                    <button onClick={() => handleToSearch()}>Update</button>
+                                    <button className='c' onClick={() => handleToSearch()}>Update</button>
                                 </div>
                             </div>
                         }

@@ -239,14 +239,14 @@ const HotelNavBar = ({ lowhigh, setlowhigh, minrange, setminrange, maxrange, set
                                                 </div>
                                             </div>
                                         ))}
-                                        <div className="hotelAddAnother flexY" onClick={() => pop('hotelSearch')}>
+                                        <div className="hotelAddAnother flexY" onClick={() => popp('hotelSearch')}>
                                             <CgMathPlus />
                                             <span>Add another room</span>
                                         </div>
                                     </div>
                                 )}
                             </div>
-                            <button className='point' onClick={() => handleToSearch()}>Update</button>
+                            <button className='point c' onClick={() => handleToSearch()}>Update</button>
                         </div>
                     </div>
                 }

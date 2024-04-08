@@ -363,7 +363,9 @@ input[type="number"]::-webkit-inner-spin-button{
 .flightInfo .borderbottom{
     border-bottom: 200px;
 }
-
+.flightinfo-userdetails{
+    color: red;
+}
 
 
 

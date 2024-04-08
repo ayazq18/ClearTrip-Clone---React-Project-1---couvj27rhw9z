@@ -21,6 +21,7 @@ export default function HotelBooking() {
     const [hotelcard, sethotelcard] = useState([])
     const [load, setLoad] = useState(false)
     const [popp, setpopp] = useState({})
+    const [userdetail, setuserdetail] = useState(false)
     const [details, setdetails] = useState({ dnumber: "", demail: "", dfname: "", dlname: "", dgender: "", dcountry: "", dstate: "", dbillingAddress: "" })
 
     const pop = (key) => {
@@ -81,31 +82,31 @@ export default function HotelBooking() {
 
     const senddata = async () => {
         try {
-          if (phonenumber && details.demail && details.dfname && details.dlname ) {
-            const response = await (await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/booking`,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
-                  projectID: Project_ID,
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  bookingType: "hotel",
-                  bookingDetails: {
-                    hotelId: hotelId,
-                    startDate: datefrom,
-                    endDate: dateTo
-                  }
-                })
-              }
-            )).json();
-          }
+            if (phonenumber && details.demail && details.dfname && details.dlname) {
+                const response = await (await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/booking`,
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+                            projectID: Project_ID,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            bookingType: "hotel",
+                            bookingDetails: {
+                                hotelId: hotelId,
+                                startDate: datefrom,
+                                endDate: dateTo
+                            }
+                        })
+                    }
+                )).json();
+            }
         }
         catch (error) {
-          alert(error);
+            alert(error);
         }
-      }
+    }
 
     function formatDate(inputDate) {
         const options = { month: 'short', day: 'numeric', weekday: 'short', hour: 'numeric', minute: '2-digit', hour12: true };
@@ -130,10 +131,12 @@ export default function HotelBooking() {
     }
 
     function gotopayment() {
-        if (phonenumber && details.demail && details.dfname && details.dlname) {
+        if (phonenumber.length === 10 && details.demail && details.dfname && details.dlname) {
             setpaymentdone(true)
             navigate(`/hotels/results/hotelcardsinfo/hotelBooking/hotelPayment?FirstName=${details.dfname}&Email=${details.demail}&Amount=${Math.floor((hotelcard.rooms[0].costDetails.baseCost) + (hotelcard.rooms[0].costDetails.taxesAndFees) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100) - ((hotelcard.rooms[0].costDetails.baseCost * 20) / 100)).toString().replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1,')}`);
             senddata()
+        } else {
+            seterrorcontact(true)
         }
     }
 
@@ -210,7 +213,7 @@ export default function HotelBooking() {
                             <h3>{hotelcard.rooms[0].roomType}</h3>
                             <div className='flexY g20'>
                                 <img src={hotelcard.images[1]} />
-                                <div><p>Room only</p><p style={{ color: 'rgba(0, 0, 255, 0.732)', cursor:'pointer'}} onClick={() => pop('moreDetailsAboutRoom')}>See more details</p></div>
+                                <div><p>Room only</p><p style={{ color: 'rgba(0, 0, 255, 0.732)', cursor: 'pointer' }} onClick={() => pop('moreDetailsAboutRoom')}>See more details</p></div>
                                 {popp['moreDetailsAboutRoom'] && <div className='moreDetailsAboutRoom ' style={{ boxShadow: 'rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px' }}>
                                     <div className='hotelinfo-left-card-sec3 flexc g20'>
                                         <CgClose onClick={() => pop('moreDetailsAboutRoom')} style={{ fontSize: '25px', backgroundColor: 'black', color: 'white', borderRadius: '50%', padding: '3px' }} />
@@ -233,7 +236,7 @@ export default function HotelBooking() {
                                 <div className='flightinfo-3-logo flexja'>18</div>
                                 <p>{hotelcard.childAndExtraBedPolicy.extraBedProvidedForChild === true ? 'Guests below 18 years of age allowed' : 'Guests below 18 years of age not allowed'}</p>
                             </div>
-                            <p style={{ color: 'rgba(0, 0, 255, 0.732)', paddingTop: '10px', cursor:"pointer" }} onClick={() => pop('seemore')}>See more</p>
+                            <p style={{ color: 'rgba(0, 0, 255, 0.732)', paddingTop: '10px', cursor: "pointer" }} onClick={() => pop('seemore')}>See more</p>
                             {popp['seemore'] && <div className='seemore ' style={{ borderRadius: '8px', boxShadow: 'rgba(0, 0, 0, 0.6) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px' }}>
                                 <div className='hotelinfo-left-card-sec3 flexc g20'>
                                     <CgClose onClick={() => pop('seemore')} style={{ fontSize: '25px', backgroundColor: 'black', color: 'white', borderRadius: '50%', padding: '3px' }} />
@@ -248,14 +251,14 @@ export default function HotelBooking() {
 
                         <div className='hotelInfo-guestdetails flexj flexc g20'>
                             <div className='hotelInfo-guestdiv flexa g20'>
-                                <input className='hotelInfo-emailInput' type='email' placeholder='Email Address' onClick={() => { pop("emailaddress") }} value={details.demail} onChange={(e) => { travellerinfo("demail", e.target.value) }} />
+                                <input className='hotelInfo-emailInput' type='email' placeholder='Email Address' onClick={() => { pop("emailaddress") }} value={details.demail} onChange={(e) => {seterrorcontact(false);  travellerinfo("demail", e.target.value) }} />
                                 <input type="number" className='hotelInfo-numberInput' onClick={() => { pop("mobile") }} placeholder='Enter mobile number' ref={inputref} value={phonenumber} onChange={(e) => { seterrorcontact(false); setphonenumber(e.target.value); numbererror(e) }} />
 
                             </div>
                             <p>Booking details will be sent to this number and email address</p>
                             <div className='hotelInfo-guestdiv flexa g20'>
-                                <input type='text' className='fname' placeholder='First name' value={details.dfname} onChange={(e) => { travellerinfo("dfname", `${e.target.value}`) }} onClick={() => { pop("fname") }} />
-                                <input type='text' className='lname' placeholder='Last name' value={details.dlname} onChange={(e) => { travellerinfo("dlname", `${e.target.value}`) }} onClick={() => { pop("lname") }} />
+                                <input type='text' className='fname' placeholder='First name' value={details.dfname} onChange={(e) => {seterrorcontact(false);  travellerinfo("dfname", `${e.target.value}`) }} onClick={() => { pop("fname") }} />
+                                <input type='text' className='lname' placeholder='Last name' value={details.dlname} onChange={(e) => {seterrorcontact(false);  travellerinfo("dlname", `${e.target.value}`) }} onClick={() => { pop("lname") }} />
                             </div>
                             {errorcontact && <p className='errorcontact'>fill the form correctly</p>}
                             <div className='hotelInfo-buttondiv flex'>
