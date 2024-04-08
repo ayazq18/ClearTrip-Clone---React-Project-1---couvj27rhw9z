@@ -5,7 +5,8 @@ import { FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import { Base_URL, Project_ID } from "../Constants.js";
 import Form from "../Form/Form.js";
 import { flightbanner } from "../../Resources/Icons.js";
-
+import Footer from '../Footer.js';
+import Homebanner from "./Homebanner.js";
 export default function Home() {
   const [offers, setOffers] = useState([]);
   const [counter, setCounter] = useState(0);
@@ -55,57 +56,60 @@ export default function Home() {
 
 
   return (
-    <div className="home">
-      <div className="home-main">
-        <h1>Search flights</h1>
-        <h2>Enjoy hassle free bookings with Cleartrip</h2>
-        <Form onClick={(e) => handleSearchFlight(e)} />
-       <div className="maxbox "><div>{flightbanner}<span className="flex flex-between statement">Free cancellation or free date change starting from ₹499. T&amp;C apply.</span></div></div>
-      </div>
+    <div className="">
+      <div className="home">
+        <div className="home-main">
+          <h1>Search flights</h1>
+          <h2>Enjoy hassle free bookings with Cleartrip</h2>
+          <Form onClick={(e) => handleSearchFlight(e)} />
+          <div className="maxbox "><div>{flightbanner}<span className="flex flex-between statement">Free cancellation or free date change starting from ₹499. T&amp;C apply.</span></div></div>
+        </div>
 
-      {/* offer section */}
-      <div className="offer-sec ">
-        <ImgCorousel />
-        <h1 id="more">More offers</h1>
-        {offers.length && (
-          <div id="offer-corousel" key={offers._id}>
-            <div className="corousel-content">
-              <h2>{offers[counter].pTx} offers</h2>
-              <h2>{offers[counter].pTl} offers</h2>
-              <a>Know more</a>
+        {/* offer section */}
+        <div className="offer-sec ">
+          <ImgCorousel />
+          <h1 id="more">More offers</h1>
+          {offers.length && (
+            <div id="offer-corousel" key={offers._id}>
+              <div className="corousel-content">
+                <h2>{offers[counter].pTx} offers</h2>
+                <h2>{offers[counter].pTl} offers</h2>
+                <a>Know more</a>
+              </div>
+              <div id="corousel-btn" className="flexXY">
+                <div>
+                  <FaLessThan
+                    onClick={() =>
+                      handleCarouselButtonClick("offer-corousel", "prev")
+                    }
+                    id="prevIcon"
+                  />
+                </div>
+                <div className="btn-dots">
+                  {offers.map((offer, index) => (
+                    <div key={offer._id}>
+                      <div
+                        onClick={() => setCounter(index)}
+                        className={`dot ${offer._id === imgCounter ? "active-class" : ""
+                          }`}
+                      ></div>
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <FaGreaterThan
+                    onClick={() =>
+                      handleCarouselButtonClick("offer-corousel", "next")
+                    }
+                    id="nextIcon"
+                  />
+                </div>
+              </div>
             </div>
-            <div id="corousel-btn" className="flexXY">
-              <div>
-                <FaLessThan
-                  onClick={() =>
-                    handleCarouselButtonClick("offer-corousel", "prev")
-                  }
-                  id="prevIcon"
-                />
-              </div>
-              <div className="btn-dots">
-                {offers.map((offer, index) => (
-                  <div key={offer._id}>
-                    <div
-                      onClick={() => setCounter(index)}
-                      className={`dot ${offer._id === imgCounter ? "active-class" : ""
-                        }`}
-                    ></div>
-                  </div>
-                ))}
-              </div>
-              <div>
-                <FaGreaterThan
-                  onClick={() =>
-                    handleCarouselButtonClick("offer-corousel", "next")
-                  }
-                  id="nextIcon"
-                />
-              </div>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+      <Homebanner/>
     </div>
   );
 }

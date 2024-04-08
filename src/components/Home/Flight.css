@@ -24,7 +24,7 @@
     margin: 10px 0px;
     display: flex;
     justify-content: space-between;
-    gap: 25px;
+    gap: 5px;
     /* border: 2px solid red; */
   }
   
@@ -136,6 +136,25 @@
   .active-class {
     background-color: #000;
     width: 12px;
+  }
+  .banner-container{
+    flex-direction: column;
+    gap: 30px;
+  }
+  .homebanner-list{
+    /* border: 1px solid blue; */
+    margin-top: 30px;
+    width: 70vw;
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+  }
+  .homebanner-img{
+    width: 30%;
   }
   /* -------------------Media----------------------- */
   @media only screen and (min-width: 240px) and (max-width: 768px) {

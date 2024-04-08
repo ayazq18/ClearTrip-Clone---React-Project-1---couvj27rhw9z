@@ -3,7 +3,7 @@ import "./NavBar.css";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Signup from "../Signup/Signup.js";
-import {logo, flight, flightsidelogo, hotelsidelogo, mytrips } from "../../Resources/Icons.js";
+import {logo, flight, flightsidelogo, hotelsidelogo, mytrips, bus, support } from "../../Resources/Icons.js";
 import Login from "../Login/Login.js";
 
 export default function NavBar() {
@@ -60,6 +60,22 @@ export default function NavBar() {
                   </div>
               </NavLink>
             </li>}
+            <li>
+              <NavLink to="/Bus">
+              <div className="flexY g10">
+                  <div>{bus}</div>
+                  <h2 className="aside-links">Bus</h2>
+                  </div>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/Support">
+              <div className="flexY g10">
+                  <div>{support}</div>
+                  <h2 className="aside-links">Support</h2>
+                  </div>
+              </NavLink>
+            </li>
           </ul>
           <Outlet />
         </div>
