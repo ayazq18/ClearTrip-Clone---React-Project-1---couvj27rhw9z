@@ -20,7 +20,7 @@ export default function Homebanner() {
             <img className="homebanner-img c" src={item.url} />
           ))}
         </div>
-        <img style={{ width: '67vw' }} src="./home_images/qrCode_7.webp" />
+        <img className='banner-img' style={{ width: '70vw' }} src="./home_images/qrCode_7.webp" />
         <Footer />
       </div>
   )

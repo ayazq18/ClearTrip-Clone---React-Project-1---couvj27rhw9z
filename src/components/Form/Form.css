@@ -47,29 +47,34 @@
   }
   
   .search-card {
-    width: 45vw;
+    width: 100%;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.06) 0px 6px 12px, rgba(0, 0, 0, 0.04) 0px 2px 16px;
     margin: 20px 0;
     border-radius: 10px;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid red; */
   }
-
+  
   /* -----Select---- */
   
   .select {
-    width: 20vw;
+    width: 100%;
     /* max-height: 20%; */
   }
-
+  
   .selectTrip{
+    width: 100%;
     padding: 10px 0;
     margin-right: 5px;
-    width: fit-content;
+    /* width: fit-content; */
     position: relative;
     cursor: pointer;
     text-wrap: nowrap;
     gap: 10px;
+    /* border: 1px solid red; */
   }
 
   .select h4{
@@ -208,6 +213,7 @@
   }
 
   .search-card .btns-div {
+    width: 100%;
     padding: 10px 0;
     gap: 10px;
     flex-wrap: wrap;
@@ -426,15 +432,20 @@
   @media only screen and (min-width: 240px) and (max-width: 768px) {
     
     .search-card{
-      width: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
     .search-card .btns-div {
+      width: 70%;
       display: flex;
-      flex-wrap: wrap;
+      justify-content: center;
+      /* flex-wrap: wrap; */
     }
     .search-card .btns-div button {
       font-size: 10px;
-      text-wrap: nowrap;
+       text-wrap: nowrap;
     }
     .search-way{
       top: 320px;
@@ -452,18 +463,21 @@
       left: -80px;
       width: 300px;
     }
-    .search-card .btns-div  {
+    .select-h{
+      width: 50%;
+    }
+    /* .search-card .btns-div  {
       justify-content: center;
-    }
-    .search-card .btns-div h2 {
-      font-size: 10px;
-    }
+    }*/
+    /* .search-card .btns-div h2 {
+      font-size: 12px;
+    }  */
     .exchangeIcon {
       display: none;
     }
   
     .input {
-      width: 100%;
+      width: 50%;
       flex-direction: column;
     }
     .expand-whereTo{

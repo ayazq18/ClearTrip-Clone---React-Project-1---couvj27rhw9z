@@ -173,7 +173,7 @@ export default function Form() {
 
     return (
         <form className="search-card">
-            <div className="select flexBet">
+            <div className="select-h flexBet">
                 {/* --------------Trip way------------------ */}
                 <div className="selectWay" onClick={() => handleTrip()}>
                     <div className="selectTrip flexY">

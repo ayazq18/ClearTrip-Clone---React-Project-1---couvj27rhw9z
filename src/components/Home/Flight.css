@@ -168,6 +168,7 @@
       justify-content: center;
       text-align: center;
       height: fit-content;
+      overflow-x: hidden;
       /* width: 100vw; */
       /* flex-wrap: wrap; */
     }
@@ -185,7 +186,7 @@
     .select {
       padding: 2px;
       margin: 0;
-      width: 20px;
+      /* width: 20px; */
       flex-wrap: nowrap;
     }
   
@@ -195,7 +196,7 @@
       justify-content: center;
       flex-wrap: wrap;
     }
-  
+
     #input1,
     #input2, #date1,
     #date2  {
@@ -223,15 +224,34 @@
   
     .offer-section {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
       align-items: center;
       gap: 10px;
     }
+    .banner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
     .homebanner-list{
+      width: 100%;
       justify-content: center;
+      align-items: center;
+      gap: 10px;
     }
+    .homebanner-img{
+      width: 50%;
+    }
+   .banner-img{
+      width: 80%;
+    }
+    .maxbox {
+      width: 100%;
+      /* display: flex;
+      justify-content: center; */
+  }
   }
   
 
@@ -259,5 +279,6 @@
       align-items: center;
       gap: 10px;
     }
+ 
   }
   
