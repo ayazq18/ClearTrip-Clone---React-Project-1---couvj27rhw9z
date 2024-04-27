@@ -190,6 +190,8 @@
 
 .selectTicket {
   padding: 10px;
+  position: relative;
+
 }
 
 .ticketSearch-sec #flightSearchBtn {
@@ -199,6 +201,9 @@
   color: #fff;
   font-size: 15px;
   text-wrap: nowrap;
+}
+.inputTicket{
+  flex-wrap: wrap;
 }
 
 .ticketMain-container {
@@ -251,6 +256,10 @@
   width: 90%;
   z-index: 1;
 }
+.owprice{
+  position: relative;
+
+}
 .wayprice {
   justify-content: space-evenly;
   align-items: center;
@@ -259,10 +268,10 @@
 }
 .filterPopupwayprice {
   padding: 0 30px;
-  width: 230px;
+  width: 90%;
   position: absolute;
-  top: 155px;
-  right: 15px;
+  /* top: 155px; */
+  right: 40px;
   color: #00000097;
 }
 .filterPopupwayprice p {
@@ -477,6 +486,7 @@ label {
 }
 
 .content-card-price-book-container {
+  flex-wrap: wrap;
   margin-right: 10px;
   gap: 20px;
 }
@@ -643,7 +653,6 @@ label {
   font-size: 12px;
   padding: 10px;
   margin-right: 10px;
-  position: relative;
   cursor: pointer;
 }
 
@@ -658,8 +667,8 @@ label {
   border: 1px solid #9c979745;
   border-radius: 6px;
   position: absolute;
-  top: 95px;
-  right: 270px;
+  top: 58px;
+  right: 0px;
   cursor: pointer;
   z-index: 11;
   height: fit-content;
@@ -810,7 +819,7 @@ label {
 /* -------------------Expand-whereFrom-------------- */
 
 .exchangeIcon-one {
-  font-size: 56px;
+  /* font-size: 56px; */
   color: orange;
   font-weight: 600;
   z-index: 1;
@@ -941,6 +950,7 @@ label {
   }
   .input-text1 {
     padding: 5px;
+    flex-wrap: wrap;
   }
   .ticketForm {
     flex-direction: column;
@@ -981,7 +991,7 @@ label {
   }
   .selectCateg-Expand-one {
     top: 85px;
-    right: 85px;
+    left: 0px;
   }
   .ticketSearch-sec #flightSearchBtn {
     padding: 5px 10px;
@@ -1022,7 +1032,7 @@ label {
   }
   .ticket-content-header-sec1 {
     padding-left: 10px;
-    width: 360px;
+    width: 90vw;
     margin: 0px;
     gap: 70px;
   }
@@ -1047,7 +1057,8 @@ label {
     font-size: 14px;
   }
   .content-card-price-book-container  h2{
-    font-size: 14px;
+    font-size: 11px;
+  padding: 10px 15px;
   }
   .content-card-expanded h3{
     font-size: 12px;
@@ -1069,9 +1080,13 @@ label {
     position: static;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 50px;
     height: 100px;
-    width: 100vw;
+    width: 90vw;
+    margin-top: 80px;
+    margin-bottom: 0;
+    /* border: 1px solid red; */
   }
   #stops {
     background-color: #fff;
@@ -1079,9 +1094,9 @@ label {
     margin-top: 0;
   }
   #one-way-price {
-    margin-top: 0px
+    display: none;
   }
-  .stops-static, .wayprice, .trip-duration{
+  .stops-static, .wayprice{
     text-wrap: nowrap;
     border: 1px dashed #000;
     border-radius: 20px;
@@ -1089,7 +1104,8 @@ label {
     align-items: center;
   }
   .stop-container{
-    width: 90%;
+    /* width: 90%; */
+    top: 50px;
     z-index: 1;
   }
   .wayprice {
@@ -1099,7 +1115,8 @@ label {
     padding: 0 30px;
     width: 200px;
     background-color: #fff;
-    left: 115px;
+    right: -40px;
+    top: 50px;
   }
   .filterPopupwayprice p {
     font-size: 14px;
@@ -1111,6 +1128,6 @@ label {
     display: flex;
   }
   /* .trip-duration {
-    align-items: center;
+    display: none;
   } */
 }

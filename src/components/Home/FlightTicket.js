@@ -272,7 +272,7 @@ export default function FlightTicket() {
                             <div className="ticketForm flexEnd">
                                 <form className="ticketSearch-sec" onSubmit={(e) => { handleSearchResults(e), ((flightIn !== flightOut && flightIn !== "" && flightOut !== "" && whereDate !== "") && settoggle(!toggle)) }}>
                                     <div className="inputTicket flexXY">
-                                        <div className="input-text1 flexY">
+                                        <div className="input-text1 flexXY">
                                             <input
                                                 id="inputSource"
                                                 type="text"
@@ -435,17 +435,19 @@ export default function FlightTicket() {
                                         </div>
                                     )}
                                 </div>
-                                <div className='wayprice flexXY' onClick={() => { poptab("wayprice") }}>
-                                    <p>One-way price</p>
-                                    <div><MdKeyboardArrowUp className={`fs ${pop['wayprice'] ? 'rotatedegree' : 'rotatezero'}`} /></div>
-                                </div>
+                                <div className="owprice">
+                                    <div className='wayprice flexXY' onClick={() => { poptab("wayprice") }}>
+                                        <p>One-way price</p>
+                                        <div><MdKeyboardArrowUp className={`fs ${pop['wayprice'] ? 'rotatedegree' : 'rotatezero'}`} /></div>
+                                    </div>
 
-                                {!pop["wayprice"] &&
-                                    <div className='filterPopupwayprice flex flexc'>
-                                        <p>Up to ₹{onewayPrice}</p>
-                                        <input type='range' min="1127" max="2500" value={onewayPricewithoutcomma()} onChange={(e) => { onewayPricewithcomma(e.target.value); }} />
-                                        <div className='flexBet'><p>₹1,127</p><p>₹2,500</p></div>
-                                    </div>}
+                                    {!pop["wayprice"] &&
+                                        <div className='filterPopupwayprice flex flexc'>
+                                            <p>Up to ₹{onewayPrice}</p>
+                                            <input type='range' min="1127" max="2500" value={onewayPricewithoutcomma()} onChange={(e) => { onewayPricewithcomma(e.target.value); }} />
+                                            <div className='flexBet'><p>₹1,127</p><p>₹2,500</p></div>
+                                        </div>}
+                                </div>
                                 <div id="one-way-price" className="flex">
                                     <div onClick={() => { poptab('oneway') }} className="trip-duration flexY">
                                         <h1>Trip duration</h1>
@@ -509,7 +511,7 @@ export default function FlightTicket() {
                                                         <h3>{result.arrivalTime}</h3>
                                                     </div>
                                                 </div>
-                                                <div className="content-card-price-book-container flexBet">
+                                                <div className="content-card-price-book-container flexXY">
                                                     <h3>₹{result.ticketPrice}</h3>
                                                     <h2 onClick={() => { navigateToFlightInfo(result._id, result.flightID, result.source, result.destination) }} className="content-card-book-btn">Book</h2>
                                                 </div>

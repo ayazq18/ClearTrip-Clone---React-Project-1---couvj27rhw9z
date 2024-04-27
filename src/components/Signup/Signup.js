@@ -35,7 +35,7 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
       const result = await response.json()
         if (result.status === 'success') {
           localStorage.setItem('token', result.token)
-          localStorage.setItem('name', result.data.name)
+          localStorage.setItem('name', result.data.user.name)
           setName('')
           setEmail('')
           setPassword('')
@@ -70,7 +70,7 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
       const result = await response.json()
       if (result.status === 'success') {
         localStorage.setItem('token', JSON.stringify(result.token));
-        localStorage.setItem('name', JSON.stringify(result.data.name))
+        localStorage.setItem('name', JSON.stringify(result.data.user.name))
         setToken(localStorage.getItem('token'))
         setShowSignUp(false)
         setShowSignUp(!showSignup);
@@ -129,7 +129,7 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
             <div className=" login-form-btn flexXY">
               <button>Signup</button>
             </div>
-            <div className="flexXY"><p>If you are an existing user please</p>&nbsp; <p onClick={() => handleLoginSignUp()} style={{ color: 'blue', cursor:'pointer' }}>Log in</p></div>
+            <div className="flexXY"><p onClick={() => handleLoginSignUp()} style={{ color: 'blue', cursor:'pointer' }}>If you are an existing user please Log in</p></div>
           </form>) :
             (<form
               className="login-form flexXY"
@@ -150,7 +150,7 @@ export default function Signup({ token, setToken, showSignup, setShowSignUp }) {
               <div className=" login-form-btn flexXY">
                 <button>Login</button>
               </div>
-              <div className="flexXY"><p>If you are not an existing user please</p>&nbsp; <p onClick={() => handleToSignUp()} style={{ color: 'blue', cursor:'pointer'  }}>SignUp</p></div>
+              <div className="flexXY"><p onClick={() => handleToSignUp()} style={{ color: 'blue', cursor:'pointer' }}>If you are not an existing user please SignUp</p></div>
             </form>
             )}
           <div className="footer-section flexc">
