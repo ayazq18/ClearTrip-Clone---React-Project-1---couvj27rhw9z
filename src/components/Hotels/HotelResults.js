@@ -39,7 +39,7 @@ const HotelResults = () => {
     const fetchHotels = useMemo(async () => {
         try {
             setLoad(false)
-            const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputResult}"}&filter={"rating":{"$gte":"${rating}"}}&page=${pagination}&limit=10`, { method: "GET", headers: { Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow', projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputResult}"}&filter={"rating":{"$gte":"${rating}"}}&page=${pagination}&limit=10`, { method: "GET", headers: { Authorization: `Bearer ${localstorage.getItem('token')}`, projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             setresultforpagination(result.totalResults)
             setHotelResultData(sortingincreaseordecrease(result.data.hotels))

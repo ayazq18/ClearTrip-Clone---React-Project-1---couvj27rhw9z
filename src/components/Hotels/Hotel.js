@@ -91,7 +91,7 @@ export default function Hotel() {
       const response = await fetch(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${inputVal}"}`, {
         method: "GET",
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJlZWE2ZWM3MjNmN2NkZTA0OTJmNSIsImlhdCI6MTcwNTkxNDQyMywiZXhwIjoxNzM3NDUwNDIzfQ.NsXu4O1WNOfj__A2bSWNhgoazcYlUFMaWeMDp_fPTow',
+          Authorization:  `Bearer ${localStorage.getItem('token')}`,
           projectID: Project_ID,
           "Content-Type": "application/json",
         }
