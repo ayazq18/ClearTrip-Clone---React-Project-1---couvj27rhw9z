@@ -39,7 +39,7 @@ const HotelResults = () => {
     const fetchHotels = useMemo(async () => {
         try {
             setLoad(false)
-            const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputResult}"}&filter={"rating":{"$gte":"${rating}"}}&page=${pagination}&limit=10`, { method: "GET", headers: { Authorization: `Bearer ${localstorage.getItem('token')}`, projectID: Project_ID, "Content-Type": "application/json" } });
+            const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputResult}"}&filter={"rating":{"$gte":"${rating}"}}&page=${pagination}&limit=10`, { method: "GET", headers: { projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
             console.log('result---------', result)
             setresultforpagination(result.totalResults)
@@ -60,7 +60,7 @@ const HotelResults = () => {
 
     return (
         <>
-            {!load && <div>
+            {load && <div>
                 <div className='hotelHome'>
                     <div><HotelNavBar lowhigh={lowhigh} setlowhigh={setlowhigh} minrange={minrange} setminrange={setminrange} maxrange={maxrange} setmaxrange={setmaxrange} rating={rating} setrating={setrating} inputResult={inputResult} fromDate={fromDate} toDate={toDate} /></div>
                     <div className='hotelMain flexXY'>
@@ -113,7 +113,7 @@ const HotelResults = () => {
                     <button className={` ${(pagination === +resultforpagination / 10) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination / 10 == pagination} >Next</button>
                 </div>
             </div>}
-            {/* {!load && <div className='loader'></div>} */}
+            {!load && <div className='loader'></div>}
         </>
     );
 }
