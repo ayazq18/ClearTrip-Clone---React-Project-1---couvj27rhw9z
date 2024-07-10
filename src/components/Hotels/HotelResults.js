@@ -60,7 +60,7 @@ const HotelResults = () => {
 
     return (
         <>
-            {load && <div>
+            {!load && <div>
                 <div className='hotelHome'>
                     <div><HotelNavBar lowhigh={lowhigh} setlowhigh={setlowhigh} minrange={minrange} setminrange={setminrange} maxrange={maxrange} setmaxrange={setmaxrange} rating={rating} setrating={setrating} inputResult={inputResult} fromDate={fromDate} toDate={toDate} /></div>
                     <div className='hotelMain flexXY'>
@@ -113,7 +113,7 @@ const HotelResults = () => {
                     <button className={` ${(pagination === +resultforpagination / 10) ? 'inactive' : 'btn'}`} onClick={() => setPagination(pagination + 1)} disabled={+resultforpagination / 10 == pagination} >Next</button>
                 </div>
             </div>}
-            {!load && <div className='loader'></div>}
+            {/* {!load && <div className='loader'></div>} */}
         </>
     );
 }
