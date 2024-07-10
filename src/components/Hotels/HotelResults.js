@@ -41,6 +41,7 @@ const HotelResults = () => {
             setLoad(false)
             const response = await fetch(`${Base_URL}/hotel?search={"location":"${inputResult}"}&filter={"rating":{"$gte":"${rating}"}}&page=${pagination}&limit=10`, { method: "GET", headers: { Authorization: `Bearer ${localstorage.getItem('token')}`, projectID: Project_ID, "Content-Type": "application/json" } });
             const result = await response.json()
+            console.log('result---------', result)
             setresultforpagination(result.totalResults)
             setHotelResultData(sortingincreaseordecrease(result.data.hotels))
             setLoad(true)

@@ -166,7 +166,7 @@ const HotelNavBar = ({ lowhigh, setlowhigh, minrange, setminrange, maxrange, set
                     </div>
                     <div className='hotelResults-navBar-btnDiv flexXY' onClick={(e) => { handleLoginSignUp(e) }}>
                         {token && <div>{loginProfile}</div>}
-                        <h4 className={`hotelResults-navBar-btnDiv-loginbtn point ${token ? 'loggedIn' : ''}`}>{token ? <>{JSON.parse(localStorage.getItem('name'))} {dropDown}</> : 'Login / Signup'}</h4>
+                        <h4 className={`hotelResults-navBar-btnDiv-loginbtn point ${token ? 'loggedIn' : ''}`}>{token ? <>{localStorage.getItem('name')} {dropDown}</> : 'Login / Signup'}</h4>
                         {showSignup && <div className='hotelLogin-transparent'></div>}
                     </div>
                     <div className='hotelResults-signup'>
