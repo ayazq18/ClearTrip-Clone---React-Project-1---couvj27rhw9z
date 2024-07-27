@@ -62,7 +62,7 @@ const HotelResults = () => {
         <>
             {load && <div>
                 <div className='hotelHome'>
-                    <div><HotelNavBar lowhigh={lowhigh} setlowhigh={setlowhigh} minrange={minrange} setminrange={setminrange} maxrange={maxrange} setmaxrange={setmaxrange} rating={rating} setrating={setrating} inputResult={inputResult} fromDate={fromDate} toDate={toDate} /></div>
+                    <div className='hotNavBar'><HotelNavBar lowhigh={lowhigh} setlowhigh={setlowhigh} minrange={minrange} setminrange={setminrange} maxrange={maxrange} setmaxrange={setmaxrange} rating={rating} setrating={setrating} inputResult={inputResult} fromDate={fromDate} toDate={toDate} /></div>
                     <div className='hotelMain flexXY'>
                         <div className='hotelMain-container'>
                             <div className='hotelMain-container-card'>

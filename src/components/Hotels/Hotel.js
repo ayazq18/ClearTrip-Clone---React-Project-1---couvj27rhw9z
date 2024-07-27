@@ -232,7 +232,7 @@ export default function Hotel() {
             </div>
           </form>
         </div>
-        <img alt="cancel for no reason banner" loading="lazy" width="610" height="80" decoding="async" data-nimg="1" src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpg" style={{ color: "transparent" }} />
+        <img className="ho-banner" alt="cancel for no reason banner" loading="lazy" height="80" decoding="async" data-nimg="1" src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpg" style={{ width: '45vw', color: "transparent" }} />
       </div>
       <div className="offer-sec ">
         <ImgCorousel />

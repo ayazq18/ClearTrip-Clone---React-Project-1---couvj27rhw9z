@@ -299,13 +299,16 @@
     .search-card-hotel{
       width: 80vw;
     }
+    .ho-banner{
+      display: none;
+    }
     .search-card-hotel .btns-div {
       display: flex;
       flex-wrap: wrap;
     }
     .hotelInputExpand{
-      top: 340px;
-      width: 335px;
+      top: 345px;
+      width: 65%;
       height: 300px;
       overflow-y: scroll;
     }
@@ -330,6 +333,10 @@
       width:50%;
       gap: 5px;
       right: 90px;
+      bottom: 10px;
+      margin-left: 10px;
+      padding: 10px 0px;
+      overflow-y: hidden;
     }
     .hotelSelect-expand1{
       top: -260px;
@@ -340,7 +347,7 @@
       left: 0px;
     }
     #hotelSearchBtn {
-      padding: 15px 20px;
+      padding: 10px 15px;
       position: relative;
       bottom: 69px;
     }

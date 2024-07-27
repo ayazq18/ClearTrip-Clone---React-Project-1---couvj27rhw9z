@@ -578,7 +578,6 @@ body{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 25px 15px;
-
 }
 .hotelMain-sec1, .hotelMain-sec2, .hotelMain-sec3{
     width: 258px;
@@ -664,3 +663,16 @@ body{
     background-color: lightgoldenrodyellow;
 }
 
+@media (max-width: 600px) {
+    .hotelMain-container-card {
+      grid-template-columns: 1fr;
+      grid-gap: 15px;
+      width: 100%; 
+      max-width: 258px;
+      margin: 0 auto; 
+      padding: 0 15px; 
+    }
+    /* .hotNavBar{
+        display: none;
+    } */
+  }
