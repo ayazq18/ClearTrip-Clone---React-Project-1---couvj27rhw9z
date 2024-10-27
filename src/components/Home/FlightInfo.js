@@ -116,13 +116,13 @@ export default function FlightInfo() {
 
 
   function gotopayment() {
-    if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
+    // if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
       senddata();
       setflightpaymentdone(true)
       navigate(`/flights/results/Info/bookingpage?FirstName="${details.dfname}"&Email="${details.demail}"&Amount=${((dataa.ticketPrice * 18) / 100 + dataa.ticketPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`);
-    }else{
-      setuserdetail(true)
-    }
+    // }else{
+    //   setuserdetail(true)
+    // }
   }
 
   function emailerror(e) {
@@ -246,14 +246,16 @@ export default function FlightInfo() {
               </div>
               {switcherform && <>
                 <div className='flightinfo-travellerdetails flexj flexc g20'>
+                <h3 style={{backgroundColor:'yellow', color:'red', padding:'5px'}}>NOTE : </h3>
+                <h5 style={{backgroundColor:'yellow', color:'red', padding:'5px'}}>This Form is disabled because of the warning has been reported for phishing by the vercel team, SO SUBMIT WITHOUT FILLING THE DETAILS </h5>
                   <label>Billing Address</label>
-                  <input className='flightinfo-billinginput' type='text' placeholder='Billing Address' onClick={() => { popp("billingAddress") }} value={details.dbillingAddress} onChange={(e) => { travellerinfo("dbillingAddress", e.target.value) }} />
+                  <input disabled className='flightinfo-billinginput' type='text' placeholder='Billing Address' onClick={() => { popp("billingAddress") }} value={details.dbillingAddress} onChange={(e) => { travellerinfo("dbillingAddress", e.target.value) }} />
                   <label>Traveller name and gender</label>
                   <div className='flightinfo-travellerdiv flexa g20'>
-                    <input type='text' className='fname' placeholder='First name' value={details.dfname} onChange={(e) => { travellerinfo("dfname", `${e.target.value}`) }} onClick={() => { popp("fname") }} />
-                    <input type='text' className='lname' placeholder='Last name' value={details.dlname} onChange={(e) => { travellerinfo("dlname", `${e.target.value}`) }} onClick={() => { popp("lname") }} />
+                    <input disabled type='text' className='fname' placeholder='First name' value={details.dfname} onChange={(e) => { travellerinfo("dfname", `${e.target.value}`) }} onClick={() => { popp("fname") }} />
+                    <input disabled type='text' className='lname' placeholder='Last name' value={details.dlname} onChange={(e) => { travellerinfo("dlname", `${e.target.value}`) }} onClick={() => { popp("lname") }} />
                     <div className='gender flexa b1' onClick={() => { popp("gender") }}>
-                      <input type='text' placeholder='Gender' className='b1' value={details.dgender} disabled />
+                      <input disabled type='text' placeholder='Gender' className='b1' value={details.dgender} />
                       <IoIosArrowDown className={pop["gender"] ? "gender-downarrow" : "gender-uparrow"} />
                       {pop["gender"] &&
                         <div className='gender-pop felxa flexc'>
@@ -266,7 +268,7 @@ export default function FlightInfo() {
                   <label>Nationality</label>
                   <div className='flexa g10'>
                     <div className='country flexa' onClick={() => { popp("country") }} >
-                      <input type='text' className='country-input' placeholder='Country (e.g. India)' value={details.dcountry} disabled />
+                      <input disabled type='text' className='country-input' placeholder='Country (e.g. India)' value={details.dcountry} />
                       <IoIosArrowDown className={pop["country"] ? "country-downarrow" : "country-uparrow"} />
                       {pop["country"] &&
                         <div className='country-pop flexa g10 flexc'>

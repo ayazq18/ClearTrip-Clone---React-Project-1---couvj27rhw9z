@@ -30,41 +30,41 @@ export default function HotelPayment() {
   }
 
   const clicktopay = () => {
-    if(details.name && details.cardnumber.length===16 && details.CVV.length===3 && details.ischecked){
+    // if(details.name && details.cardnumber.length===16 && details.CVV.length===3 && details.ischecked){
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
         setflightpaymentdone(false)
         navigate('/')
       }, 10000);
-    }
-    else{
-      if(details.cardnumber.length<16){
-        alert("Enter the correct card number")
-        }else if(details.CVV.length<3){
-          alert("Enter the correct CVV")
-        }else if(details.name === '' ){
-          alert("Enter the correct Name")
-        }else if(!details.ischecked){
-          alert("Please accept the terms")
-        }
-    }
+    // }
+    // else{
+    //   if(details.cardnumber.length<16){
+    //     alert("Enter the correct card number")
+    //     }else if(details.CVV.length<3){
+    //       alert("Enter the correct CVV")
+    //     }else if(details.name === '' ){
+    //       alert("Enter the correct Name")
+    //     }else if(!details.ischecked){
+    //       alert("Please accept the terms")
+    //     }
+    // }
   }
 
   const clicktopayUpi = () => {
-    if (details.UPI && details.ischecked && details.UPI.includes('@')) {
+    // if (details.UPI && details.ischecked && details.UPI.includes('@')) {
       setPayment(!payment)
       setTimeout(() => {
         setPayment(false)
         setflightpaymentdone(false)
         navigate('/')
       }, 5000);
-    } else if(details.UPI === '' || !details.UPI.includes('@')){
-      alert ("Please enter the correct UPI")
-    }
-    else if (!details.ischecked) {
-      alert("Please accept the terms")
-    }
+    // } else if(details.UPI === '' || !details.UPI.includes('@')){
+    //   alert ("Please enter the correct UPI")
+    // }
+    // else if (!details.ischecked) {
+    //   alert("Please accept the terms")
+    // }
   }
 
   function travellerinfo(key, value) {
@@ -89,6 +89,7 @@ useEffect(()=>{
       </div>
       <div className='hotelPayment flexXY flexc g20'>
         <h1>Pay to complete your booking</h1>
+        <h5 style={{backgroundColor:'yellow', color:'red', padding:'5px', width:'500px', textAlign:'center'}}>This Form is disabled because of the warning has been reported for phishing by the vercel team, SO YOU CAN SUBMIT WITHOUT FILLING THE DETAILS </h5>
         <div className='hotelPayment-main flex'>
           {payment &&
             <div className='paymentPopup'>
@@ -110,16 +111,16 @@ useEffect(()=>{
               <div className='hotelCard'><h3>Enter Card details</h3><div className='flexXY'></div></div>
               <form className='hotelDebitform flex'>
                 <label>Card Number</label>
-                <input type='number' value={details.cardnumber} minLength={16} maxLength={16} onInput={(e)=>{if (e.target.value.length > 16) {e.target.value = e.target.value.slice(0, 16)}}} onChange={(e)=>travellerinfo('cardnumber', `${e.target.value}`)} placeholder='Enter card number' />
+                <input disabled type='number' value={details.cardnumber} minLength={16} maxLength={16} onInput={(e)=>{if (e.target.value.length > 16) {e.target.value = e.target.value.slice(0, 16)}}} onChange={(e)=>travellerinfo('cardnumber', `${e.target.value}`)} placeholder='Enter card number' />
                 <label>Expiry date</label>
                 <div className=' g20'>
                     <select>{object.map(item=>(<option value={item.month}>{item.month}</option>))}</select>
                     <select>{yearsArray.map((item, index) => (<option key={index}>{item}</option>))}</select>
                 </div>
                 <label>Cardholder name</label>
-                <input type='text' value={details.name} onChange={(e)=>travellerinfo('name', `${e.target.value}`)} placeholder='Name as on card' />
+                <input disabled type='text' value={details.name} onChange={(e)=>travellerinfo('name', `${e.target.value}`)} placeholder='Name as on card' />
                 <label>CVV</label>
-                <input className='CVV' type='number' minLength={3} maxLength={4} value={details.CVV} onInput={(e)=>{if (e.target.value.length > 4) {e.target.value = e.target.value.slice(0, 4)}}}  onChange={(e)=>travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
+                <input disabled className='CVV' type='number' minLength={3} maxLength={4} value={details.CVV} onInput={(e)=>{if (e.target.value.length > 4) {e.target.value = e.target.value.slice(0, 4)}}}  onChange={(e)=>travellerinfo('CVV', `${e.target.value}`)} placeholder='CVV' />
               </form>
             </div>}
 
@@ -128,7 +129,7 @@ useEffect(()=>{
                 <div className='hotelPayment-Upi-option1-form flexc'>
                   <h3>Enter UPI ID</h3>
                   <form className='hotelUPIform'>
-                    <input type='text' value={details.UPI} onChange={(e)=>travellerinfo('UPI', `${e.target.value}`)} placeholder='Enter your UPI ID' />
+                    <input disabled type='text' value={details.UPI} onChange={(e)=>travellerinfo('UPI', `${e.target.value}`)} placeholder='Enter your UPI ID' />
                   </form>
                   <p>Payment request will be sent to the phone no. linked to your UPI ID</p>
                 </div>
