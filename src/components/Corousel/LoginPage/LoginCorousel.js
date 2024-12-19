@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import './LoginCorousel.css'
 const LoginCorousel = () => {
   const images = [
-    { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_410,h_337,dpr_2/offermgmt/images/slider3.png" },
-    { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_410,h_337,dpr_2/offermgmt/images/slider2.png" },
+    { url: "https://media.istockphoto.com/id/1281150061/vector/register-account-submit-access-login-password-username-internet-online-website-concept.jpg?s=612x612&w=0&k=20&c=9HWSuA9IaU4o-CK6fALBS5eaO1ubnsM08EOYwgbwGBo=" },
+    { url: "https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg" },
   ];
 
   const [imgCounter, setImgCounter] = useState(0);

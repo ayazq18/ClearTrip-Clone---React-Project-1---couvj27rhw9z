@@ -531,7 +531,7 @@ export default function FlightTicket() {
                                                     <div className="content-card-container-details-airline flexY g20">
                                                         <div className="content-card-container-details-sec1 flexBet">
                                                             <div>
-                                                                <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} />
+                                                                <img src={getAirlineInfo(result.flightID.slice(0, 2)).logoSrc} style={{width:'40px'}} />
                                                             </div>
                                                             <div className="content-card-container-airline-name">
                                                                 <h5>{getAirlineInfo(result.flightID.slice(0, 2)).airlineName}</h5>

@@ -19,14 +19,14 @@ export const expandedObj = [
 export const getAirlineInfo = (flightIDs) => {
     let logoSrc, airlineName;
     switch (flightIDs.slice(0, 2)) {
-      case '6E': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/6E.svg'; airlineName = 'Indigo'; break;
-      case 'AI': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/AI.svg'; airlineName = 'Air India'; break;
-      case 'QP': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/QP.svg'; airlineName = 'Akasa Air'; break;
-      case 'UK': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/UK.svg'; airlineName = 'Vistara'; break;
-      case 'SG': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/SG.svg'; airlineName = 'Spicejet'; break;
-      case 'IX': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/IX.svg'; airlineName = 'Air India Express'; break;
-      case 'G8': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/G8.svg'; airlineName = 'GoAir'; break;
-      case 'I5': logoSrc = 'https://fastui.cltpstatic.com/image/upload/resources/images/logos/air-logos/svg_logos/I5.svg'; airlineName = 'AirAsia India'; break;
+      case '6E': logoSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFF6Szgfwsb2tOSaSEdnQqUIaIO3SqCbjhQ&s'; airlineName = 'Indigo'; break;
+      case 'AI': logoSrc = 'https://uxdt.nic.in/wp-content/uploads/2020/06/Preview-2.png?x23734'; airlineName = 'Air India'; break;
+      case 'QP': logoSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ3Gq_woK4rbx6iyGpcNLtyaO4ks5dmUjDpw&s'; airlineName = 'Akasa Air'; break;
+      case 'UK': logoSrc = 'https://thehardcopy.co/wp-content/uploads/Vistara-Images-7-1200x805.png'; airlineName = 'Vistara'; break;
+      case 'SG': logoSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAxMTS8LLM2N8sGJ3_S3ww4adYj-7quEA3SA&s'; airlineName = 'Spicejet'; break;
+      case 'IX': logoSrc = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM70hjiFpo1RsYbkeTAJqH9n4DFH6u9bjadQ&s'; airlineName = 'Air India Express'; break;
+      case 'G8': logoSrc = 'https://upload.wikimedia.org/wikipedia/commons/8/86/GoAir_Logo.png'; airlineName = 'GoAir'; break;
+      case 'I5': logoSrc = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/AirAsia_New_Logo.svg/1200px-AirAsia_New_Logo.svg.png'; airlineName = 'AirAsia India'; break;
       default: logoSrc = ''; airlineName = '';
     }
     return { logoSrc, airlineName };

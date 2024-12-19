@@ -59,7 +59,7 @@ export default function MyTrips() {
                     <div className="trip-card-container-details-airline flexY g20">
                         <div className="trip-card-container-details-sec1 flexBet">
                             <div>
-                                <img src={getAirlineInfo(item.flight.flightID.slice(0, 2)).logoSrc} />
+                                <img src={getAirlineInfo(item.flight.flightID.slice(0, 2)).logoSrc} style={{width:'40px'}}/>
                             </div>
                             <div className="trip-card-container-airline-name">
                                 <h5>{getAirlineInfo(item.flight.flightID.slice(0, 2)).airlineName}</h5>

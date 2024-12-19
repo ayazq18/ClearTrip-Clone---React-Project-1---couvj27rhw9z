@@ -3,10 +3,10 @@ import { FaLessThan, FaGreaterThan, } from "react-icons/fa";
 import './ImgCorousel.css'
 const Carousel = () => {
   const images = [
-    { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/BBD/GiftCards_RR_12072023.png" },
-    { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_DOTW_Varanasi_F_0501.jpg" },
-    { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_CTTHAI_F_2012.jpg" },
-    { url: "https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_260,h_205,dpr_2/offermgmt/images/banner/RR_Medicancel_F_1711.jpg" },
+    { url: "https://www.shutterstock.com/image-vector/travel-promo-vector-design-tour-260nw-2172252889.jpg" },
+    { url: "https://c8.alamy.com/comp/2WK7XK7/online-tickets-services-landing-page-low-cost-flights-budget-air-tickets-cheap-flights-concept-web-banner-template-couple-of-tourists-with-baggag-2WK7XK7.jpg" },
+    { url: "https://www.shutterstock.com/image-vector/travel-promo-vector-design-tour-260nw-2172252889.jpg" },
+    { url: "https://c8.alamy.com/comp/2WK7XK7/online-tickets-services-landing-page-low-cost-flights-budget-air-tickets-cheap-flights-concept-web-banner-template-couple-of-tourists-with-baggag-2WK7XK7.jpg" },
   ];
 
   const [imgCounter, setImgCounter] = useState(0);
